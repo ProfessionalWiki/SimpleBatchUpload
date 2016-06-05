@@ -1,0 +1,25 @@
+{
+	"name": "SimpleBatchUpload",
+	"version": "0.0.0-alpha",
+	"author": [
+		"[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
+	"descriptionmsg": "simplebatchupload-desc",
+	"license-name": "GPL-2.0+",
+	"type": "specialpage",
+	"requires": {
+		"MediaWiki": "~1.27"
+	},
+	"config": {
+		"_prefix": "wgex"
+	},
+	"MessagesDirs": {
+		"SimpleBatchUpload": [
+			"i18n"
+		]
+	},
+	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
+	"manifest_version": 1,
+	"load_composer_autoloader" : true
+}
