@@ -67,24 +67,22 @@ class SpecialBatchUpload extends SpecialPage {
 		$this->setHeaders();
 		$this->checkPermissions();
 
-		$request = $this->getRequest();
+//		$request = $this->getRequest();
 		$output = $this->getOutput();
 
 		# Get request data from, e.g.
-		$param = $request->getText( 'param' );
+//		$param = $request->getText( 'param' );
 
-		# Do stuff
-		# ...
-		$html = '<span class="btn btn-success fileinput-button">
+		$html = '<span id="fileupload-dropzone" class="fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
-        <span>Select files...</span>
+        <span>Select files (or drop them here)...</span>
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="file" data-url="' . wfScript( 'api' ) . '" data-token="' . $this->getUser()->getEditToken() . '" multiple>
-    </span>
+    </span><ul id="fileupload-results"></ul>
     ';
 		$output->addHTML( $html );
 		$output->addModules( 'ext.SimpleBatchUpload' );
-		$output->addModuleStyles( 'ext.SimpleBatchUpload' );
+		$output->addModuleStyles( [ 'ext.SimpleBatchUpload', 'ext.SimpleBatchUpload.jquery-file-upload' ] );
 	}
 
 }

@@ -1,0 +1,40 @@
+.fileinput-button {
+    -moz-user-select: none;
+    background-color: #f9f9f9;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#fileupload-results {
+    list-style: outside none none;
+    margin-top: 1em;
+    padding-left: 0;
+}
+
+#fileupload-results li {
+    padding: 0.2em 1em;
+}
+
+#fileupload-results li.ful-success{
+    background-color: lightgreen;
+}
+
+#fileupload-results li.ful-success a {
+    color: #0645ad;
+}
+
+#fileupload-results li.ful-error{
+    background-color: lightpink;
+}

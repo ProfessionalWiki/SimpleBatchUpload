@@ -26,8 +26,13 @@
 	$( function () {
 		$( '#fileupload' ).fileupload( {
 			dataType: 'json',
+			dropZone: $( '#fileupload-dropzone' ),
 
 			add: function ( e, data ) {
+
+				var status = $('<li>').text( data.files[0].name );
+				$( '#fileupload-results' ).append( status );
+
 				data.formData = {
 					format: 'json',
 					action: 'upload',
@@ -35,26 +40,31 @@
 					ignorewarnings: 1,
 					filename: data.files[ 0 ].name
 				};
-				// data.submit();
+
 				var jqXHR = data.submit()
 					.success( function ( result, textStatus, jqXHR ) {
-						alert( 'SUCCESS!' );
-						/* ... */
+						var link = $('<a>');
+						link
+							.attr( 'href', mw.Title.makeTitle( mw.config.get( 'wgNamespaceIds' ).file, result.upload.filename ).getUrl() )
+							.text( result.upload.filename );
+
+						status
+							// .empty()
+							.addClass('ful-success')
+							.text( ' OK' )
+							.prepend( link );
+
 					} )
 					.error( function ( jqXHR, textStatus, errorThrown ) {
-						alert( 'ERROR!' );
-						/* ... */
-					} )
-					.complete( function ( result, textStatus, jqXHR ) {
-						alert( 'COMPLETE!' );
-						/* ... */
+						status.text( status.text() + " ERROR").addClass('ful-error');
 					} );
-			},
 
-			done: function ( e, data ) {
-				alert( 'DONE!' );
 			}
 		} );
+
+		$(document).bind('drop dragover', function (e) {
+			e.preventDefault();
+		});
 	} );
 
 }( jQuery, mediaWiki ));
