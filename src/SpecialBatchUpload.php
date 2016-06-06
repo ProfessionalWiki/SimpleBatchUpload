@@ -23,6 +23,7 @@
  */
 
 namespace SimpleBatchUpload;
+
 use SpecialPage;
 
 /**
@@ -38,7 +39,7 @@ class SpecialBatchUpload extends SpecialPage {
 	 * @param string $restriction User right required, e.g. "block" or "delete"
 	 * @param bool $listed Whether the page is listed in Special:Specialpages
 	 */
-	function __construct( $name = '', $restriction = '', $listed = true	) {
+	public function __construct( $name = '', $restriction = '', $listed = true ) {
 		parent::__construct( 'BatchUpload', 'upload', $listed );
 	}
 
@@ -62,24 +63,20 @@ class SpecialBatchUpload extends SpecialPage {
 	 * @param null|string $par
 	 * @throws \MWException
 	 */
-	function execute( $par ) {
+	public function execute( $par ) {
 
 		$this->setHeaders();
 		$this->checkPermissions();
 
-//		$request = $this->getRequest();
 		$output = $this->getOutput();
-
-		# Get request data from, e.g.
-//		$param = $request->getText( 'param' );
 
 		$html = '<span id="fileupload-dropzone" class="fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
         <span>Select files (or drop them here)...</span>
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="file" data-url="' . wfScript( 'api' ) . '" data-token="' . $this->getUser()->getEditToken() . '" multiple>
-    </span><ul id="fileupload-results"></ul>
-    ';
+        </span><ul id="fileupload-results"></ul>';
+
 		$output->addHTML( $html );
 		$output->addModules( 'ext.SimpleBatchUpload' );
 		$output->addModuleStyles( [ 'ext.SimpleBatchUpload', 'ext.SimpleBatchUpload.jquery-file-upload' ] );

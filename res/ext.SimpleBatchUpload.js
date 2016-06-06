@@ -19,6 +19,8 @@
  * @ingroup SimpleBatchUpload
  */
 
+/** global: jQuery, mediaWiki */
+
 ;( function ( $, mw, undefined ) {
 
 	'use strict';
@@ -30,7 +32,7 @@
 
 			add: function ( e, data ) {
 
-				var status = $('<li>').text( data.files[0].name );
+				var status = $( '<li>' ).text( data.files[ 0 ].name );
 				$( '#fileupload-results' ).append( status );
 
 				data.formData = {
@@ -41,30 +43,36 @@
 					filename: data.files[ 0 ].name
 				};
 
-				var jqXHR = data.submit()
-					.success( function ( result, textStatus, jqXHR ) {
-						var link = $('<a>');
-						link
-							.attr( 'href', mw.Title.makeTitle( mw.config.get( 'wgNamespaceIds' ).file, result.upload.filename ).getUrl() )
-							.text( result.upload.filename );
+				data.submit()
+					.success( function ( result /*, textStatus, jqXHR */ ) {
 
-						status
-							// .empty()
-							.addClass('ful-success')
-							.text( ' OK' )
-							.prepend( link );
+						if ( result.error != undefined ) {
+
+							status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
+
+						} else {
+							var link = $( '<a>' );
+							link
+								.attr( 'href', mw.Title.makeTitle( mw.config.get( 'wgNamespaceIds' ).file, result.upload.filename ).getUrl() )
+								.text( result.upload.filename );
+
+							status
+								.addClass( 'ful-success' )
+								.text( ' OK' )
+								.prepend( link );
+						}
 
 					} )
-					.error( function ( jqXHR, textStatus, errorThrown ) {
-						status.text( status.text() + " ERROR").addClass('ful-error');
+					.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
+						status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
 					} );
 
 			}
 		} );
 
-		$(document).bind('drop dragover', function (e) {
+		$( document ).bind( 'drop dragover', function ( e ) {
 			e.preventDefault();
-		});
+		} );
 	} );
 
 }( jQuery, mediaWiki ));

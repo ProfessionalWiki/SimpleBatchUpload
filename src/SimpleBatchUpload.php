@@ -62,14 +62,14 @@ class SimpleBatchUpload {
 			'localBasePath' => dirname( __DIR__ ),
 			'remoteExtPath' => $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload',
 			'scripts'       => [ 'res/ext.SimpleBatchUpload.js' ],
-			'styles'       => [ 'res/ext.SimpleBatchUpload.css' ],
-			'position' => 'top',
+			'styles'        => [ 'res/ext.SimpleBatchUpload.css' ],
+			'position'      => 'top',
 			'dependencies'  => [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title' ],
 		];
 	}
 
 	protected function registerUploadModule() {
-		if ( file_exists( '../vendor/blueimp' ) ) {
+		if ( file_exists( '../vendor' ) ) {
 			$localBasePath = dirname( __DIR__ );
 			$remoteBasePath = $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload';
 		} else {
@@ -81,15 +81,15 @@ class SimpleBatchUpload {
 			'localBasePath'  => $localBasePath . '/vendor/blueimp/jquery-file-upload/',
 			'remoteBasePath' => $remoteBasePath . '/vendor/blueimp/jquery-file-upload/',
 
-			'scripts'        => [
+			'scripts' => [
 				'js/jquery.fileupload.js',
 			],
 
-			'styles'         => [
+			'styles'       => [
 				'css/jquery.fileupload.css',
 			],
-			'position' => 'bottom',
-			'dependencies'   => [ 'jquery.ui.widget' ],
+			'position'     => 'bottom',
+			'dependencies' => [ 'jquery.ui.widget' ],
 		];
 	}
 
