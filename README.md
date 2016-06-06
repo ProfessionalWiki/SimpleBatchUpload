@@ -1,9 +1,9 @@
 # SimpleBatchUpload
 
-[![Latest Stable Version](https://poser.pugx.org/s7eph4n/simple-batch-upload/version.png)](https://packagist.org/packages/s7eph4n/simple-batch-upload)
-[![Packagist download count](https://poser.pugx.org/s7eph4n/simple-batch-upload/d/total.png)](https://packagist.org/packages/s7eph4n/simple-batch-upload)
+[![Latest Stable Version](https://poser.pugx.org/mediawiki/simple-batch-upload/v/stable)](https://packagist.org/packages/mediawiki/simple-batch-upload)
+[![Packagist download count](https://poser.pugx.org/mediawiki/simple-batch-upload/downloads)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/?branch=master)
-[![Dependency Status](https://www.versioneye.com/php/s7eph4n:simple-batch-upload/badge.png)](https://www.versioneye.com/php/s7eph4n:simple-batch-upload)
+[![Dependency Status](https://www.versioneye.com/user/projects/57554ea07757a00041b3a717/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57554ea07757a00041b3a717)
 
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
