@@ -67,7 +67,7 @@ class SpecialBatchUpload extends SpecialPage {
 
 		$html = '<span id="fileupload-dropzone" class="fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
-        <span>Select files (or drop them here)...</span>
+        <span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span>
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="file" data-url="' . wfScript( 'api' ) . '" data-token="' . $this->getUser()->getEditToken() . '" multiple>
         </span><ul id="fileupload-results"></ul>';
