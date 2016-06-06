@@ -19,7 +19,8 @@
  * @ingroup SimpleBatchUpload
  */
 
-/** global: jQuery, mediaWiki */
+/** global: mediaWiki */
+/** global: jQuery */
 
 ;( function ( $, mw, undefined ) {
 

@@ -42,34 +42,52 @@ class SimpleBatchUpload {
 		return self::$singleton;
 	}
 
-	/**
-	 *
-	 */
 	public static function initCallback() {
-		self::singleton()->init();
+		$GLOBALS[ 'wgHooks' ][ 'SetupAfterCache' ][ ] = function() {
+			self::singleton()->init();
+		};
 	}
 
-	/**
-	 *
-	 */
 	public function init() {
+
 		$GLOBALS[ 'wgExtensionMessagesFiles' ][ 'SimpleBatchUploadAlias' ] = __DIR__ . '/SimpleBatchUpload.alias.php';
 		$GLOBALS[ 'wgSpecialPages' ][ 'BatchUpload' ] = '\SimpleBatchUpload\SpecialBatchUpload';
 
-		$this->registerUploadModule();
+		$this->registerUploadProvidingModule();
+		$this->registerUploadUtilizingModule();
+	}
 
-		$GLOBALS[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload' ] = [
-			'localBasePath' => dirname( __DIR__ ),
-			'remoteExtPath' => $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload',
+	protected function registerUploadProvidingModule() {
+
+		$moduleDescription = [
+			'scripts' => [ '/vendor/blueimp/jquery-file-upload/js/jquery.fileupload.js' ],
+			'styles'       => [	'/vendor/blueimp/jquery-file-upload/css/jquery.fileupload.css' ],
+			'position'     => 'top',
+			'dependencies' => [ 'jquery.ui.widget' ],
+		];
+
+		$this->registerResourceModule( 'ext.SimpleBatchUpload.jquery-file-upload', $moduleDescription, true );
+
+	}
+
+	protected function registerUploadUtilizingModule() {
+
+		$moduleDescription = [
 			'scripts'       => [ 'res/ext.SimpleBatchUpload.js' ],
 			'styles'        => [ 'res/ext.SimpleBatchUpload.css' ],
 			'position'      => 'top',
 			'dependencies'  => [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title' ],
 		];
+
+		$this->registerResourceModule( 'ext.SimpleBatchUpload', $moduleDescription, false );
 	}
 
-	protected function registerUploadModule() {
-		if ( file_exists( '../vendor' ) ) {
+	/**
+	 * @return array
+	 */
+	protected function registerResourceModule( $moduleName, $moduleDefinition, $isDependency = false ) {
+
+		if ( file_exists( dirname( __DIR__ ) . '/vendor' ) || !$isDependency ) {
 			$localBasePath = dirname( __DIR__ );
 			$remoteBasePath = $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload';
 		} else {
@@ -77,21 +95,8 @@ class SimpleBatchUpload {
 			$remoteBasePath = $GLOBALS[ 'wgScriptPath' ];
 		}
 
-		$GLOBALS[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload.jquery-file-upload' ] = [
-			'localBasePath'  => $localBasePath . '/vendor/blueimp/jquery-file-upload/',
-			'remoteBasePath' => $remoteBasePath . '/vendor/blueimp/jquery-file-upload/',
+		$GLOBALS[ 'wgResourceModules' ][ $moduleName ] =
+			array_merge( [ 'localBasePath'  => $localBasePath, 'remoteBasePath' => $remoteBasePath ], $moduleDefinition );
 
-			'scripts' => [
-				'js/jquery.fileupload.js',
-			],
-
-			'styles'       => [
-				'css/jquery.fileupload.css',
-			],
-			'position'     => 'bottom',
-			'dependencies' => [ 'jquery.ui.widget' ],
-		];
 	}
-
-
 }

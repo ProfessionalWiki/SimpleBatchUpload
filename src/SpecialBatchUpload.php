@@ -55,11 +55,6 @@ class SpecialBatchUpload extends SpecialPage {
 	}
 
 	/**
-	 * Execute method
-	 * Checks user permissions
-	 *
-	 * This must be overridden by subclasses; it will be made abstract in a future version
-	 *
 	 * @param null|string $par
 	 * @throws \MWException
 	 */
