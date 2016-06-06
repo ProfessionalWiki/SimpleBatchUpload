@@ -1,7 +1,7 @@
 {
 	"name"       : "mediawiki/simple-batch-upload",
 	"type"       : "mediawiki-extension",
-	"description": "Simple batch upload of files for MediaWiki",
+	"description": "Basic, no-frills uploading of multiple files to MediaWiki",
 	"keywords"   : [
 		"wiki",
 		"MediaWiki",

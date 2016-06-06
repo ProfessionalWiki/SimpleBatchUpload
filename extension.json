@@ -9,7 +9,7 @@
 	"license-name": "GPL-2.0+",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": "~1.27"
+		"MediaWiki": "~1.26"
 	},
 	"config": {
 		"_prefix": "wgex"
