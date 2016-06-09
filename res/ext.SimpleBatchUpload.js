@@ -27,13 +27,26 @@
 	'use strict';
 
 	$( function () {
-		$( '#fileupload' ).fileupload( {
+		$( '#fileupload' )
+
+		.on( 'change', function ( e, data ) { $( '#fileupload-results' ).empty(); } )
+
+		.fileupload( {
 			dataType: 'json',
 			dropZone: $( '#fileupload-dropzone' ),
+			progressInterval: 100,
+
+			drop: function ( e, data ) {
+				$( '#fileupload-results' ).empty();
+			},
 
 			add: function ( e, data ) {
 
-				var status = $( '<li>' ).text( data.files[ 0 ].name );
+				data.id = Date.now();
+
+				var status = $('<li>')
+					.attr( 'id', data.id )
+					.text( data.files[0].name );
 				$( '#fileupload-results' ).append( status );
 
 				data.formData = {
@@ -68,6 +81,13 @@
 						status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
 					} );
 
+			},
+
+			progress: function (e, data) {
+				if ( data.loaded != data.total ) {
+					$( '#' + data.id )
+						.text( data.files[0].name + ' ' + parseInt(data.loaded / data.total * 100, 10) + '%' );
+				}
 			}
 		} );
 
