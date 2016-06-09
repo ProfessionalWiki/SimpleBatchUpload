@@ -29,16 +29,14 @@
 	$( function () {
 		$( '#fileupload' )
 
-		.on( 'change', function ( e, data ) { $( '#fileupload-results' ).empty(); } )
+		.on( 'change', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
+		.on( 'drop', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
 
 		.fileupload( {
 			dataType: 'json',
 			dropZone: $( '#fileupload-dropzone' ),
 			progressInterval: 100,
 
-			drop: function ( e, data ) {
-				$( '#fileupload-results' ).empty();
-			},
 
 			add: function ( e, data ) {
 
@@ -47,6 +45,7 @@
 				var status = $('<li>')
 					.attr( 'id', data.id )
 					.text( data.files[0].name );
+
 				$( '#fileupload-results' ).append( status );
 
 				data.formData = {
