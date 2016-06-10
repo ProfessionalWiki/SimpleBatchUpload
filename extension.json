@@ -1,6 +1,6 @@
 {
 	"name": "SimpleBatchUpload",
-	"version": "1.1-alpha",
+	"version": "1.1.0",
 	"author": [
 		"[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]"
 	],
@@ -10,9 +10,6 @@
 	"type": "specialpage",
 	"requires": {
 		"MediaWiki": "~1.26"
-	},
-	"config": {
-		"_prefix": "wgex"
 	},
 	"MessagesDirs": {
 		"SimpleBatchUpload": [

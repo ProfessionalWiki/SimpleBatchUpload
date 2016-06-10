@@ -1,5 +1,13 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.1.0
+
+Released on 10-Jun-2016
+
+Changes:
+* Add progress indicators
+* Delete result list before initiating new upload
+
 ### SimpleBatchUpload 1.0.1
 
 Released on 07-Jun-2016
