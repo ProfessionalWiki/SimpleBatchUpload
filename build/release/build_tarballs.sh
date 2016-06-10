@@ -31,7 +31,7 @@ if [ "$VERSION" == "" ]; then
 	VERSION=$COMPOSER_VERSION
 fi
 
-NAME="SimpleBatchUpload $VERSION (+dependencies)"
+NAME="SimpleBatchUpload.$VERSION.with.dependencies"
 DIR="SimpleBatchUpload"
 
 BUILD_DIR="build-$VERSION"

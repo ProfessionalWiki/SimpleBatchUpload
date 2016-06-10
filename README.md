@@ -42,5 +42,5 @@ wfLoadExtension('SimpleBatchUpload');
 [GNU General Public License 2.0][license] or later.
 
 [license]: https://www.gnu.org/copyleft/gpl.html
-[mw-simple-batch-upload]: https://www.mediawiki.org/wiki/Extension:Semantic_Glossary
+[mw-simple-batch-upload]: https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
 [composer]: https://getcomposer.org/
