@@ -64,7 +64,7 @@
 							data.submit()
 								.success( function ( result /*, textStatus, jqXHR */ ) {
 
-									if ( result.error != undefined ) {
+									if ( result.error !== undefined ) {
 
 										status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
 
@@ -93,7 +93,7 @@
 			},
 
 			progress: function (e, data) {
-				if ( data.loaded != data.total ) {
+				if ( data.loaded !== data.total ) {
 					$( '#' + data.id )
 						.text( data.files[0].name + ' ' + parseInt(data.loaded / data.total * 100, 10) + '%' );
 				}
