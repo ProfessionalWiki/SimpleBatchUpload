@@ -1,5 +1,6 @@
 {
 	"simplebatchupload-desc": "Simple batch upload of files",
 	"batchupload": "Upload multiple files",
-	"simplebatchupload-buttonlabel": "Select files (or drop them here)..."
+	"simplebatchupload-buttonlabel": "Select files (or drop them here)...",
+	"simplebatchupload-comment": "Uploaded with [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]"
 }
