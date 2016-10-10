@@ -84,7 +84,9 @@ class SimpleBatchUpload {
 	}
 
 	/**
-	 * @return array
+	 * @param string $moduleName
+	 * @param array $moduleDefinition
+	 * @param bool $isDependency
 	 */
 	protected function registerResourceModule( $moduleName, $moduleDefinition, $isDependency = false ) {
 
