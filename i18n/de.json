@@ -1,5 +1,7 @@
 {
 	"simplebatchupload-desc": "Einfaches Hochladen mehrerer Dateien",
 	"batchupload": "Mehrere Dateien hochladen",
-	"simplebatchupload-buttonlabel": "Wähle Dateien (oder ziehe sie hierher)..."
+	"simplebatchupload-buttonlabel": "Wähle Dateien (oder ziehe sie hierher)...",
+	"simplebatchupload-comment": "Hochgeladen mittels [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]"
+
 }
