@@ -53,6 +53,7 @@
 					action: 'upload',
 					token: $( this ).fileupload( 'option', 'token' ),
 					ignorewarnings: 1,
+					comment: mw.message( 'simplebatchupload-comment' ).text(),
 					filename: data.files[ 0 ].name
 				};
 
