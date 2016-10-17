@@ -69,7 +69,7 @@ class SpecialBatchUpload extends SpecialPage {
         <i class="glyphicon glyphicon-plus"></i>
         <span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span>
         <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="file" data-url="' . wfScript( 'api' ) . '" data-token="' . $this->getUser()->getEditToken() . '" multiple>
+        <input id="fileupload" type="file" name="file" multiple data-url="' . wfScript( 'api' ) . '">
         </span><ul id="fileupload-results"></ul>';
 
 		$output->addHTML( $html );

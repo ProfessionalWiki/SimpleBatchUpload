@@ -48,37 +48,47 @@
 
 				$( '#fileupload-results' ).append( status );
 
-				data.formData = {
-					format: 'json',
-					action: 'upload',
-					token: $( this ).fileupload( 'option', 'token' ),
-					ignorewarnings: 1,
-					filename: data.files[ 0 ].name
-				};
+				var api = new mw.Api();
+				api.getEditToken()
+					.then(
+						function ( token ) {
 
-				data.submit()
-					.success( function ( result /*, textStatus, jqXHR */ ) {
+							data.formData = {
+								format: 'json',
+								action: 'upload',
+								token: token,
+								ignorewarnings: 1,
+								filename: data.files[ 0 ].name
+							};
 
-						if ( result.error != undefined ) {
+							data.submit()
+								.success( function ( result /*, textStatus, jqXHR */ ) {
 
-							status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
+									if ( result.error != undefined ) {
 
-						} else {
-							var link = $( '<a>' );
-							link
-								.attr( 'href', mw.Title.makeTitle( mw.config.get( 'wgNamespaceIds' ).file, result.upload.filename ).getUrl() )
-								.text( result.upload.filename );
+										status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
 
-							status
-								.addClass( 'ful-success' )
-								.text( ' OK' )
-								.prepend( link );
+									} else {
+										var link = $( '<a>' );
+										link
+											.attr( 'href', mw.Title.makeTitle( mw.config.get( 'wgNamespaceIds' ).file, result.upload.filename ).getUrl() )
+											.text( result.upload.filename );
+
+										status
+											.addClass( 'ful-success' )
+											.text( ' OK' )
+											.prepend( link );
+									}
+
+								} )
+								.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
+									status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
+								} );
+						},
+						function () {
+							status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
 						}
-
-					} )
-					.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
-						status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
-					} );
+					);
 
 			},
 

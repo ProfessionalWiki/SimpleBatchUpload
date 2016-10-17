@@ -76,7 +76,7 @@ class SimpleBatchUpload {
 			'scripts'       => [ 'res/ext.SimpleBatchUpload.js' ],
 			'styles'        => [ 'res/ext.SimpleBatchUpload.css' ],
 			'position'      => 'top',
-			'dependencies'  => [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title' ],
+			'dependencies'  => [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.api.edit' ],
 		];
 
 		$this->registerResourceModule( 'ext.SimpleBatchUpload', $moduleDescription, false );
