@@ -49,7 +49,11 @@
 				$( '#fileupload-results' ).append( status );
 
 				var api = new mw.Api();
-				api.getEditToken()
+
+				// invalidate cached token; always request a new one
+				api.badToken( 'csrf' );
+
+				api.getToken( 'csrf' )
 					.then(
 						function ( token ) {
 
