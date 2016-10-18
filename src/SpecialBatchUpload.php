@@ -63,6 +63,13 @@ class SpecialBatchUpload extends SpecialPage {
 		$this->setHeaders();
 		$this->checkPermissions();
 
+		$this->prepareOutput( $subpage );
+	}
+
+	/**
+	 * @param string|null $subpage
+	 */
+	private function prepareOutput( $subpage ) {
 		$paramProvider = new ParameterProvider( $subpage );
 
 		$html = '<span id="fileupload-dropzone" class="fileinput-button">
@@ -71,7 +78,7 @@ class SpecialBatchUpload extends SpecialPage {
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="file" multiple
             data-url="' . wfScript( 'api' ) . '"
-            data-comment="' . $paramProvider->getEscapedUploadComment() .'"
+            data-comment="' . $paramProvider->getEscapedUploadComment() . '"
             data-text="' . $paramProvider->getEscapedUploadPageText() . '"
         >
         </span><ul id="fileupload-results"></ul>';
