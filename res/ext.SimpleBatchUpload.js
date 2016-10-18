@@ -40,6 +40,7 @@
 
 			add: function ( e, data ) {
 
+				var that = this;
 				data.id = Date.now();
 
 				var status = $('<li>')
@@ -62,7 +63,8 @@
 								action: 'upload',
 								token: token,
 								ignorewarnings: 1,
-								comment: mw.message( 'simplebatchupload-comment' ).text(),
+								text: $( that ).fileupload( 'option', 'text' ),
+								comment: $( that ).fileupload( 'option', 'comment' ),
 								filename: data.files[ 0 ].name
 							};
 

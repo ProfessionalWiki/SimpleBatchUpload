@@ -55,23 +55,29 @@ class SpecialBatchUpload extends SpecialPage {
 	}
 
 	/**
-	 * @param null|string $par
+	 * @param null|string $subpage
 	 * @throws \MWException
 	 */
-	public function execute( $par ) {
+	public function execute( $subpage ) {
 
 		$this->setHeaders();
 		$this->checkPermissions();
 
-		$output = $this->getOutput();
+		$paramProvider = new ParameterProvider( $subpage );
 
 		$html = '<span id="fileupload-dropzone" class="fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
         <span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span>
         <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="file" multiple data-url="' . wfScript( 'api' ) . '">
+        <input id="fileupload" type="file" name="file" multiple
+            data-url="' . wfScript( 'api' ) . '"
+            data-comment="' . $paramProvider->getEscapedUploadComment() .'"
+            data-text="' . $paramProvider->getEscapedUploadPageText() . '"
+        >
         </span><ul id="fileupload-results"></ul>';
 
+		$output = $this->getOutput();
+		$output->setPageTitle( $paramProvider->getSpecialPageTitle() );
 		$output->addHTML( $html );
 		$output->addModules( 'ext.SimpleBatchUpload' );
 		$output->addModuleStyles( [ 'ext.SimpleBatchUpload', 'ext.SimpleBatchUpload.jquery-file-upload' ] );
