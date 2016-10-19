@@ -1,4 +1,9 @@
 {
+	"@metadata": {
+		"authors": [
+			"F.trott"
+		]
+	},
 	"simplebatchupload-desc": "Einfaches Hochladen mehrerer Dateien",
 	"batchupload": "Mehrere Dateien hochladen",
 	"simplebatchupload-buttonlabel": "Wähle Dateien (oder ziehe sie hierher)...",

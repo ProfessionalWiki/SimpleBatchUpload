@@ -1,4 +1,9 @@
 {
+	"@metadata": {
+		"authors": [
+			"F.trott"
+		]
+	},
 	"simplebatchupload-desc": "{{desc|name=SimpleBatchUpload|url=https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload}}",
 	"batchupload": "{{doc-special|BatchUpload}}",
 	"simplebatchupload-buttonlabel": "The label for the upload button",
