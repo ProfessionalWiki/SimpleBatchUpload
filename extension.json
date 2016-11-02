@@ -16,6 +16,11 @@
 			"i18n"
 		]
 	},
+	"AutoloadClasses": {
+		"SimpleBatchUpload\\ParameterProvider": "src/ParameterProvider.php",
+		"SimpleBatchUpload\\SimpleBatchUpload": "src/SimpleBatchUpload.php",
+		"SimpleBatchUpload\\SpecialBatchUpload": "src/SpecialBatchUpload.php"
+	},
 	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
 	"manifest_version": 1
 }
