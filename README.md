@@ -37,6 +37,34 @@ Then add the following line to your `LocalSettings.php`:
 wfLoadExtension('SimpleBatchUpload');
 ```
 
+## Customization
+
+It is possible to specify dedicated upload pages for specific file types by
+editing the _MediaWiki:Simplebatchupload-parameters_ page. Each line of
+that page is considered as one set of parameters.
+
+Available parameters are:
+ * Name of template to be stored as text on initial upload
+ * Upload comment
+ * Title line of the Special:BatchUpload page
+
+Parameters should be separated by pipes (|).
+
+The line to be used is selected by appending the name of the template as the
+subpage to the URL of the Special:BatchUpload page.
+
+__Example:__
+
+Consider the parameter line
+```
+Pics | These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}SimpleBatchUpload]] | Upload some pics!
+```
+
+* This can be selected by going to _Special:BatchUpload/Pics_.
+* The title of this page will be _Upload some pics!_.
+* The comment for the upload will be _These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}SimpleBatchUpload]]_.
+* If a file with that name is uploaded for the first time it will have `{{Pics}}` as wikitext.
+
 ## License
 
 [GNU General Public License 2.0][license] or later.
