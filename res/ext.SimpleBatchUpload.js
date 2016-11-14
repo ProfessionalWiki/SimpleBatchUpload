@@ -51,10 +51,16 @@
 
 				var api = new mw.Api();
 
-				// invalidate cached token; always request a new one
-				api.badToken( 'csrf' );
+				var tokenType = 'csrf';
 
-				api.getToken( 'csrf' )
+				if ( mw.config.get( 'wgVersion' ) < '1.27.0' ) {
+					tokenType = 'edit'
+				}
+
+				// invalidate cached token; always request a new one
+				api.badToken( tokenType );
+
+				api.getToken( tokenType )
 					.then(
 						function ( token ) {
 
@@ -78,7 +84,7 @@
 									} else {
 										var link = $( '<a>' );
 										link
-											.attr( 'href', mw.Title.makeTitle( mw.config.get( 'wgNamespaceIds' ).file, result.upload.filename ).getUrl() )
+											.attr( 'href', mw.Title.newFromFileName( result.upload.filename ).getUrl() )
 											.text( result.upload.filename );
 
 										status
