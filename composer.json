@@ -25,6 +25,7 @@
 	},
 	"require"    : {
 		"php"    : ">=5.4",
+		"mediawiki/mediawiki": ">=1.26",
 		"blueimp/jquery-file-upload": "~9.12"
 	},
 	"autoload": {
