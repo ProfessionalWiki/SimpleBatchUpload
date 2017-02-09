@@ -1,5 +1,6 @@
 {
 	"scripts": {
+		"pretest": "npm install",
 		"test": "grunt test",
 		"lint": "grunt lint"
 	},

@@ -54,7 +54,7 @@
 				var tokenType = 'csrf';
 
 				if ( mw.config.get( 'wgVersion' ) < '1.27.0' ) {
-					tokenType = 'edit'
+					tokenType = 'edit';
 				}
 
 				// invalidate cached token; always request a new one
