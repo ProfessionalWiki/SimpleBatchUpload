@@ -2,7 +2,7 @@
 
 ### SimpleBatchUpload 1.2.0
 
-Released on TBD
+Released on 09-Feb-2017
 
 Changes:
 * Add a summary/comment for each upload
