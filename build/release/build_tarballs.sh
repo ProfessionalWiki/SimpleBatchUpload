@@ -43,7 +43,10 @@ cd $BUILD_DIR
 composer create-project mediawiki/simple-batch-upload $DIR $COMPOSER_VERSION --stability dev --prefer-dist --no-dev --ignore-platform-reqs --no-install
 
 cd $DIR
+mv composer.json composer.json.orig
+sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
 composer install --prefer-dist --no-dev --ignore-platform-reqs --optimize-autoloader
+mv composer.json.orig composer.json
 cd -
 
 zip -qro9 "$NAME.zip" $DIR
