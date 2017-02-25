@@ -16,11 +16,41 @@
 			"i18n"
 		]
 	},
+	"ExtensionMessagesFiles": {
+		"SimpleBatchUploadAlias": "src/SimpleBatchUpload.alias.php"
+	},
+	"SpecialPages": {
+		"BatchUpload": "\\SimpleBatchUpload\\SpecialBatchUpload"
+	},
 	"AutoloadClasses": {
 		"SimpleBatchUpload\\ParameterProvider": "src/ParameterProvider.php",
-		"SimpleBatchUpload\\SimpleBatchUpload": "src/SimpleBatchUpload.php",
+		"SimpleBatchUpload\\DependencyCheck": "src/DependencyCheck.php",
 		"SimpleBatchUpload\\SpecialBatchUpload": "src/SpecialBatchUpload.php"
 	},
-	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
+	"callback": "SimpleBatchUpload\\DependencyCheck::initCallback",
+	"ResourceModules": {
+		"ext.SimpleBatchUpload": {
+			"scripts": "ext.SimpleBatchUpload.js",
+			"styles": "ext.SimpleBatchUpload.css",
+			"position": "top",
+			"dependencies": [
+				"ext.SimpleBatchUpload.jquery-file-upload",
+				"mediawiki.Title",
+				"mediawiki.api.edit",
+				"mediawiki.jqueryMsg"
+			],
+			"messages": "simplebatchupload-comment",
+			"localBasePath": "res",
+			"remoteExtPath": "SimpleBatchUpload/res"
+		},
+		"ext.SimpleBatchUpload.jquery-file-upload": {
+			"scripts": "/vendor/blueimp/jquery-file-upload/js/jquery.fileupload.js",
+			"styles": "/vendor/blueimp/jquery-file-upload/css/jquery.fileupload.css",
+			"position": "top",
+			"dependencies": "jquery.ui.widget",
+			"localBasePath": "",
+			"remoteExtPath": "SimpleBatchUpload"
+		}
+	},
 	"manifest_version": 1
 }
