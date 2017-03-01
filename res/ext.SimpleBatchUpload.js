@@ -22,100 +22,104 @@
 /** global: mediaWiki */
 /** global: jQuery */
 
-;( function ( $, mw, undefined ) {
+/* Load the RL module mediawiki.api.messages and when loaded and the page is ready; */
+$.when( mw.loader.using(["mediawiki.api.messages", "mediawiki.jqueryMsg"]), $.ready ).done( function() {
+	/* Load the messages that you need if they are not yet loaded, then do stuff with them */
+	new mw.Api().loadMessagesIfMissing( ['simplebatchupload-comment'  ] ).done(
+		function ( $, mw, undefined ) {
 
-	'use strict';
+			'use strict';
 
-	$( function () {
-		$( '#fileupload' )
+			$( function () {
+				$( '#fileupload' )
 
-		.on( 'change', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
-		.on( 'drop', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
+					.on( 'change', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
+					.on( 'drop', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
 
-		.fileupload( {
-			dataType: 'json',
-			dropZone: $( '#fileupload-dropzone' ),
-			progressInterval: 100,
+					.fileupload( {
+						dataType: 'json',
+						dropZone: $( '#fileupload-dropzone' ),
+						progressInterval: 100,
 
 
-			add: function ( e, data ) {
+						add: function ( e, data ) {
 
-				var that = this;
-				data.id = Date.now();
+							var that = this;
+							data.id = Date.now();
 
-				var status = $('<li>')
-					.attr( 'id', data.id )
-					.text( data.files[0].name );
+							var status = $('<li>')
+								.attr( 'id', data.id )
+								.text( data.files[0].name );
 
-				$( '#fileupload-results' ).append( status );
+							$( '#fileupload-results' ).append( status );
 
-				var api = new mw.Api();
+							var api = new mw.Api();
 
-				var tokenType = 'csrf';
+							var tokenType = 'csrf';
 
-				if ( mw.config.get( 'wgVersion' ) < '1.27.0' ) {
-					tokenType = 'edit';
-				}
+							if ( mw.config.get( 'wgVersion' ) < '1.27.0' ) {
+								tokenType = 'edit';
+							}
 
-				// invalidate cached token; always request a new one
-				api.badToken( tokenType );
+							// invalidate cached token; always request a new one
+							api.badToken( tokenType );
 
-				api.getToken( tokenType )
-					.then(
-						function ( token ) {
+							api.getToken( tokenType )
+								.then(
+									function ( token ) {
 
-							data.formData = {
-								format: 'json',
-								action: 'upload',
-								token: token,
-								ignorewarnings: 1,
-								text: $( that ).fileupload( 'option', 'text' ),
-								comment: $( that ).fileupload( 'option', 'comment' ),
-								filename: data.files[ 0 ].name
-							};
+										data.formData = {
+											format: 'json',
+											action: 'upload',
+											token: token,
+											ignorewarnings: 1,
+											text: $( that ).fileupload( 'option', 'text' ),
+											comment: $( that ).fileupload( 'option', 'comment' ),
+											filename: data.files[ 0 ].name
+										};
 
-							data.submit()
-								.success( function ( result /*, textStatus, jqXHR */ ) {
+										data.submit()
+											.success( function ( result /*, textStatus, jqXHR */ ) {
 
-									if ( result.error !== undefined ) {
+												if ( result.error !== undefined ) {
 
-										status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
+													status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
 
-									} else {
-										var link = $( '<a>' );
-										link
-											.attr( 'href', mw.Title.newFromFileName( result.upload.filename ).getUrl() )
-											.text( result.upload.filename );
+												} else {
+													var link = $( '<a>' );
+													link
+														.attr( 'href', mw.Title.newFromFileName( result.upload.filename ).getUrl() )
+														.text( result.upload.filename );
 
-										status
-											.addClass( 'ful-success' )
-											.text( ' OK' )
-											.prepend( link );
+													status
+														.addClass( 'ful-success' )
+														.text( ' OK' )
+														.prepend( link );
+												}
+
+											} )
+											.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
+												status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
+											} );
+									},
+									function () {
+										status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
 									}
+								);
 
-								} )
-								.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
-									status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
-								} );
 						},
-						function () {
-							status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
+
+						progress: function (e, data) {
+							if ( data.loaded !== data.total ) {
+								$( '#' + data.id )
+									.text( data.files[0].name + ' ' + parseInt(data.loaded / data.total * 100, 10) + '%' );
+							}
 						}
-					);
+					} );
 
-			},
+				$( document ).bind( 'drop dragover', function ( e ) {
+					e.preventDefault();
+				} );
+			} );
 
-			progress: function (e, data) {
-				if ( data.loaded !== data.total ) {
-					$( '#' + data.id )
-						.text( data.files[0].name + ' ' + parseInt(data.loaded / data.total * 100, 10) + '%' );
-				}
-			}
-		} );
-
-		$( document ).bind( 'drop dragover', function ( e ) {
-			e.preventDefault();
-		} );
-	} );
-
-}( jQuery, mediaWiki ));
+		}( jQuery, mediaWiki ));} );
