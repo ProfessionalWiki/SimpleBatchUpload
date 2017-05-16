@@ -1,4 +1,4 @@
-.fileinput-button {
+span.fileinput-button {
     -moz-user-select: none;
     background-color: #f9f9f9;
     background-image: none;
@@ -17,24 +17,24 @@
     white-space: nowrap;
 }
 
-#fileupload-results {
+ul.fileupload-results {
     list-style: outside none none;
     margin-top: 1em;
     padding-left: 0;
 }
 
-#fileupload-results li {
+ul.fileupload-results li {
     padding: 0.2em 1em;
 }
 
-#fileupload-results li.ful-success{
+ul.fileupload-results li.ful-success{
     background-color: lightgreen;
 }
 
-#fileupload-results li.ful-success a {
+ul.fileupload-results li.ful-success a {
     color: #0645ad;
 }
 
-#fileupload-results li.ful-error{
+ul.fileupload-results li.ful-error{
     background-color: lightpink;
 }

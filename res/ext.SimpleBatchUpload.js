@@ -1,7 +1,7 @@
 /**
  * File containing the SimpleBatchUpload class
  *
- * @copyright (C) 2016, Stephan Gambke
+ * @copyright (C) 2016 - 2017, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * This software is free software; you can redistribute it and/or
@@ -27,40 +27,43 @@
 	'use strict';
 
 	$( function () {
-		$( '#fileupload' )
+		$( 'span.fileupload-container' ).each( function () {
 
-		.on( 'change', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
-		.on( 'drop', function ( /* e, data */ ) { $( '#fileupload-results' ).empty(); } )
+			var container = this;
 
-		.fileupload( {
-			dataType: 'json',
-			dropZone: $( '#fileupload-dropzone' ),
-			progressInterval: 100,
+			$( 'input.fileupload', container )
+
+			.on( 'change drop', function ( /* e, data */ ) { $( 'ul.fileupload-results', container ).empty(); } )
+
+			.fileupload( {
+				dataType: 'json',
+				dropZone: $( '.fileupload-dropzone', container ),
+				progressInterval: 100,
 
 
-			add: function ( e, data ) {
+				add: function ( e, data ) {
 
-				var that = this;
-				data.id = Date.now();
+					var that = this;
+					data.id = Date.now();
 
-				var status = $('<li>')
+					var status = $( '<li>' )
 					.attr( 'id', data.id )
-					.text( data.files[0].name );
+					.text( data.files[ 0 ].name );
 
-				$( '#fileupload-results' ).append( status );
+					$( 'ul.fileupload-results', container ).append( status );
 
-				var api = new mw.Api();
+					var api = new mw.Api();
 
-				var tokenType = 'csrf';
+					var tokenType = 'csrf';
 
-				if ( mw.config.get( 'wgVersion' ) < '1.27.0' ) {
-					tokenType = 'edit';
-				}
+					if ( mw.config.get( 'wgVersion' ) < '1.27.0' ) {
+						tokenType = 'edit';
+					}
 
-				// invalidate cached token; always request a new one
-				api.badToken( tokenType );
+					// invalidate cached token; always request a new one
+					api.badToken( tokenType );
 
-				api.getToken( tokenType )
+					api.getToken( tokenType )
 					.then(
 						function ( token ) {
 
@@ -75,42 +78,43 @@
 							};
 
 							data.submit()
-								.success( function ( result /*, textStatus, jqXHR */ ) {
+							.success( function ( result /*, textStatus, jqXHR */ ) {
 
-									if ( result.error !== undefined ) {
+								if ( result.error !== undefined ) {
 
-										status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
+									status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
 
-									} else {
-										var link = $( '<a>' );
-										link
-											.attr( 'href', mw.Title.newFromFileName( result.upload.filename ).getUrl() )
-											.text( result.upload.filename );
+								} else {
+									var link = $( '<a>' );
+									link
+									.attr( 'href', mw.Title.newFromFileName( result.upload.filename ).getUrl() )
+									.text( result.upload.filename );
 
-										status
-											.addClass( 'ful-success' )
-											.text( ' OK' )
-											.prepend( link );
-									}
+									status
+									.addClass( 'ful-success' )
+									.text( ' OK' )
+									.prepend( link );
+								}
 
-								} )
-								.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
-									status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
-								} );
+							} )
+							.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
+								status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
+							} );
 						},
 						function () {
 							status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
 						}
 					);
 
-			},
+				},
 
-			progress: function (e, data) {
-				if ( data.loaded !== data.total ) {
-					$( '#' + data.id )
-						.text( data.files[0].name + ' ' + parseInt(data.loaded / data.total * 100, 10) + '%' );
+				progress: function ( e, data ) {
+					if ( data.loaded !== data.total ) {
+						$( '#' + data.id )
+						.text( data.files[ 0 ].name + ' ' + parseInt( data.loaded / data.total * 100, 10 ) + '%' );
+					}
 				}
-			}
+			} );
 		} );
 
 		$( document ).bind( 'drop dragover', function ( e ) {

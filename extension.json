@@ -1,6 +1,6 @@
 {
 	"name": "SimpleBatchUpload",
-	"version": "1.2.1-alpha",
+	"version": "1.3-alpha",
 	"author": [
 		"[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]"
 	],
@@ -15,11 +15,6 @@
 		"SimpleBatchUpload": [
 			"i18n"
 		]
-	},
-	"AutoloadClasses": {
-		"SimpleBatchUpload\\ParameterProvider": "src/ParameterProvider.php",
-		"SimpleBatchUpload\\SimpleBatchUpload": "src/SimpleBatchUpload.php",
-		"SimpleBatchUpload\\SpecialBatchUpload": "src/SpecialBatchUpload.php"
 	},
 	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
 	"manifest_version": 1

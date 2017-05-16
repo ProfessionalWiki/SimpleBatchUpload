@@ -36,12 +36,24 @@ Then add the following line to your `LocalSettings.php`:
 ```php
 wfLoadExtension('SimpleBatchUpload');
 ```
+## Usage
+
+* Go to _Special:BatchUpload_ to get a plain upload page
+* Go to _Special:BatchUpload/Foo_ to get an upload page that sets `{{Foo}}` as
+  the wikitext of the uploaded file's page
+* Add `{{#batchupload:}}` to any wikipage to get a simple upload button
+* Add `{{#batchupload:Foo|Bar|Baz}}` to any wikipage to get an upload button
+  that sets `{{Foo|Bar|Baz}}` as the wikitext of the uploaded file's page  
+
+**Note:** The wikitext will only be set for newly uploaded files. If the file
+exists already, subsequent uploads of new versions of the file will not change
+the wikitext.
 
 ## Customization
 
-It is possible to specify dedicated upload pages for specific file types by
-editing the _MediaWiki:Simplebatchupload-parameters_ page. Each line of
-that page is considered as one set of parameters.
+It is possible to specify dedicated parameter sets for the upload of specific
+file types by editing the _MediaWiki:Simplebatchupload-parameters_ page. Each
+line of that page is considered as one set of parameters.
 
 Available parameters are:
  * Name of template to be stored as text on initial upload

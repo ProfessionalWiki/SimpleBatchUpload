@@ -1,19 +1,19 @@
 {
-	"name"       : "mediawiki/simple-batch-upload",
-	"type"       : "mediawiki-extension",
+	"name": "mediawiki/simple-batch-upload",
+	"type": "mediawiki-extension",
 	"description": "Basic, no-frills uploading of multiple files to MediaWiki",
-	"keywords"   : [
+	"keywords": [
 		"wiki",
 		"MediaWiki",
 		"extension"
 	],
-	"homepage"   : "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
-	"license"    : "GPL-2.0+",
-	"authors"    : [
+	"homepage": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
+	"license": "GPL-2.0+",
+	"authors": [
 		{
-			"name" : "Stephan Gambke",
+			"name": "Stephan Gambke",
 			"email": "s7eph4n@gmail.com",
-			"role" : "Developer"
+			"role": "Developer"
 		}
 	],
 	"support": {
@@ -23,8 +23,8 @@
 		"issues": "https://github.com/s7eph4n/SimpleBatchUpload/issues",
 		"irc": "irc://irc.freenode.org/mediawiki"
 	},
-	"require"    : {
-		"php"    : ">=5.4",
+	"require": {
+		"php": ">=5.4",
 		"mediawiki/mediawiki": ">=1.26",
 		"blueimp/jquery-file-upload": "~9.12"
 	},
@@ -33,10 +33,9 @@
 			"SimpleBatchUpload\\": "src/"
 		}
 	},
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-
-        }
-    }
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.x-dev"
+		}
+	}
 }

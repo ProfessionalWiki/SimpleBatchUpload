@@ -22,10 +22,10 @@
  * @ingroup ExtensionManager
  */
 
-$specialPageAliases = [];
+$magicWords = [];
 
 /** English
  */
-$specialPageAliases['en'] = [
-	'BatchUpload' => [ 'BatchUpload' ],
+$magicWords['en'] = [
+	'batchupload' => [ 0, 'batchupload' ],
 ];
