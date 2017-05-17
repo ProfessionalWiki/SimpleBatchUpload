@@ -31,13 +31,12 @@ class SimpleBatchUpload {
 
 	public static function initCallback() {
 
-		$GLOBALS[ 'wgExtensionFunctions'][] = function() {
 			$configuration = ( new self() )->getConfiguration();
 
 			foreach ( $configuration as $varname => $value ) {
 				$GLOBALS[ $varname ] = array_replace_recursive( $GLOBALS[ $varname ], $value );
 			}
-		};
+
 	}
 
 	/**
