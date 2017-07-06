@@ -38,6 +38,7 @@ wfLoadExtension('SimpleBatchUpload');
 ```
 ## Usage
 
+There are four ways to upload files using this extension:
 * Go to _Special:BatchUpload_ to get a plain upload page
 * Go to _Special:BatchUpload/Foo_ to get an upload page that sets `{{Foo}}` as
   the wikitext of the uploaded file's page
