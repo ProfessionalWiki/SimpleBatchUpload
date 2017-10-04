@@ -82,7 +82,7 @@
 
 								if ( result.error !== undefined ) {
 
-									status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error' );
+									status.text( status.text() + " ERROR: " + result.error.info ).addClass( 'ful-error api-error' );
 
 								} else {
 									var link = $( '<a>' );
@@ -98,11 +98,13 @@
 
 							} )
 							.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
-								status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
+								status.text( status.text() + " ERROR: Server communication failed." ).addClass( 'ful-error server-error' );
+								console.log( JSON.stringify( arguments ) );
 							} );
 						},
 						function () {
-							status.text( status.text() + " ERROR" ).addClass( 'ful-error' );
+							status.text( status.text() + " ERROR: Could not get token." ).addClass( 'ful-error token-error' );
+							console.log( JSON.stringify( arguments ) );
 						}
 					);
 
