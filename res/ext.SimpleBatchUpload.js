@@ -99,12 +99,12 @@
 							} )
 							.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
 								status.text( status.text() + " ERROR: Server communication failed." ).addClass( 'ful-error server-error' );
-								console.log( JSON.stringify( arguments ) );
+								// console.log( JSON.stringify( arguments ) );
 							} );
 						},
 						function () {
 							status.text( status.text() + " ERROR: Could not get token." ).addClass( 'ful-error token-error' );
-							console.log( JSON.stringify( arguments ) );
+							// console.log( JSON.stringify( arguments ) );
 						}
 					);
 
