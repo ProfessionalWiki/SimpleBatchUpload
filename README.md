@@ -36,6 +36,12 @@ Then add the following line to your `LocalSettings.php`:
 ```php
 wfLoadExtension('SimpleBatchUpload');
 ```
+
+**Note:** To use the extension [`$wgEnableWriteAPI`][$wgEnableWriteAPI] needs to
+be enabled and the user needs the [`writeapi`][writeapi] right. Both is the
+default MediaWiki setting for registered users, but it may have been changed
+during the configuration of the wiki.
+
 ## Usage
 
 There are four ways to upload files using this extension:
@@ -85,3 +91,5 @@ Pics | These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}Simpl
 [license]: https://www.gnu.org/copyleft/gpl.html
 [mw-simple-batch-upload]: https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
 [composer]: https://getcomposer.org/
+[$wgEnableWriteAPI]: https://www.mediawiki.org/wiki/Manual:$wgEnableWriteAPI
+[writeapi]: https://www.mediawiki.org/wiki/Manual:User_rights#List_of_permissions
