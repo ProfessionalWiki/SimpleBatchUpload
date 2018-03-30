@@ -2,10 +2,11 @@
 
 ### SimpleBatchUpload 1.3.0
 
-Released on TBD
+Released on 30-Mar-2018
 
 Changes:
 * Add parser function #batchupload
+* Improved error messages
 
 ### SimpleBatchUpload 1.2.0
 
