@@ -23,6 +23,8 @@
  */
 
 namespace SimpleBatchUpload;
+use Parser;
+use PPFrame;
 
 
 /**
@@ -31,15 +33,13 @@ namespace SimpleBatchUpload;
  */
 class UploadButtonRenderer {
 
-	private $output;
-
 	/**
-	 * @param \Parser $parser
-	 * @param \PPFrame $frame
+	 * @param Parser $parser
+	 * @param PPFrame $frame
 	 * @param $args
 	 * @return array
 	 */
-	public function renderParserFunction( \Parser $parser, \PPFrame $frame, $args ) {
+	public function renderParserFunction( Parser $parser, PPFrame $frame, $args ) {
 
 		$args = array_map( [ $frame, 'expand' ], $args );
 		$output = $parser->getOutput();

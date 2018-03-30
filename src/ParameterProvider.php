@@ -62,7 +62,7 @@ class ParameterProvider {
 	}
 
 	/**
-	 * @param string $key
+	 * @param int $key
 	 * @return string
 	 */
 	private function getEscapedParameter( $key ) {

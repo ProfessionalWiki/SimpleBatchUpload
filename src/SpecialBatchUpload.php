@@ -69,7 +69,7 @@ class SpecialBatchUpload extends SpecialPage {
 	 * @param string|null $subpage
 	 */
 	private function addPageContentToOutput( $subpage ) {
-		$renderer = new UploadButtonRenderer( $this->getOutput() );
+		$renderer = new UploadButtonRenderer();
 		$renderer->renderSpecialPage( $this, $subpage );
 	}
 

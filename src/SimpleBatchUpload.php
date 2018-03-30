@@ -61,10 +61,12 @@ class SimpleBatchUpload {
 
 	/**
 	 * @param \Parser $parser
+	 *
 	 * @return bool
+	 * @throws \MWException
 	 */
 	public function registerParserFunction( &$parser ) {
-		$parser->setFunctionHook( 'batchupload', [ new UploadButtonRenderer( $parser->getOutput() ), 'renderParserFunction' ], SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'batchupload', [ new UploadButtonRenderer(), 'renderParserFunction' ], SFH_OBJECT_ARGS );
 		return true;
 	}
 
