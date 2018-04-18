@@ -1,6 +1,6 @@
 {
 	"name": "SimpleBatchUpload",
-	"version": "1.3-alpha",
+	"version": "1.3.1",
 	"author": [
 		"[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]"
 	],
@@ -17,5 +17,6 @@
 		]
 	},
 	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
-	"manifest_version": 1
+	"manifest_version": 1,
+	"load_composer_autoloader": true
 }

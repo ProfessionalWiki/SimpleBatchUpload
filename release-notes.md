@@ -1,5 +1,12 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.3.1
+
+Released on 18-Apr-2018
+
+Changes:
+* Fix tarball installation
+
 ### SimpleBatchUpload 1.3.0
 
 Released on 30-Mar-2018
