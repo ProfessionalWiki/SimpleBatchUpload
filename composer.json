@@ -8,7 +8,7 @@
 		"extension"
 	],
 	"homepage": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
-	"license": "GPL-2.0+",
+	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
 			"name": "Stephan Gambke",
