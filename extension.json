@@ -6,7 +6,7 @@
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
 	"descriptionmsg": "simplebatchupload-desc",
-	"license-name": "GPL-2.0+",
+	"license-name": "GPL-2.0-or-later",
 	"type": "specialpage",
 	"requires": {
 		"MediaWiki": "~1.26"
