@@ -29,6 +29,11 @@ namespace SimpleBatchUpload;
  */
 class SimpleBatchUpload {
 
+	/**
+	 * @var integer Max files could be uploaded per batch
+	 */
+	protected $maxFilesPerBatch;
+
 	public static function initCallback() {
 
 			$configuration = ( new self() )->getConfiguration();
@@ -52,6 +57,7 @@ class SimpleBatchUpload {
 		$configuration[ 'wgSpecialPages' ][ 'BatchUpload' ] = '\SimpleBatchUpload\SpecialBatchUpload';
 
 		$configuration[ 'wgHooks' ][ 'ParserFirstCallInit' ][ 'ext.simplebatchupload' ] = [ $this, 'registerParserFunction' ];
+		$configuration[ 'wgHooks' ][ 'MakeGlobalVariablesScript' ][ 'ext.simplebatchupload' ] = [ $this, 'onMakeGlobalVariablesScript' ];
 
 		$configuration[ 'wgResourceModules' ] = $this->getUploadSupportModuleDefinition() + $this->getUploadModuleDefinition();
 
@@ -104,7 +110,7 @@ class SimpleBatchUpload {
 				'styles' => [ 'res/ext.SimpleBatchUpload.css' ],
 				'position' => 'top',
 				'dependencies' => [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.api.edit', 'mediawiki.jqueryMsg' ],
-				'messages' => [ 'simplebatchupload-comment' ],
+				'messages' => [ 'simplebatchupload-comment', 'simplebatchupload-max-files-alert' ],
 			],
 		];
 	}
@@ -132,6 +138,29 @@ class SimpleBatchUpload {
 			'localBasePath' => $GLOBALS[ 'IP' ],
 			'remoteBasePath' => $GLOBALS[ 'wgScriptPath' ],
 		];
+	}
+
+	/**
+	 * @param array $vars
+	 * @param \OutputPage $out
+	 */
+	public function onMakeGlobalVariablesScript( &$vars, $out ) {
+		$vars['simpleBatchUploadMaxFilesPerBatch'] = $this->getMaxFilesPerBatch();
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getMaxFilesPerBatch() {
+		global $wgSimpleBatchUploadMaxFilesPerBatch;
+		return $this->maxFilesPerBatch ? $this->maxFilesPerBatch : $wgSimpleBatchUploadMaxFilesPerBatch;
+	}
+
+	/**
+	 * @param integer $maxFilesPerBatch
+	 */
+	public function setMaxFilesPerBatch( $maxFilesPerBatch ) {
+		$this->maxFilesPerBatch = $maxFilesPerBatch;
 	}
 
 }

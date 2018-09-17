@@ -7,5 +7,6 @@
 	"simplebatchupload-desc": "Simple batch upload of files",
 	"batchupload": "Upload multiple files",
 	"simplebatchupload-buttonlabel": "Select files (or drop them here)...",
-	"simplebatchupload-comment": "Uploaded with [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]"
+	"simplebatchupload-comment": "Uploaded with [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "You can not upload more than $1 files at a time."
 }
