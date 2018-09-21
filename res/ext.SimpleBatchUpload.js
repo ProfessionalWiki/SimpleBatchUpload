@@ -44,6 +44,13 @@
 				add: function ( e, data ) {
 
 					var that = this;
+					var filesLimitPerBatch = mw.config.get( 'simpleBatchUploadMaxFilesPerBatch' );
+
+					if ( filesLimitPerBatch && data.originalFiles.length > filesLimitPerBatch ) {
+						alert( mw.msg( 'simplebatchupload-max-files-alert', filesLimitPerBatch ) );
+						return false;
+					}
+
 					data.id = Date.now();
 
 					var status = $( '<li>' )

@@ -84,6 +84,12 @@ Pics | These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}Simpl
 * The comment for the upload will be _These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}SimpleBatchUpload]]_.
 * If a file with that name is uploaded for the first time it will have `{{Pics}}` as wikitext.
 
+## Configuration
+
+Available configuration options:
+
+* `$wgSimpleBatchUploadMaxFilesPerBatch` - defines maximum number of files that could be uploaded at time.
+
 ## License
 
 [GNU General Public License 2.0][license] or later.

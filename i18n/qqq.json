@@ -7,5 +7,6 @@
 	"simplebatchupload-desc": "{{desc|name=SimpleBatchUpload|url=https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload}}",
 	"batchupload": "{{doc-special|BatchUpload}}",
 	"simplebatchupload-buttonlabel": "The label for the upload button",
-	"simplebatchupload-comment": "Comment saved with the upload"
+	"simplebatchupload-comment": "Comment saved with the upload",
+	"simplebatchupload-max-files-alert": "Alert saying there are too many files in a batch"
 }
