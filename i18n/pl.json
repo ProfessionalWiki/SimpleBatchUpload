@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Railfail536"
+		]
+	},
+	"simplebatchupload-desc": "Proste przesyłanie grup plików",
+	"batchupload": "Prześlij wiele plików",
+	"simplebatchupload-buttonlabel": "Wybierz pliki (lub upuść je tutaj)…",
+	"simplebatchupload-comment": "Przesłano za pomocą rozszerzenia [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Nie możesz przesłać więcej niż $1 {{PLURAL:$1|plik|pliki|plików}} na raz."
+}
