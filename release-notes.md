@@ -1,5 +1,14 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.3.2
+
+Released on 12-Oct-2018
+
+Changes:
+* Fix for unauthenticated arbitrary file upload vulnerability in Blueimp
+  jQuery-File-Upload <= v9.22.0 ([CVE-2018-9206](https://nvd.nist.gov/vuln/detail/CVE-2018-9206))
+  (this also fixes the issue where the extension does not work in debug=true mode)
+
 ### SimpleBatchUpload 1.3.1
 
 Released on 18-Apr-2018
