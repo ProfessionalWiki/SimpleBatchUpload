@@ -1,14 +1,21 @@
 {
+	"name": "simplebatchupload",
+	"description": "Basic, no-frills uploading of multiple files to MediaWiki",
+	"author": "Stephan Gambke",
+	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"pretest": "npm install",
 		"test": "grunt test",
-		"lint": "grunt lint"
+		"lint": "grunt lint",
+		"preinstall": "rm -f res/jquery.fileupload.*",
+		"install": "cp node_modules/blueimp-file-upload/js/jquery.fileupload.js node_modules/blueimp-file-upload/css/jquery.fileupload.css res"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.0",
 		"grunt-cli": "^0.1.13",
 		"grunt-banana-checker": "^0.4.0",
 		"grunt-contrib-jshint": "^1.0.0",
-		"grunt-jsonlint": "^1.0.7"
+		"grunt-jsonlint": "^1.0.7",
+		"blueimp-file-upload": "^9.22.0"
 	}
 }

@@ -36,12 +36,21 @@ class SimpleBatchUpload {
 
 	public static function initCallback() {
 
-			$configuration = ( new self() )->getConfiguration();
+		$simpleBatchUpload = new self();
 
-			foreach ( $configuration as $varname => $value ) {
-				$GLOBALS[ $varname ] = array_replace_recursive( $GLOBALS[ $varname ], $value );
-			}
+		$configuration = $simpleBatchUpload->getConfiguration();
 
+		self::mergeConfiguration( $configuration );
+	}
+
+
+	/**
+	 * @param $configuration
+	 */
+	public static function mergeConfiguration( $configuration ) {
+		foreach ( $configuration as $varname => $value ) {
+			$GLOBALS[ $varname ] = array_replace_recursive( $GLOBALS[ $varname ], $value );
+		}
 	}
 
 	/**
@@ -58,8 +67,7 @@ class SimpleBatchUpload {
 
 		$configuration[ 'wgHooks' ][ 'ParserFirstCallInit' ][ 'ext.simplebatchupload' ] = [ $this, 'registerParserFunction' ];
 		$configuration[ 'wgHooks' ][ 'MakeGlobalVariablesScript' ][ 'ext.simplebatchupload' ] = [ $this, 'onMakeGlobalVariablesScript' ];
-
-		$configuration[ 'wgResourceModules' ] = $this->getUploadSupportModuleDefinition() + $this->getUploadModuleDefinition();
+		$configuration[ 'wgHooks' ][ 'SetupAfterCache' ][ 'ext.simplebatchupload' ] = [ $this, 'onSetupAfterCache'];
 
 		return $configuration;
 
@@ -84,11 +92,11 @@ class SimpleBatchUpload {
 
 		return [ 'ext.SimpleBatchUpload.jquery-file-upload' =>
 
-			$this->getBasePathsForComposerModules() +
+			$this->getBasePathsForNonComposerModules() +
 
 			[
-				'scripts' => [ '/vendor/blueimp/jquery-file-upload/js/jquery.fileupload.js' ],
-				'styles' => [ '/vendor/blueimp/jquery-file-upload/css/jquery.fileupload.css' ],
+				'scripts' => [ 'res/jquery.fileupload.js' ],
+				'styles' => [ 'res/jquery.fileupload.css' ],
 				'position' => 'top',
 				'dependencies' => [ 'jquery.ui.widget' ],
 			],
@@ -126,26 +134,18 @@ class SimpleBatchUpload {
 	}
 
 	/**
-	 * @return string[]
-	 */
-	protected function getBasePathsForComposerModules() {
-
-		if ( file_exists( dirname( __DIR__ ) . '/vendor' ) ) {
-			return $this->getBasePathsForNonComposerModules();
-		}
-
-		return [
-			'localBasePath' => $GLOBALS[ 'IP' ],
-			'remoteBasePath' => $GLOBALS[ 'wgScriptPath' ],
-		];
-	}
-
-	/**
 	 * @param array $vars
 	 * @param \OutputPage $out
 	 */
 	public function onMakeGlobalVariablesScript( &$vars, $out ) {
 		$vars['simpleBatchUploadMaxFilesPerBatch'] = $this->getMaxFilesPerBatch();
+	}
+
+	public function onSetupAfterCache() {
+
+		$configuration = [ 'wgResourceModules' => $this->getUploadSupportModuleDefinition() + $this->getUploadModuleDefinition() ];
+		self::mergeConfiguration( $configuration );
+
 	}
 
 	/**
