@@ -30,9 +30,9 @@ namespace SimpleBatchUpload;
 class SimpleBatchUpload {
 
 	/**
-	 * @var integer Max files could be uploaded per batch
+	 * @var array Max files could be uploaded per batch
 	 */
-	protected $maxFilesPerBatch;
+	protected $maxFilesPerBatchConfig;
 
 	public static function initCallback() {
 
@@ -134,11 +134,11 @@ class SimpleBatchUpload {
 	}
 
 	/**
-	 * @param array $vars
+	 * @param array &$vars
 	 * @param \OutputPage $out
 	 */
 	public function onMakeGlobalVariablesScript( &$vars, $out ) {
-		$vars['simpleBatchUploadMaxFilesPerBatch'] = $this->getMaxFilesPerBatch();
+		$vars['simpleBatchUploadMaxFilesPerBatch'] = $this->getMaxFilesPerBatchConfig();
 	}
 
 	public function onSetupAfterCache() {
@@ -149,18 +149,21 @@ class SimpleBatchUpload {
 	}
 
 	/**
-	 * @return integer
+	 * @return array
 	 */
-	public function getMaxFilesPerBatch() {
+	public function getMaxFilesPerBatchConfig() {
 		global $wgSimpleBatchUploadMaxFilesPerBatch;
-		return $this->maxFilesPerBatch ? $this->maxFilesPerBatch : $wgSimpleBatchUploadMaxFilesPerBatch;
+		if ( $this->maxFilesPerBatchConfig === null ) {
+			$this->maxFilesPerBatchConfig = $wgSimpleBatchUploadMaxFilesPerBatch;
+		}
+		return $this->maxFilesPerBatchConfig;
 	}
 
 	/**
-	 * @param integer $maxFilesPerBatch
+	 * @param $maxFilesPerBatchConfig
 	 */
-	public function setMaxFilesPerBatch( $maxFilesPerBatch ) {
-		$this->maxFilesPerBatch = $maxFilesPerBatch;
+	public function setMaxFilesPerBatchConfig( $maxFilesPerBatchConfig ) {
+		$this->maxFilesPerBatchConfig = $maxFilesPerBatchConfig;
 	}
 
 }
