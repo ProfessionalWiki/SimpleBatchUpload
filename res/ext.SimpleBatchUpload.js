@@ -27,6 +27,19 @@
 	'use strict';
 
 	$( function () {
+
+		var filesLimitPerBatchConfig = mw.config.get( 'simpleBatchUploadMaxFilesPerBatch' ),
+			userGroups = mw.config.get( 'wgUserGroups' ),
+			userUploadLimit = 0;
+
+		if ( filesLimitPerBatchConfig ) {
+			$.each( filesLimitPerBatchConfig, function ( role, limit ) {
+				if ( userGroups.indexOf( role ) !== -1 && ( limit > userUploadLimit ) ) {
+					userUploadLimit = limit;
+				}
+			} );
+		}
+
 		$( 'span.fileupload-container' ).each( function () {
 
 			var container = this;
@@ -40,14 +53,12 @@
 				dropZone: $( '.fileupload-dropzone', container ),
 				progressInterval: 100,
 
-
 				add: function ( e, data ) {
 
 					var that = this;
-					var filesLimitPerBatch = mw.config.get( 'simpleBatchUploadMaxFilesPerBatch' );
 
-					if ( filesLimitPerBatch && data.originalFiles.length > filesLimitPerBatch ) {
-						alert( mw.msg( 'simplebatchupload-max-files-alert', filesLimitPerBatch ) );
+					if ( data.originalFiles.length > userUploadLimit ) {
+						window.alert( mw.msg( 'simplebatchupload-max-files-alert', userUploadLimit ) );
 						return false;
 					}
 

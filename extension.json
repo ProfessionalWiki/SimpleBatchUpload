@@ -17,7 +17,9 @@
 		]
 	},
 	"config": {
-		"SimpleBatchUploadMaxFilesPerBatch": 0
+		"SimpleBatchUploadMaxFilesPerBatch": {
+			"*": 1000
+		}
 	},
 	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
 	"manifest_version": 1,
