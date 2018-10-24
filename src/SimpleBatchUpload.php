@@ -152,10 +152,11 @@ class SimpleBatchUpload {
 	 * @return array
 	 */
 	public function getMaxFilesPerBatchConfig() {
-		global $wgSimpleBatchUploadMaxFilesPerBatch;
+
 		if ( $this->maxFilesPerBatchConfig === null ) {
-			$this->maxFilesPerBatchConfig = $wgSimpleBatchUploadMaxFilesPerBatch;
+			$this->maxFilesPerBatchConfig = $GLOBALS[ 'wgSimpleBatchUploadMaxFilesPerBatch' ];
 		}
+
 		return $this->maxFilesPerBatchConfig;
 	}
 

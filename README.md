@@ -3,7 +3,6 @@
 [![Latest Stable Version](https://poser.pugx.org/mediawiki/simple-batch-upload/v/stable)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Packagist download count](https://poser.pugx.org/mediawiki/simple-batch-upload/downloads)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/?branch=master)
-[![Dependency Status](https://www.versioneye.com/php/mediawiki:simple-batch-upload/badge.png)](https://www.versioneye.com/php/mediawiki:simple-batch-upload)
 
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
@@ -23,7 +22,7 @@ installation directory.
 ```json
 {
 	"require": {
-		"mediawiki/simple-batch-upload": "~1.0"
+		"mediawiki/simple-batch-upload": "~1.4"
 	}
 }
 ```
@@ -88,7 +87,20 @@ Pics | These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}Simpl
 
 Available configuration options:
 
-* `$wgSimpleBatchUploadMaxFilesPerBatch` - defines maximum number of files that could be uploaded at time.
+* `$wgSimpleBatchUploadMaxFilesPerBatch` - Array defining the maximum number of
+files that can be uploaded each time depending on the user group. <br> Default:
+``` php
+$wgSimpleBatchUploadMaxFilesPerBatch = [
+	'*' => 1000,
+];
+```
+
+**Note:** Be aware that this is not the right setting to completely block file
+uploads! Users can still use the normal file upload or the MediaWiki API. See
+the paragraph on user permissions on
+[Configuring file uploads](https://www.mediawiki.org/wiki/Manual:Configuring_file_uploads#Upload_permissions)
+on mediawiki.org.
+
 
 ## License
 

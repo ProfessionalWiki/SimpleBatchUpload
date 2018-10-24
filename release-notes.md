@@ -1,5 +1,12 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.4.0
+
+Released on 24-Oct-2018
+
+Changes:
+* New configuration setting `$wgSimpleBatchUploadMaxFilesPerBatch`
+
 ### SimpleBatchUpload 1.3.2
 
 Released on 12-Oct-2018
@@ -21,7 +28,7 @@ Changes:
 Released on 30-Mar-2018
 
 Changes:
-* Add parser function #batchupload
+* Add parser function `#batchupload`
 * Improved error messages
 
 ### SimpleBatchUpload 1.2.0
