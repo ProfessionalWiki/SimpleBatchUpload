@@ -64,9 +64,22 @@
 
 					data.id = Date.now();
 
+					var src_filename = data.files[ 0 ].name;
+					var filenode_text = src_filename;
+					var dst_filename = '';
+					var textdata = $( that ).fileupload( 'option', 'text' );
+					if ( /\|\s*\+prefixpage\s*[|}]/.test(textdata) ) {
+						var title = mw.RegExp.escape(mw.config.get('wgTitle'));
+						var fnregex = RegExp(`^(${title}[-_.@+ ]*)?(.+)$`, 'iu');
+						dst_filename = src_filename.replace(fnregex, `${title}-$2`);
+						filenode_text = ( dst_filename == src_filename ) ?
+							src_filename : `${src_filename} --> ${dst_filename}`;
+					}
+					
 					var status = $( '<li>' )
 					.attr( 'id', data.id )
-					.text( data.files[ 0 ].name );
+					.text( filenode_text )
+					.data('filenode_text', filenode_text);
 
 					$( 'ul.fileupload-results', container ).append( status );
 
@@ -92,7 +105,7 @@
 								ignorewarnings: 1,
 								text: $( that ).fileupload( 'option', 'text' ),
 								comment: $( that ).fileupload( 'option', 'comment' ),
-								filename: data.files[ 0 ].name
+								filename: dst_filename
 							};
 
 							data.submit()
@@ -106,7 +119,7 @@
 									var link = $( '<a>' );
 									link
 									.attr( 'href', mw.Title.newFromFileName( result.upload.filename ).getUrl() )
-									.text( result.upload.filename );
+									.text( status.data('filenode_text') );
 
 									status
 									.addClass( 'ful-success' )
@@ -130,8 +143,8 @@
 
 				progress: function ( e, data ) {
 					if ( data.loaded !== data.total ) {
-						$( '#' + data.id )
-						.text( data.files[ 0 ].name + ' ' + parseInt( data.loaded / data.total * 100, 10 ) + '%' );
+						var status = $( '#' + data.id );
+						status.text( status.data('filenode_text') + ' ' + parseInt( data.loaded / data.total * 100, 10 ) + '%' );
 					}
 				}
 			} );
