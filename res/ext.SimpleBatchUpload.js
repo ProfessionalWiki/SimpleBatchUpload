@@ -69,7 +69,7 @@
 					var dst_filename = '';
 					var textdata = $( that ).fileupload( 'option', 'text' );
 					if ( /\|\s*\+prefixpage\s*[|}]/.test(textdata) ) {
-						var title = mw.RegExp.escape(mw.config.get('wgTitle'));
+						var title = mw.RegExp.escape(mw.config.get('wgPageName'));
 						var fnregex = RegExp(`^(${title}[-_.@+ ]*)?(.+)$`, 'iu');
 						dst_filename = src_filename.replace(fnregex, `${title}-$2`);
 						filenode_text = ( dst_filename == src_filename ) ?
