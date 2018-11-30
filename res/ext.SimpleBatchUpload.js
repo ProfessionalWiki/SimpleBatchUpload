@@ -68,12 +68,26 @@
 					var filenode_text = src_filename;
 					var dst_filename = '';
 					var textdata = $( that ).fileupload( 'option', 'text' );
-					if ( /\|\s*\+prefixpage\s*[|}]/.test(textdata) ) {
-						var title = mw.RegExp.escape(mw.config.get('wgPageName'));
-						var fnregex = RegExp(`^(${title}[-_.@+ ]*)?(.+)$`, 'iu');
-						dst_filename = src_filename.replace(fnregex, `${title}-$2`);
+                    // It matches: 
+                    //   other| +rename = !(\w+)[ -_/]*! =$1-}} 
+                    // where: 
+                    //   what: (\w+)[ -_/]*
+                    //   with: $1-
+                    // Spaces are important in subst-pattern (after 2nd '=').
+                    var rename_regex = /\|\s*\+rename\s*=\s*([#/@!])(.*)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
+					var match = rename_regex.exec(textdata);
+					if ( match ) {
+						var pattern = RegExp(match[2], match[3]);
+						var replace = match[4];
+						dst_filename = src_filename.replace(pattern, replace);
 						filenode_text = ( dst_filename == src_filename ) ?
 							src_filename : `${src_filename} --> ${dst_filename}`;
+
+                        // Remove rename-regex from the template of the new uploaded page.
+                        //
+                        var new_textdata = textdata.replace(rename_regex, '');
+                        $( that ).fileupload( 'option', 'text', new_textdata);
+                        $( that ).attr('data-text', new_textdata);
 					}
 					
 					var status = $( '<li>' )
