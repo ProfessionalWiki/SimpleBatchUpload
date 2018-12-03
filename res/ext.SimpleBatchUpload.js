@@ -74,7 +74,7 @@
                     //   what: (\w+)[ -_/]*
                     //   with: $1-
                     // Spaces are important in subst-pattern (after 2nd '=').
-                    var rename_regex = /\|\s*\+rename\s*=\s*([#/@!])(.*)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
+                    var rename_regex = /\|\s*\+rename\s*=\s*([#\/@!])(.*)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
 					var match = rename_regex.exec(textdata);
 					if ( match ) {
 						var pattern = RegExp(match[2], match[3]);
@@ -82,12 +82,6 @@
 						dst_filename = src_filename.replace(pattern, replace);
 						filenode_text = ( dst_filename == src_filename ) ?
 							src_filename : `${src_filename} --> ${dst_filename}`;
-
-                        // Remove rename-regex from the template of the new uploaded page.
-                        //
-                        var new_textdata = textdata.replace(rename_regex, '');
-                        $( that ).fileupload( 'option', 'text', new_textdata);
-                        $( that ).attr('data-text', new_textdata);
 					}
 					
 					var status = $( '<li>' )
@@ -117,7 +111,7 @@
 								action: 'upload',
 								token: token,
 								ignorewarnings: 1,
-								text: $( that ).fileupload( 'option', 'text' ),
+								text: textdata.replace(rename_regex, ''),
 								comment: $( that ).fileupload( 'option', 'comment' ),
 								filename: dst_filename
 							};
