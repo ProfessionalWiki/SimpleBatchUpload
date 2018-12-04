@@ -74,7 +74,7 @@
                     //   what: (\w+)[ -_/]*
                     //   with: $1-
                     // Spaces are important in subst-pattern (after 2nd '=').
-                    var rename_regex = /\|\s*\+rename\s*=\s*([#\/@!])(.*)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
+                    var rename_regex = /\|\s*\+rename\s*=\s*([#\/@!])(.+)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
 					var match = rename_regex.exec(textdata);
 					if ( match ) {
 						var pattern = RegExp(match[2], match[3]);
