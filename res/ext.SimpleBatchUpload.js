@@ -66,7 +66,7 @@
 
 					var src_filename = data.files[ 0 ].name;
 					var filenode_text = src_filename;
-					var dst_filename = '';
+					var dst_filename = src_filename
 					var textdata = $( that ).fileupload( 'option', 'text' );
                     // It matches: 
                     //   other| +rename = !(\w+)[ -_/]*! =$1-}} 
