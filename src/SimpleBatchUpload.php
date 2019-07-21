@@ -109,6 +109,14 @@ class SimpleBatchUpload {
 	 */
 	protected function getUploadModuleDefinition() {
 
+		$dependencies = [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.jqueryMsg' ];
+
+		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.32.0', '>' ) ) {
+			$dependencies[] = 'mediawiki.api';
+		} else {
+			$dependencies[] = 'mediawiki.api.edit';
+		}
+
 		return [ 'ext.SimpleBatchUpload' =>
 
 			$this->getBasePathsForNonComposerModules() +
@@ -117,7 +125,7 @@ class SimpleBatchUpload {
 				'scripts' => [ 'res/ext.SimpleBatchUpload.js' ],
 				'styles' => [ 'res/ext.SimpleBatchUpload.css' ],
 				'position' => 'top',
-				'dependencies' => [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.api.edit', 'mediawiki.jqueryMsg' ],
+				'dependencies' => $dependencies,
 				'messages' => [ 'simplebatchupload-comment', 'simplebatchupload-max-files-alert' ],
 			],
 		];
