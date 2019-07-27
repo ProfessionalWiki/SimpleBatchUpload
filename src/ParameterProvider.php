@@ -103,12 +103,12 @@ class ParameterProvider {
 
 		if ( $paramMsg->exists() ) {
 
-			$paramSet = explode( "\n", $paramMsg->plain() );
-			$paramSet = array_map( [ $this, 'parseParamLine' ], $paramSet );
-			$paramSet = array_combine( array_column( $paramSet, 0 ), $paramSet );
+			$paramLines = explode( "\n", $paramMsg->plain() );
+			$paramSet = array_map( [ $this, 'parseParamLine' ], $paramLines );
+			$paramMap = array_combine( array_column( $paramSet, 0 ), $paramSet );
 
-			if ( array_key_exists( $this->templateName, $paramSet ) ) {
-				$this->setParameters( $this->templateName, '', $paramSet[ $this->templateName ][ 1 ], $paramSet[ $this->templateName ][ 2 ] );
+			if ( array_key_exists( $this->templateName, $paramMap ) ) {
+				$this->setParameters( $this->templateName, '', $paramMap[ $this->templateName ][ 1 ], $paramMap[ $this->templateName ][ 2 ] );
 				return true;
 			}
 		}
