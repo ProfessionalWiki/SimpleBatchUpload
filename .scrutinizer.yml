@@ -23,7 +23,8 @@ build:
                 variables:
                     MW: master
             commands:
-                - build/tests/setup/install-mediawiki.sh
+                - checkout-code ~/SimpleBatchUpload
+                - ~/SimpleBatchUpload/tests/setup/install-mediawiki.sh
                 - pwd
 
 build_failure_conditions: {}

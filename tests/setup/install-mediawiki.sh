@@ -10,4 +10,4 @@ cd mw
 composer install
 
 mysql -e 'create database wikidb;'
-php maintenance/install.php --dbuser root --dbname wikidb --pass hugo TestWiki admin
+php maintenance/install.php --dbserver $SERVICE_MARIADB_IP --dbuser root --dbname wikidb --pass hugo TestWiki admin
