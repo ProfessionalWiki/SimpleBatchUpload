@@ -1,0 +1,31 @@
+checks: {} # Using the central config
+# The checks section configures Scrutinizer's own analysis tools (js-scrutinizer-run, php-scrutinizer-run,
+# ruby-scrutinizer-run, etc.). It does not configure third-party analysis tools.
+
+coding_style: {} # Using the central config
+# The coding-style section configures Scrutinizer's coding-style fixes. It can be configured via the coding-style editor on the website.
+
+filter: {}
+# The filter section defines which files are analyzed, where dependencies are located and which files should be completely ignored.
+
+build:
+    # The build contains everything related to running test, deployment and analysis commands.
+    dependencies:
+        before:
+            - mv composer.json composer.json.orig
+            - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
+    nodes:
+        test-install-from-zip:
+            services:
+                mariadb: 10
+            environment:
+                php: 7.1
+                variables:
+                    MW: master
+            commands:
+                - build/tests/setup/install-mediawiki.sh
+                - pwd
+
+build_failure_conditions: {}
+# The build failure conditions section allows you to define failure conditions where a build should be failed based on findings in the analysis.
+# Findings can be that code coverage has decreased below a certain point, or that new issues have been found, etc.
