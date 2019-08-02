@@ -13,7 +13,7 @@ build:
     dependencies:
         before:
             - mv composer.json composer.json.orig
-            - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
+            - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",?//g composer.json.orig > composer.json
     nodes:
         test-install-from-zip:
             services:
