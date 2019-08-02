@@ -24,8 +24,8 @@
 		"irc": "irc://irc.freenode.org/mediawiki"
 	},
 	"require": {
-		"php": ">=7.0",
-		"mediawiki/mediawiki": ">=1.31"
+		"mediawiki/mediawiki": ">=1.31",
+		"php": ">=7.0"
 	},
 	"extra": {
 		"branch-alias": {
