@@ -1,5 +1,15 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.5.0
+
+Released on tbd
+
+Changes:
+* Raise minimum required versions to
+  * MediaWiki 1.31
+  * PHP 7.0
+* Use MW autoloader (replaces Composer autoloader)
+
 ### SimpleBatchUpload 1.4.0
 
 Released on 24-Oct-2018

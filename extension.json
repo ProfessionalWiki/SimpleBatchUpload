@@ -25,6 +25,5 @@
 		"SimpleBatchUpload\\": "src/"
 	},
 	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
-	"manifest_version": 2,
-	"load_composer_autoloader": false
+	"manifest_version": 2
 }
