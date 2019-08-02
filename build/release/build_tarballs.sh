@@ -3,7 +3,10 @@
 # Utility adapted from the tool for creating SMW tarballs
 # By Jeroen De Dauw < jeroendedauw@gmail.com >
 #
-# @copyright (C) 2016, Stephan Gambke
+# This script is not currently used. It is kept in case Composer-managed
+# dependencies are added again.
+#
+# @copyright (C) 2016-2019, Stephan Gambke
 # @license   GNU General Public License, version 2 (or any later version)
 #
 # This software is free software; you can redistribute it and/or
@@ -18,17 +21,11 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 # Parameters:
-# $1: version fed to composer, defaults to dev-master
-# $2: version used in the tarball name, defaults to $1
+# $1: version used for cloning and in the tarball name
 
-COMPOSER_VERSION="$1"
-VERSION="$2"
-if [ "$COMPOSER_VERSION" == "" ]; then
-	COMPOSER_VERSION="dev-master"
-fi
-
+VERSION="$1"
 if [ "$VERSION" == "" ]; then
-	VERSION=$COMPOSER_VERSION
+	VERSION="master"
 fi
 
 NAME="SimpleBatchUpload.$VERSION.with.dependencies"
@@ -36,17 +33,20 @@ DIR="SimpleBatchUpload"
 
 BUILD_DIR="build-$VERSION"
 
-rm -rf $BUILD_DIR
-mkdir $BUILD_DIR
-cd $BUILD_DIR
+rm -rf "$BUILD_DIR"
+mkdir "$BUILD_DIR"
+cd "$BUILD_DIR"
 
-composer create-project mediawiki/simple-batch-upload $DIR $COMPOSER_VERSION --stability dev --prefer-dist --no-dev --ignore-platform-reqs --no-install
+# composer create-project mediawiki/simple-batch-upload $DIR $COMPOSER_VERSION --stability dev --prefer-dist --no-dev --ignore-platform-reqs --no-install
+git clone https://github.com/s7eph4n/SimpleBatchUpload.git "$DIR"
+git checkout "$VERSION"
 
 cd $DIR
 mv composer.json composer.json.orig
 sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
 composer install --prefer-dist --no-dev --ignore-platform-reqs --optimize-autoloader
 mv composer.json.orig composer.json
+rm -rf .git
 cd -
 
 zip -qro9 "$NAME.zip" $DIR
@@ -54,4 +54,4 @@ tar -czf "$NAME.tar.gz" $DIR
 
 cd ..
 set -x
-ls -lap $BUILD_DIR
+ls -lap "$BUILD_DIR"
