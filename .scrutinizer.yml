@@ -23,17 +23,11 @@ build:
                 variables:
                     MW: master
             commands:
-                - checkout-code ~/SimpleBatchUpload
-                - cd ~/SimpleBatchUpload
-
-                - mv composer.json composer.json.orig
-                - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
-                - composer install --prefer-dist --no-dev --ignore-platform-reqs --optimize-autoloader
-                - mv composer.json.orig composer.json
-
                 - cd ~
+                - checkout-code ~/SimpleBatchUpload
                 - ~/SimpleBatchUpload/tests/setup/install-mediawiki.sh
-                - cp -R ~/SimpleBatchUpload mw/extensions
+                - cp -R ~/SimpleBatchUpload ~/mw/extensions
+                - echo "wfLoadExtension( 'SimpleBatchUpload' );" >> ~/mw/LocalSettings.php
                 - pwd
 
 build_failure_conditions: {}
