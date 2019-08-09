@@ -2,7 +2,7 @@
 /**
  * File containing the SimpleBatchUpload class
  *
- * @copyright (C) 2016 - 2017, Stephan Gambke
+ * @copyright (C) 2016 - 2019, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * This software is free software; you can redistribute it and/or
@@ -22,6 +22,9 @@
 
 namespace SimpleBatchUpload;
 
+use MediaWiki\MediaWikiServices;
+use Parser;
+
 /**
  * Class ExtensionManager
  *
@@ -37,26 +40,39 @@ class SimpleBatchUpload {
 	public static function initCallback() {
 
 		$simpleBatchUpload = new self();
-
-		$configuration = $simpleBatchUpload->getConfiguration();
-
-		self::mergeConfiguration( $configuration );
+		$simpleBatchUpload->registerEarlyConfiguration( $GLOBALS );
 	}
 
 
 	/**
-	 * @param $configuration
+	 * @param $targetConfiguration
 	 */
-	public static function mergeConfiguration( $configuration ) {
-		foreach ( $configuration as $varname => $value ) {
-			$GLOBALS[ $varname ] = array_replace_recursive( $GLOBALS[ $varname ], $value );
+	public function registerEarlyConfiguration( &$targetConfiguration ){
+		$sourceConfiguration = $this->getEarlyConfiguration();
+		$this->mergeConfiguration( $sourceConfiguration, $targetConfiguration );
+	}
+
+	/**
+	 * @param $targetConfiguration
+	 */
+	public function registerLateConfiguration( &$targetConfiguration ){
+		$sourceConfiguration = $this->getLateConfiguration();
+		$this->mergeConfiguration( $sourceConfiguration, $targetConfiguration );
+	}
+
+	/**
+	 * @param array $targetConfiguration
+	 */
+	protected function mergeConfiguration( $sourceConfiguration, &$targetConfiguration ) {
+		foreach ( $sourceConfiguration as $varname => $value ) {
+			$targetConfiguration[ $varname ] = array_key_exists( $varname, $targetConfiguration )?array_replace_recursive( $targetConfiguration[ $varname ], $value ):$value;
 		}
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getConfiguration() {
+	protected function getEarlyConfiguration(): array {
 
 		$configuration = [];
 
@@ -70,7 +86,18 @@ class SimpleBatchUpload {
 		$configuration[ 'wgHooks' ][ 'SetupAfterCache' ][ 'ext.simplebatchupload' ] = [ $this, 'onSetupAfterCache'];
 
 		return $configuration;
+	}
 
+
+	/**
+	 * @return array
+	 */
+	protected function getLateConfiguration(): array {
+
+		$configuration = [];
+		$configuration[ 'wgResourceModules' ] = $this->getUploadSupportModuleDefinition() + $this->getUploadModuleDefinition();
+
+		return $configuration;
 	}
 
 	/**
@@ -80,7 +107,7 @@ class SimpleBatchUpload {
 	 * @throws \MWException
 	 */
 	public function registerParserFunction( &$parser ) {
-		$parser->setFunctionHook( 'batchupload', [ new UploadButtonRenderer(), 'renderParserFunction' ], SFH_OBJECT_ARGS );
+		$parser->setFunctionHook( 'batchupload', [ new UploadButtonRenderer(), 'renderParserFunction' ], Parser::SFH_OBJECT_ARGS );
 		return true;
 	}
 
@@ -150,10 +177,7 @@ class SimpleBatchUpload {
 	}
 
 	public function onSetupAfterCache() {
-
-		$configuration = [ 'wgResourceModules' => $this->getUploadSupportModuleDefinition() + $this->getUploadModuleDefinition() ];
-		self::mergeConfiguration( $configuration );
-
+		$this->registerLateConfiguration( $GLOBALS );
 	}
 
 	/**
@@ -167,12 +191,4 @@ class SimpleBatchUpload {
 
 		return $this->maxFilesPerBatchConfig;
 	}
-
-	/**
-	 * @param $maxFilesPerBatchConfig
-	 */
-	public function setMaxFilesPerBatchConfig( $maxFilesPerBatchConfig ) {
-		$this->maxFilesPerBatchConfig = $maxFilesPerBatchConfig;
-	}
-
 }

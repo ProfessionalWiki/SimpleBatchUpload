@@ -23,12 +23,11 @@ build:
                 variables:
                     MW: master
             commands:
-                - cd ~
                 - checkout-code ~/SimpleBatchUpload
                 - ~/SimpleBatchUpload/tests/setup/install-mediawiki.sh
                 - cp -R ~/SimpleBatchUpload ~/mw/extensions
                 - echo "wfLoadExtension( 'SimpleBatchUpload' );" >> ~/mw/LocalSettings.php
-                - pwd
+                - php ~/mw/tests/phpunit/phpunit.php -c ~/mw/extensions/SimpleBatchUpload/phpunit.xml.dist
 
 build_failure_conditions: {}
 # The build failure conditions section allows you to define failure conditions where a build should be failed based on findings in the analysis.
