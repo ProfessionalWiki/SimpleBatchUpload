@@ -81,10 +81,13 @@ class SimpleBatchUploadTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testOnMakeGlobalVariablesScript() {
-		$sbu = new SimpleBatchUpload();
 		$vars = [];
+		$out = $this->getMockBuilder( OutputPage::class )
+			->disableOriginalConstructor()
+			->getMock();
 
-		$sbu->onMakeGlobalVariablesScript( $vars );
+		$sbu = new SimpleBatchUpload();
+		$sbu->onMakeGlobalVariablesScript( $vars, $out );
 
 		$this->assertArrayHasKey( 'simpleBatchUploadMaxFilesPerBatch', $vars );
 	}
