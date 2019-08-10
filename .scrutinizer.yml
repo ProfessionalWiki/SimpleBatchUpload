@@ -15,7 +15,7 @@ build:
             - mv composer.json composer.json.orig
             - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
     nodes:
-        test-install-from-zip:
+        test-master:
             services:
                 mariadb: 10
             environment:
@@ -25,10 +25,20 @@ build:
             tests:
                 override:
                     -
-                        command: ~/build/tests/setup/run-tests.sh
+                        command: ~/build/tests/setup/run-tests.sh --coverage-clover ~/coverage.xml
                         coverage:
                             file: ~/coverage.xml
                             format: clover
+        test-min-versions:
+            services:
+                mariadb: 10
+            environment:
+                php: 7.0
+                variables:
+                    MW: 1.31.0
+            tests:
+                override:
+                    - ~/build/tests/setup/run-tests.sh
 
 build_failure_conditions: {}
 # The build failure conditions section allows you to define failure conditions where a build should be failed based on findings in the analysis.

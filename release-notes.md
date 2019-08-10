@@ -8,7 +8,7 @@ Changes:
 * Raise minimum required versions to
   * MediaWiki 1.31
   * PHP 7.0
-* Use MW autoloader (replaces Composer autoloader)
+* Add CI testing
 
 ### SimpleBatchUpload 1.4.0
 
