@@ -27,7 +27,11 @@ build:
                 - ~/SimpleBatchUpload/tests/setup/install-mediawiki.sh
                 - cp -R ~/SimpleBatchUpload ~/mw/extensions
                 - echo "wfLoadExtension( 'SimpleBatchUpload' );" >> ~/mw/LocalSettings.php
-                - php ~/mw/tests/phpunit/phpunit.php -c ~/mw/extensions/SimpleBatchUpload/phpunit.xml.dist
+                -
+                    command: php ~/mw/tests/phpunit/phpunit.php -c ~/mw/extensions/SimpleBatchUpload/phpunit.xml.dist --coverage-clover ~/coverage.xml
+                    coverage:
+                        file: ~/coverage.xml
+                        format: clover
 
 build_failure_conditions: {}
 # The build failure conditions section allows you to define failure conditions where a build should be failed based on findings in the analysis.
