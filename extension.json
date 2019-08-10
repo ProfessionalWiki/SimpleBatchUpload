@@ -18,7 +18,9 @@
 	},
 	"config": {
 		"SimpleBatchUploadMaxFilesPerBatch": {
-			"*": 1000
+			"value":{
+				"*": 1000
+			}
 		}
 	},
 	"AutoloadNamespaces": {
