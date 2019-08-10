@@ -24,13 +24,8 @@ build:
                     MW: master
             tests:
                 override:
-#                    - checkout-code ~/SimpleBatchUpload
-                    - cd ~
-                    - ./build/tests/setup/install-mediawiki.sh
-                    - cp -R ~/build ~/mw/extensions/SimpleBatchUpload
-                    - echo "wfLoadExtension( 'SimpleBatchUpload' );" >> ~/mw/LocalSettings.php
                     -
-                        command: php ~/mw/tests/phpunit/phpunit.php -c ~/mw/extensions/SimpleBatchUpload/phpunit.xml.dist --coverage-clover ~/coverage.xml
+                        command: ~/build/tests/setup/run-tests.sh
                         coverage:
                             file: ~/coverage.xml
                             format: clover
