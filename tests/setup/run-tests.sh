@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -xe
 
 function fetch_mw_from_download() {
 
@@ -29,7 +29,8 @@ function fetch_sbu_from_composer() {
 
   local COMPOSER_VERSION=''
 
-  if [ "$SCRUTINIZER_PR_SOURCE_BRANCH" == '' ]; then
+  if [[ "$SCRUTINIZER_PR_SOURCE_BRANCH" == '' ]]
+  then
     COMPOSER_VERSION="dev-${SCRUTINIZER_BRANCH}#${SCRUTINIZER_SHA1}"
   else
     COMPOSER_VERSION="dev-${SCRUTINIZER_PR_SOURCE_BRANCH}#${SCRUTINIZER_SHA1}"
@@ -58,7 +59,12 @@ else
   fetch_mw_from_composer
 fi
 
-fetch_sbu_from_download
+if [[ "$SBU" == "download" ]]
+then
+  fetch_sbu_from_download
+else
+  fetch_sbu_from_composer
+fi
 
 install
 

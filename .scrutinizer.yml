@@ -22,10 +22,10 @@ build:
                 php: 7.1
                 variables:
                     MW: master
+                    SBU: composer
             tests:
                 override:
-                    -
-                        command: ~/build/tests/setup/run-tests.sh --coverage-clover ~/coverage.xml
+                    -   command: ~/build/tests/setup/run-tests.sh --coverage-clover ~/coverage.xml
                         coverage:
                             file: ~/coverage.xml
                             format: clover
@@ -36,9 +36,16 @@ build:
                 php: 7.0
                 variables:
                     MW: 1.31.0
+                    SBU: download
             tests:
                 override:
                     - ~/build/tests/setup/run-tests.sh
+        analysis:
+            tests:
+                override:
+                    -   command: phpcs-run
+                        use_website_config: true
+                    - php-scrutinizer-run
 
 build_failure_conditions: {}
 # The build failure conditions section allows you to define failure conditions where a build should be failed based on findings in the analysis.
