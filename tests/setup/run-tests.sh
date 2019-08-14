@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -x
 
 function fetch_mw_from_download() {
     #TODO
@@ -22,8 +22,20 @@ function fetch_sbu_from_download() {
 }
 
 function fetch_sbu_from_composer() {
-  # TODO
-    echo Not implemented.
+
+  local COMPOSER_VERSION=''
+
+  if [ "$SCRUTINIZER_PR_SOURCE_BRANCH" == '' ]
+  then
+    COMPOSER_VERSION="dev-${SCRUTINIZER_BRANCH}#${SCRUTINIZER_SHA1}"
+  else
+    COMPOSER_VERSION="dev-${SCRUTINIZER_PR_SOURCE_BRANCH}#${SCRUTINIZER_SHA1}"
+  fi
+
+  php ~/build/tests/setup/fix-composer.php "mediawiki/simple-batch-upload" "$COMPOSER_VERSION" "$SCRUTINIZER_PROJECT" < ~/mw/composer.local.json-sample > ~/mw/composer.local.json
+
+  cd ~/mw
+  composer update "mediawiki/simple-batch-upload"
 }
 
 function install() {
@@ -37,7 +49,7 @@ function run_tests() {
 }
 
 fetch_mw_from_composer
-fetch_sbu_from_download
+fetch_sbu_from_composer
 install
 
 run_tests "$@"
