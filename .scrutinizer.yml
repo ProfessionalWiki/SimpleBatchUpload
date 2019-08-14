@@ -10,6 +10,11 @@ filter: {}
 
 build:
     # The build contains everything related to running test, deployment and analysis commands.
+    dependencies:
+        before:
+            - mv composer.json composer.json.orig
+            - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
+
     nodes:
         test-master:
             services:
@@ -39,8 +44,6 @@ build:
         analysis:
             tests:
                 override:
-                    - mv composer.json composer.json.orig
-                    - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
                     -   command: phpcs-run
                         use_website_config: true
                     - php-scrutinizer-run
