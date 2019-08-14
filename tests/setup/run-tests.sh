@@ -3,7 +3,7 @@ set -x
 
 function fetch_mw_from_download() {
 
-  wget "https://releases.wikimedia.org/mediawiki/1.31/mediawiki-$MW.tar.gz"
+  wget "https://releases.wikimedia.org/mediawiki/${MW%.*}/mediawiki-$MW.tar.gz"
   tar -zxf "mediawiki-$MW.tar.gz"
   mv "mediawiki-$MW" ~/mw
 
@@ -51,9 +51,15 @@ function run_tests() {
   php ~/mw/tests/phpunit/phpunit.php -c ~/mw/extensions/SimpleBatchUpload/phpunit.xml.dist "$@"
 }
 
-MW=1.31.0
-fetch_mw_from_download
+if [[ "$MW" =~ 1.[[:digit:]][[:digit:]].[[:digit:]][[:digit:]]? ]]
+then
+  fetch_mw_from_download
+else
+  fetch_mw_from_composer
+fi
+
 fetch_sbu_from_download
+
 install
 
 run_tests "$@"
