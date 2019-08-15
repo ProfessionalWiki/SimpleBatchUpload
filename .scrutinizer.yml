@@ -23,7 +23,7 @@ build:
     nodes:
         test-master:
             environment:
-                php: 7.1
+                php: 7.3
                 variables:
                     MW: master
                     SBU: composer
@@ -38,6 +38,24 @@ build:
                 php: 7.0
                 variables:
                     MW: 1.31.0
+                    SBU: download
+        test-1.31:
+            environment:
+                php: 7.1
+                variables:
+                    MW: 1.31.3
+                    SBU: composer
+        test-1.32:
+            environment:
+                php: 7.2
+                variables:
+                    MW: 1.32.3
+                    SBU: download
+        test-1.33:
+            environment:
+                php: 7.2
+                variables:
+                    MW: 1.33.0
                     SBU: download
         analysis:
             tests:
