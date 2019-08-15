@@ -16,6 +16,9 @@ build:
             - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
     services:
         mariadb: 10
+    tests:
+        override:
+            - ~/build/tests/setup/run-tests.sh
 
     nodes:
         test-master:
@@ -36,9 +39,6 @@ build:
                 variables:
                     MW: 1.31.0
                     SBU: download
-            tests:
-                override:
-                    - ~/build/tests/setup/run-tests.sh
         analysis:
             tests:
                 override:
