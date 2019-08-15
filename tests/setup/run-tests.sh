@@ -39,7 +39,7 @@ function fetch_sbu_from_composer() {
   php ~/build/tests/setup/fix-composer.php "mediawiki/simple-batch-upload" "$COMPOSER_VERSION" "$SCRUTINIZER_PROJECT" <~/mw/composer.local.json-sample >~/mw/composer.local.json
 
   cd ~/mw
-  composer update "mediawiki/simple-batch-upload"
+  composer update "mediawiki/simple-batch-upload" --no-dev
 }
 
 function install() {

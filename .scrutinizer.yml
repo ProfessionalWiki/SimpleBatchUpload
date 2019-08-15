@@ -1,10 +1,3 @@
-checks: {} # Using the central config
-# The checks section configures Scrutinizer's own analysis tools (js-scrutinizer-run, php-scrutinizer-run,
-# ruby-scrutinizer-run, etc.). It does not configure third-party analysis tools.
-
-coding_style: {} # Using the central config
-# The coding-style section configures Scrutinizer's coding-style fixes. It can be configured via the coding-style editor on the website.
-
 filter: {}
 # The filter section defines which files are analyzed, where dependencies are located and which files should be completely ignored.
 
