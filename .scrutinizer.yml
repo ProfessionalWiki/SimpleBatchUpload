@@ -14,11 +14,11 @@ build:
         before:
             - mv composer.json composer.json.orig
             - sed s/\"mediawiki\\/mediawiki\":\ \"\>=1...\",//g composer.json.orig > composer.json
+    services:
+        mariadb: 10
 
     nodes:
         test-master:
-            services:
-                mariadb: 10
             environment:
                 php: 7.1
                 variables:
@@ -31,8 +31,6 @@ build:
                             file: ~/coverage.xml
                             format: clover
         test-min-versions:
-            services:
-                mariadb: 10
             environment:
                 php: 7.0
                 variables:
