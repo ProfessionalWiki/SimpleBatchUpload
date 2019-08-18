@@ -58,7 +58,12 @@ function run_tests() {
   php ~/mw/tests/phpunit/phpunit.php -c ~/mw/extensions/SimpleBatchUpload/phpunit.xml.dist "$@"
 }
 
-if [[ "$MW" =~ 1.[[:digit:]][[:digit:]].[[:digit:]][[:digit:]]? ]]
+function prepare_analysis() {
+  cd ~/build
+  mv ~/mw ~/build
+}
+
+if [[ "$MW" =~ 1.[[:digit:]][[:digit:]].[[:digit:]][[:digit:]]? ]]  # e.g. 1.33.0
 then
   fetch_mw_from_download
 else
@@ -75,3 +80,5 @@ fi
 install
 
 run_tests "$@"
+
+prepare_analysis

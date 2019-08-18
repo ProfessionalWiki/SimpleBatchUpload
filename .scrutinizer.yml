@@ -19,13 +19,13 @@ build:
                     SBU: composer
             tests:
                 override:
-                    -   command: phpcs-run
-                        use_website_config: true
-                    - php-scrutinizer-run
                     -   command: ~/build/tests/setup/run-tests.sh --coverage-clover ~/coverage.xml
                         coverage:
                             file: ~/coverage.xml
                             format: clover
+                    -   command: phpcs-run
+                        use_website_config: true
+                    - php-scrutinizer-run --enable-security-analysis
         test-mw-min-version:
             environment:
                 php: 7.0
@@ -51,8 +51,12 @@ build:
                     MW: 1.33.0
                     SBU: download
 
-filter: {}
+filter:
 # The filter section defines which files are analyzed, where dependencies are located and which files should be completely ignored.
+    dependency_paths:
+        - mw
+    excluded_paths:
+        - mw/extensions
 
 build_failure_conditions: {}
 # The build failure conditions section allows you to define failure conditions where a build should be failed based on findings in the analysis.
