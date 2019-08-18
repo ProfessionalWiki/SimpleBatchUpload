@@ -1,4 +1,10 @@
 #!/bin/bash
+# Run tests
+# (assumes to be run on scrutinizer.org)
+#
+# @copyright (C) 2016 - 2019, Stephan Gambke
+# @license   GNU General Public License, version 2 (or any later version)
+
 set -xe
 
 function fetch_mw_from_download() {
