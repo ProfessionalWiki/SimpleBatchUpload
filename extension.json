@@ -1,6 +1,6 @@
 {
 	"name": "SimpleBatchUpload",
-	"version": "1.5.0",
+	"version": "1.5.1-dev",
 	"author": [
 		"[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]"
 	],

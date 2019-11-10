@@ -22,7 +22,7 @@ installation directory.
 ```json
 {
 	"require": {
-		"mediawiki/simple-batch-upload": "~1.4"
+		"mediawiki/simple-batch-upload": "^1.0"
 	}
 }
 ```

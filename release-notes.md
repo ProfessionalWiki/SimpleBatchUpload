@@ -1,5 +1,12 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.5.1
+
+Released on tbd
+
+Changes:
+- None yet.
+
 ### SimpleBatchUpload 1.5.0
 
 Released on 10-Nov-2019
