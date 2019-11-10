@@ -2,13 +2,14 @@
 
 ### SimpleBatchUpload 1.5.0
 
-Released on tbd
+Released on 10-Nov-2019
 
 Changes:
 * Raise minimum required versions to
   * MediaWiki 1.31
   * PHP 7.0
 * Add CI testing
+* Ensure compatibility with MediaWiki 1.32+ ([#21](https://github.com/s7eph4n/SimpleBatchUpload/issues/21))
 
 ### SimpleBatchUpload 1.4.0
 
