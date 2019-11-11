@@ -9,8 +9,8 @@ no-frills uploading of multiple files to MediaWiki.
 
 ## Requirements
 
-- PHP 5.4 or later
-- MediaWiki 1.26 or later
+- PHP 7.0 or later
+- MediaWiki 1.31 or later
 
 ## Installation
 
