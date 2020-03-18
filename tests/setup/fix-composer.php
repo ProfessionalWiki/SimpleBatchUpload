@@ -1,5 +1,5 @@
 <?php
-# Usage: php extensions/SimpleBatchUpload/tests/setup/fix-composer.php mediawiki/simple-batch-upload dev-master g/s7eph4n/SimpleBatchUpload < composer.local.json-sample > composer.local.json
+# Usage: php extensions/SimpleBatchUpload/tests/setup/fix-composer.php mediawiki/simple-batch-upload dev-master g/ProfessionalWiki/SimpleBatchUpload < composer.local.json-sample > composer.local.json
 #
 # * Reads composer.json-like from stdin
 # * Adds requirement for the specified composer package ($argv[1] and $argv[2]) and a repo ($argv[3])

@@ -38,7 +38,7 @@ mkdir "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 # composer create-project mediawiki/simple-batch-upload $DIR $COMPOSER_VERSION --stability dev --prefer-dist --no-dev --ignore-platform-reqs --no-install
-git clone https://github.com/s7eph4n/SimpleBatchUpload.git "$DIR"
+git clone https://github.com/ProfessionalWiki/SimpleBatchUpload.git "$DIR"
 git checkout "$VERSION"
 
 cd $DIR

@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/mediawiki/simple-batch-upload/v/stable)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Packagist download count](https://poser.pugx.org/mediawiki/simple-batch-upload/downloads)](https://packagist.org/packages/mediawiki/simple-batch-upload)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/?branch=master)
 
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
@@ -28,7 +28,7 @@ installation directory.
 ```
 
 (Alternatively you can download a tar ball or zip file from
-[GitHub](https://github.com/s7eph4n/SimpleBatchUpload/releases/latest)
+[GitHub](https://github.com/ProfessionalWiki/SimpleBatchUpload/releases/latest)
 and extract it into the `extensions` directory of your MediaWiki installation.)
 
 Then add the following line to your `LocalSettings.php`:

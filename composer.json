@@ -19,8 +19,8 @@
 	"support": {
 		"wiki": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
 		"forum": "https://www.mediawiki.org/wiki/Extension_talk:SimpleBatchUpload",
-		"source": "https://github.com/s7eph4n/SimpleBatchUpload",
-		"issues": "https://github.com/s7eph4n/SimpleBatchUpload/issues",
+		"source": "https://github.com/ProfessionalWiki/SimpleBatchUpload",
+		"issues": "https://github.com/ProfessionalWiki/SimpleBatchUpload/issues",
 		"irc": "irc://irc.freenode.org/mediawiki"
 	},
 	"require": {
