@@ -1,12 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"F.trott"
+			"F.trott",
+			"Kghbln"
 		]
 	},
-	"simplebatchupload-desc": "Simple batch upload of files",
+	"simplebatchupload-desc": "Allows for simple batch uploading of of files",
+	"simplebatchupload-name": "SimpleBatchUpload",
 	"batchupload": "Upload multiple files",
 	"simplebatchupload-buttonlabel": "Select files (or drop them here)...",
 	"simplebatchupload-comment": "Uploaded with [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "You can not upload more than $1 files at a time."
+	"simplebatchupload-max-files-alert": "You cannot upload more than {{PLURAL:$1|file|files}} at a time."
 }
