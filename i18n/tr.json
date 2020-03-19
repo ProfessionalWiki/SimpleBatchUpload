@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"BaRaN6161 TURK"
+		]
+	},
+	"simplebatchupload-desc": "Dosyaların toplu olarak basitçe yüklenmesine izin verir",
+	"batchupload": "Birden fazla dosya yükle",
+	"simplebatchupload-buttonlabel": "Dosyaları seçin (veya buraya bırakın)...",
+	"simplebatchupload-comment": "[[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]] ile yüklendi",
+	"simplebatchupload-max-files-alert": "Tek seferde {{PLURAL:$1|dosya|dosya}} taneden fazlasını yükleyemezsiniz."
+}

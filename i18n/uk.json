@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Piramidion"
+		]
+	},
+	"simplebatchupload-desc": "Надає доступ до простого пакетного завантаження файлів",
+	"batchupload": "Завантаження декількох файлів",
+	"simplebatchupload-buttonlabel": "Виберіть файли (або перетягніть їх сюди)...",
+	"simplebatchupload-comment": "Завантажено за допомогою [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Ви не можете завантажувати більш ніж $1 {{PLURAL:$1|файл|файли|файлів}} водночас."
+}
