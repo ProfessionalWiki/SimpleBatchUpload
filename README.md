@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/mediawiki/simple-batch-upload/v/stable)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Packagist download count](https://poser.pugx.org/mediawiki/simple-batch-upload/downloads)](https://packagist.org/packages/mediawiki/simple-batch-upload)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/s7eph4n/SimpleBatchUpload/?branch=master)
 
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
