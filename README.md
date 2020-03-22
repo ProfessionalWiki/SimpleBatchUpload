@@ -2,6 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/mediawiki/simple-batch-upload/v/stable)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Packagist download count](https://poser.pugx.org/mediawiki/simple-batch-upload/downloads)](https://packagist.org/packages/mediawiki/simple-batch-upload)
+[![Build Status](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/?branch=master)
 
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
