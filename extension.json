@@ -1,8 +1,9 @@
 {
 	"name": "SimpleBatchUpload",
-	"version": "1.5.1-alpha",
+	"version": "1.6.0-alpha",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
+		"[https://professional.wiki/ Professional.Wiki]",
 		"..."
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",

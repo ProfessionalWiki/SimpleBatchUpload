@@ -1,12 +1,10 @@
 ## Release Notes
 
-### SimpleBatchUpload 1.5.1
+### SimpleBatchUpload 1.6.0
 
-Released on tbd
+Released on tbd.githgu
 
-Changes:
-- Support for system message translations via [translatewiki.net](https://translatewiki.net).
-- System message translations by translatewiki.net translators
+* Added translations (via [translatewiki.net](https://translatewiki.net)).
 
 ### SimpleBatchUpload 1.5.0
 
