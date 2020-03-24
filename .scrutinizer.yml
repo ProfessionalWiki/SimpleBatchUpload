@@ -55,7 +55,7 @@ build:
                 php: 7.3
                 variables:
                     MW: 1.34.0
-                    SBU: download
+                    SBU: composer
 
 filter:
 # The filter section defines which files are analyzed, where dependencies are located and which files should be completely ignored.
