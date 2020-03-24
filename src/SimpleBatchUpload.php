@@ -22,7 +22,6 @@
 
 namespace SimpleBatchUpload;
 
-use MediaWiki\MediaWikiServices;
 use Parser;
 
 /**
