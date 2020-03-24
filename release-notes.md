@@ -2,7 +2,7 @@
 
 ### SimpleBatchUpload 1.6.0
 
-Released on tbd.githgu
+Released on tbd
 
 * Added translations (via [translatewiki.net](https://translatewiki.net)).
 
