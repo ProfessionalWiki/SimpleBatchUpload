@@ -42,17 +42,13 @@ class ParameterProvider {
 	private $parameters = null;
 
 	/**
-	 * ParameterProvider constructor.
 	 * @param string|null $templateName
 	 */
 	public function __construct( $templateName ) {
 		$this->templateName = $templateName ? $templateName : '';
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getEscapedUploadPageText() {
+	public function getEscapedUploadPageText(): string {
 
 		if ( $this->templateName === '' ) {
 			return '';
@@ -61,27 +57,15 @@ class ParameterProvider {
 		return '{{' . $this->getEscapedParameter( self::IDX_TEMPLATENAME ) . $this->getEscapedParameter( self::IDX_TEMPLATEPARAMETERS ) . '}}';
 	}
 
-	/**
-	 * @param int $key
-	 * @return string
-	 */
-	private function getEscapedParameter( $key ) {
+	private function getEscapedParameter( int $key ): string {
 		return $this->escape( $this->getParameter( $key ) );
 	}
 
-	/**
-	 * @param string $text
-	 * @return string
-	 */
-	private function escape( $text ) {
+	private function escape( string $text ): string {
 		return htmlspecialchars( $text, ENT_QUOTES, 'UTF-8', false );
 	}
 
-	/**
-	 * @param int $key
-	 * @return string
-	 */
-	private function getParameter( $key ) {
+	private function getParameter( int $key ): string {
 		if ( $this->parameters === null ) {
 			$this->populateParameters();
 		}
@@ -89,15 +73,11 @@ class ParameterProvider {
 	}
 
 	private function populateParameters() {
-
 		if ( $this->templateName === '' || $this->populateParametersFromKey() === false ) {
 			$this->populateParametersFromDefaults();
 		}
-
 	}
 
-	/**
-	 */
 	private function populateParametersFromKey() {
 		$paramMsg = Message::newFromKey( 'simplebatchupload-parameters' );
 
@@ -134,24 +114,15 @@ class ParameterProvider {
 		];
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getEscapedUploadComment() {
+	public function getEscapedUploadComment(): string {
 		return $this->getEscapedParameter( self::IDX_COMMENT );
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getSpecialPageTitle() {
+	public function getSpecialPageTitle(): string {
 		return $this->getParameter( self::IDX_SPECIALPAGETITLE );
 	}
 
-	/**
-	 * @param string $parameter
-	 */
-	public function addTemplateParameter( $parameter ) {
+	public function addTemplateParameter( string $parameter ) {
 
 		if ( $this->parameters === null ) {
 			$this->populateParameters();
@@ -164,7 +135,7 @@ class ParameterProvider {
 	 * @param string $paramLine
 	 * @return string[]
 	 */
-	private function parseParamLine( $paramLine ) {
+	private function parseParamLine( string $paramLine ): array {
 		return array_replace( [ '', '', '' ], array_map( 'trim', explode( '|', $paramLine, 3 ) ) );
 	}
 
