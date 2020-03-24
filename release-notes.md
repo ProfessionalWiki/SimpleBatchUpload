@@ -2,9 +2,9 @@
 
 ### SimpleBatchUpload 1.6.0
 
-Released on tbd
+Released on March 24, 2020.
 
-* Added translations (via [translatewiki.net](https://translatewiki.net)).
+* Added translations (via [translatewiki.net](https://translatewiki.net))
 
 ### SimpleBatchUpload 1.5.0
 
