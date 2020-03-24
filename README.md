@@ -8,6 +8,9 @@
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
 
+It is maintained by [Professional.Wiki](https://professional.wiki/).
+[Contact us](https://professional.wiki/en/contact) for commercial support or development work.
+
 ## Requirements
 
 - PHP 7.0 or later
