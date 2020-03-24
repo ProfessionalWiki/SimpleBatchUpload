@@ -42,18 +42,11 @@ class SimpleBatchUpload {
 		$simpleBatchUpload->registerEarlyConfiguration( $GLOBALS );
 	}
 
-
-	/**
-	 * @param $targetConfiguration
-	 */
 	public function registerEarlyConfiguration( &$targetConfiguration ){
 		$sourceConfiguration = $this->getEarlyConfiguration();
 		$this->mergeConfiguration( $sourceConfiguration, $targetConfiguration );
 	}
 
-	/**
-	 * @param $targetConfiguration
-	 */
 	public function registerLateConfiguration( &$targetConfiguration ){
 		$sourceConfiguration = $this->getLateConfiguration();
 		$this->mergeConfiguration( $sourceConfiguration, $targetConfiguration );
@@ -68,9 +61,6 @@ class SimpleBatchUpload {
 		}
 	}
 
-	/**
-	 * @return array
-	 */
 	protected function getEarlyConfiguration(): array {
 
 		$configuration = [];
@@ -87,10 +77,6 @@ class SimpleBatchUpload {
 		return $configuration;
 	}
 
-
-	/**
-	 * @return array
-	 */
 	protected function getLateConfiguration(): array {
 
 		$configuration = [];
@@ -110,12 +96,7 @@ class SimpleBatchUpload {
 		return true;
 	}
 
-
-	/**
-	 * @return array
-	 */
-	protected function getUploadSupportModuleDefinition() {
-
+	protected function getUploadSupportModuleDefinition(): array {
 		return [ 'ext.SimpleBatchUpload.jquery-file-upload' =>
 
 			$this->getBasePathsForNonComposerModules() +
@@ -127,13 +108,9 @@ class SimpleBatchUpload {
 				'dependencies' => [ 'jquery.ui.widget' ],
 			],
 		];
-
 	}
 
-	/**
-	 * @return array
-	 */
-	protected function getUploadModuleDefinition() {
+	protected function getUploadModuleDefinition(): array {
 
 		$dependencies = [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.jqueryMsg' ];
 
@@ -160,7 +137,7 @@ class SimpleBatchUpload {
 	/**
 	 * @return string[]
 	 */
-	protected function getBasePathsForNonComposerModules() {
+	protected function getBasePathsForNonComposerModules(): array {
 		return [
 			'localBasePath' => dirname( __DIR__ ),
 			'remoteBasePath' => $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload',

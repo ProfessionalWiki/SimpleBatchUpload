@@ -39,31 +39,26 @@ class UploadButtonRenderer {
 	 * @param $args
 	 * @return array
 	 */
-	public function renderParserFunction( Parser $parser, PPFrame $frame, $args ) {
-
+	public function renderParserFunction( Parser $parser, PPFrame $frame, $args ): array {
 		$args = array_map( [ $frame, 'expand' ], $args );
 		$output = $parser->getOutput();
 
 		$html = $this->renderUploadButton( $args, $output );
 
 		return [ $html, 'isHTML' => true, 'noparse' => true, 'nowiki' => false ];
-
 	}
-
 
 	/**
 	 * @param SpecialBatchUpload $specialPage
 	 * @param string $templateName
 	 */
 	public function renderSpecialPage( SpecialBatchUpload $specialPage, $templateName ) {
-
 		$args = [ $templateName ];
 		$output = $specialPage->getOutput();
 
 		$html = $this->renderUploadButton( $args, $output );
 
 		$output->addHTML( $html );
-
 	}
 
 	/**
@@ -72,7 +67,6 @@ class UploadButtonRenderer {
 	 * @return string
 	 */
 	protected function renderUploadButton( $args, $output ) {
-
 		$paramProvider = $this->prepareParameterProvider( $args );
 
 		$this->addModulesToOutput( $output );
@@ -121,7 +115,7 @@ class UploadButtonRenderer {
 	 * @param string[] $args
 	 * @return ParameterProvider
 	 */
-	protected function prepareParameterProvider( $args ) {
+	protected function prepareParameterProvider( $args ): ParameterProvider {
 
 		$templateName = $args[ 0 ];
 
