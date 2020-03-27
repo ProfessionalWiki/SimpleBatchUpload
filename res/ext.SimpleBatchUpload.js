@@ -64,9 +64,30 @@
 
 					data.id = Date.now();
 
+					var src_filename = data.files[ 0 ].name;
+					var filenode_text = src_filename;
+					var dst_filename = src_filename
+					var textdata = $( that ).fileupload( 'option', 'text' );
+                    // It matches: 
+                    //   other| +rename = !(\w+)[ -_/]*! =$1-}} 
+                    // where: 
+                    //   what: (\w+)[ -_/]*
+                    //   with: $1-
+                    // Spaces are important in subst-pattern (after 2nd '=').
+                    var rename_regex = /\|\s*\+rename\s*=\s*([#\/@!])(.+)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
+					var match = rename_regex.exec(textdata);
+					if ( match ) {
+						var pattern = RegExp(match[2], match[3]);
+						var replace = match[4];
+						dst_filename = src_filename.replace(pattern, replace);
+						filenode_text = ( dst_filename == src_filename ) ?
+							src_filename : `${src_filename} --> ${dst_filename}`;
+					}
+					
 					var status = $( '<li>' )
 					.attr( 'id', data.id )
-					.text( data.files[ 0 ].name );
+					.text( filenode_text )
+					.data('filenode_text', filenode_text);
 
 					$( 'ul.fileupload-results', container ).append( status );
 
@@ -90,9 +111,9 @@
 								action: 'upload',
 								token: token,
 								ignorewarnings: 1,
-								text: $( that ).fileupload( 'option', 'text' ),
+								text: textdata.replace(rename_regex, ''),
 								comment: $( that ).fileupload( 'option', 'comment' ),
-								filename: data.files[ 0 ].name
+								filename: dst_filename
 							};
 
 							data.submit()
@@ -106,7 +127,7 @@
 									var link = $( '<a>' );
 									link
 									.attr( 'href', mw.Title.newFromFileName( result.upload.filename ).getUrl() )
-									.text( result.upload.filename );
+									.text( status.data('filenode_text') );
 
 									status
 									.addClass( 'ful-success' )
@@ -130,8 +151,8 @@
 
 				progress: function ( e, data ) {
 					if ( data.loaded !== data.total ) {
-						$( '#' + data.id )
-						.text( data.files[ 0 ].name + ' ' + parseInt( data.loaded / data.total * 100, 10 ) + '%' );
+						var status = $( '#' + data.id );
+						status.text( status.data('filenode_text') + ' ' + parseInt( data.loaded / data.total * 100, 10 ) + '%' );
 					}
 				}
 			} );
