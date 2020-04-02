@@ -8,5 +8,5 @@
 	"batchupload": "Birden fazla dosya yükle",
 	"simplebatchupload-buttonlabel": "Dosyaları seçin (veya buraya bırakın)...",
 	"simplebatchupload-comment": "[[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]] ile yüklendi",
-	"simplebatchupload-max-files-alert": "Tek seferde {{PLURAL:$1|dosya|dosya}} taneden fazlasını yükleyemezsiniz."
+	"simplebatchupload-max-files-alert": "Tek seferde $1 fazla dosya yükleyemezsiniz."
 }

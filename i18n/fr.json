@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gomoko",
+			"Wladek92"
+		]
+	},
+	"simplebatchupload-desc": "Permet un téléchargement simple en tâche de fond de fichiers",
+	"batchupload": "Téléverser plusieurs fichiers",
+	"simplebatchupload-buttonlabel": "Sélectionner les fichiers (ou les faire glisser ici)…",
+	"simplebatchupload-comment": "Téléversé avec [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Vous ne pouvez pas télécharger plus de $1 {{PLURAL:$1|fichier|fichiers}} à la fois."
+}

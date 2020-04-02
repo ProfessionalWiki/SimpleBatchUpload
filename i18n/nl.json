@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mainframe98"
+		]
+	},
+	"batchupload": "Meerdere bestanden uploaden",
+	"simplebatchupload-buttonlabel": "Selecteer bestanden (of sleep ze hier naar toe)...",
+	"simplebatchupload-comment": "Geupload met [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "U kunt niet meer dan $1 {{PLURAL:$1|bestand|bestanden}} tegelijkertijd uploaden."
+}

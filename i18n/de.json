@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"F.trott"
+			"F.trott",
+			"Kghbln"
 		]
 	},
-	"simplebatchupload-desc": "Einfaches Hochladen mehrerer Dateien",
+	"simplebatchupload-desc": "Ermöglicht ein einfaches Hochladen mehrerer Dateien gleichzeitig",
 	"batchupload": "Mehrere Dateien hochladen",
-	"simplebatchupload-buttonlabel": "Wähle Dateien (oder ziehe sie hierher)...",
-	"simplebatchupload-comment": "Hochgeladen mittels [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]"
+	"simplebatchupload-buttonlabel": "Dateien auswählen oder hierher ziehen...",
+	"simplebatchupload-comment": "Hochgeladen mit [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Mehr als {{PLURAL:$1|eine Datei|$1 Dateien}} können nicht auf einmal hochgeladen werden."
 }

@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ykhwong"
+		]
+	},
+	"batchupload": "여러 개의 파일 업로드",
+	"simplebatchupload-buttonlabel": "파일 선택 (또는 여기에 끌어놓으세요)..."
+}

@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"batchupload": "Méi Fichieren eroplueden",
+	"simplebatchupload-comment": "Eropgeluede mam [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Dir kënnt net méi wéi {{PLURAL:$1|ee Fichier|$1 Fichiere}} mateneen eroplueden."
+}

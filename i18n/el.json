@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Geraki"
+		]
+	},
+	"simplebatchupload-desc": "Επιτρέπει την απλή ομαδική επιφόρτωση αρχείων",
+	"batchupload": "Επιφόρτωση πολλαπλών αρχείων",
+	"simplebatchupload-buttonlabel": "Επιλέξτε αρχεία (ή ρίξτε τα εδώ)...",
+	"simplebatchupload-comment": "Ανέβηκε με το [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Δεν μπορείτε να ανεβάσετε περισσότερα από {{PLURAL:$1|αρχείο|αρχεία}} κάθε φορά."
+}
