@@ -8,5 +8,5 @@
 	"batchupload": "Carregar vários arquivos",
 	"simplebatchupload-buttonlabel": "Selecione os arquivos (ou solte-os aqui)...",
 	"simplebatchupload-comment": "Carregado com [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "Você não pode enviar mais de {{PLURAL:$1|arquivo|arquivos}} de uma só vez."
+	"simplebatchupload-max-files-alert": "Você não pode enviar mais de $1 {{PLURAL:$1|arquivo|arquivos}} de uma só vez."
 }
