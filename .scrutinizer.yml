@@ -13,7 +13,7 @@ build:
     nodes:
         code-analysis-and-test-mw-master:
             environment:
-                php: 7.3
+                php: 7.4
                 variables:
                     MW: master
                     SBU: composer
@@ -50,6 +50,12 @@ build:
                 variables:
                     MW: 1.33.0
                     SBU: download
+        test-mw-1.34:
+            environment:
+                php: 7.3
+                variables:
+                    MW: 1.34.0
+                    SBU: composer
 
 filter:
 # The filter section defines which files are analyzed, where dependencies are located and which files should be completely ignored.
