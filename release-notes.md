@@ -1,5 +1,12 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.7.0
+
+Under development
+
+* Added `+rename` parameter to `#batchupload` to enable renaming of files via regex (by @ankostis)
+* Added file number to alert message (by @Abijeet)
+
 ### SimpleBatchUpload 1.6.0
 
 Released on March 24, 2020.
