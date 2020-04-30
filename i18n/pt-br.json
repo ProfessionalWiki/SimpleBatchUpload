@@ -1,12 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eduardo Addad de Oliveira"
+			"Eduardo Addad de Oliveira",
+			"Jhonnatanricardo"
 		]
 	},
 	"simplebatchupload-desc": "Permite o carregamento em lote simples de arquivos",
 	"batchupload": "Carregar vários arquivos",
 	"simplebatchupload-buttonlabel": "Selecione os arquivos (ou solte-os aqui)...",
-	"simplebatchupload-comment": "Carregado com [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-comment": "Carregado com [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-max-files-alert": "Você não pode enviar mais de $1 {{PLURAL:$1|arquivo|arquivos}} de uma só vez."
 }

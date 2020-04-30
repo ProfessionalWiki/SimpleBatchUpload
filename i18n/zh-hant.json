@@ -7,6 +7,6 @@
 	"simplebatchupload-desc": "允許簡易批量上傳檔案",
 	"batchupload": "上傳多個檔案",
 	"simplebatchupload-buttonlabel": "選擇檔案（或托放在此）…",
-	"simplebatchupload-comment": "透過[[mw:Extension:SimpleBatchUpload|簡易批量上傳]]來上傳",
+	"simplebatchupload-comment": "透過[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|簡易批量上傳]]來上傳",
 	"simplebatchupload-max-files-alert": "您不能同時上傳超過 $1 {{PLURAL:$1|個檔案}}。"
 }

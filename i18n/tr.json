@@ -7,6 +7,6 @@
 	"simplebatchupload-desc": "Dosyaların toplu olarak basitçe yüklenmesine izin verir",
 	"batchupload": "Birden fazla dosya yükle",
 	"simplebatchupload-buttonlabel": "Dosyaları seçin (veya buraya bırakın)...",
-	"simplebatchupload-comment": "[[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]] ile yüklendi",
+	"simplebatchupload-comment": "[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]] ile yüklendi",
 	"simplebatchupload-max-files-alert": "Tek seferde $1 fazla dosya yükleyemezsiniz."
 }
