@@ -1,10 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Fitoschido"
+			"Fitoschido",
+			"MarcoAurelio"
 		]
 	},
 	"batchupload": "Cargar varios archivos",
 	"simplebatchupload-buttonlabel": "Selecciona archivos (o colócalos aquí)…",
+	"simplebatchupload-comment": "Cargado mediante [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-max-files-alert": "No es posible cargar más de $1 {{PLURAL:$1|archivo|archivos}} a la vez."
 }
