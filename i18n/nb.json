@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"simplebatchupload-desc": "Gjør det mulig å masseopplaste filer på en enkel måte",
+	"batchupload": "Last opp flere filer",
+	"simplebatchupload-buttonlabel": "Velg filer (eller slipp dem her) …",
+	"simplebatchupload-comment": "Lastet opp med [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Du kan ikke laste opp mer enn {{PLURAL:$1|én fil|$1 filer}} av gangen."
+}
