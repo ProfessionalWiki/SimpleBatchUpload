@@ -105,7 +105,7 @@ class SimpleBatchUpload {
 				'scripts' => [ 'res/jquery.fileupload.js' ],
 				'styles' => [ 'res/jquery.fileupload.css' ],
 				'position' => 'top',
-				'dependencies' => [ 'jquery.ui.widget' ],
+				'dependencies' => [ 'jquery.ui' ],
 			],
 		];
 	}
