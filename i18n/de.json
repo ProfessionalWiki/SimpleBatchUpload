@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ameisenigel",
 			"F.trott",
 			"Kghbln"
 		]
@@ -8,6 +9,6 @@
 	"simplebatchupload-desc": "Ermöglicht ein einfaches Hochladen mehrerer Dateien gleichzeitig",
 	"batchupload": "Mehrere Dateien hochladen",
 	"simplebatchupload-buttonlabel": "Dateien auswählen oder hierher ziehen...",
-	"simplebatchupload-comment": "Hochgeladen mit [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-comment": "Hochgeladen mit [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-max-files-alert": "Mehr als {{PLURAL:$1|eine Datei|$1 Dateien}} können nicht auf einmal hochgeladen werden."
 }
