@@ -1,11 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mainframe98"
+			"Mainframe98",
+			"Tkinkhorst",
+			"Xbaked potatox"
 		]
 	},
+	"simplebatchupload-desc": "Maakt uploaden van meerdere bestanden eenvoudig mogelijk",
 	"batchupload": "Meerdere bestanden uploaden",
 	"simplebatchupload-buttonlabel": "Selecteer bestanden (of sleep ze hier naar toe)...",
-	"simplebatchupload-comment": "Geupload met [[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-comment": "Geüpload met [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-max-files-alert": "U kunt niet meer dan $1 {{PLURAL:$1|bestand|bestanden}} tegelijkertijd uploaden."
 }
