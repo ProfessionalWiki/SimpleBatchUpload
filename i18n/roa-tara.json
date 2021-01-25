@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"simplebatchupload-desc": "Permette le batch facile pe le carecaminde de le fail",
+	"batchupload": "Careche cchiù file",
+	"simplebatchupload-buttonlabel": "Scacchie le fail (o scittele aqquà)...",
+	"simplebatchupload-comment": "Carecate cu [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Nojn ge puè carecà cchiù de $1 {{PLURAL:$1|fail}} jndr'à 'na vote."
+}
