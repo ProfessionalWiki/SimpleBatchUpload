@@ -7,6 +7,6 @@
 	"simplebatchupload-desc": "Овозможува просто збирно подигање на податотеки",
 	"batchupload": "Подигање на повеќе податотеки наеднаш",
 	"simplebatchupload-buttonlabel": "Изберете податотеки (или пуштете ги овде)...",
-	"simplebatchupload-comment": "Подигнато со [[mw:Extension:SimpleBatchUpload|Просто збирно подигање]]",
+	"simplebatchupload-comment": "Подигнато со [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|Просто збирно подигање]]",
 	"simplebatchupload-max-files-alert": "Не можете наеднаш да подигате повеќе од {{PLURAL:$1|една податотека|$1 податотеки}}."
 }
