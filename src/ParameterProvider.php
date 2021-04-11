@@ -48,13 +48,13 @@ class ParameterProvider {
 		$this->templateName = $templateName ? $templateName : '';
 	}
 
-	public function getEscapedUploadPageText(): string {
+	public function getUploadPageText(): string {
 
 		if ( $this->templateName === '' ) {
 			return '';
 		}
 
-		return '{{' . $this->getEscapedParameter( self::IDX_TEMPLATENAME ) . $this->getEscapedParameter( self::IDX_TEMPLATEPARAMETERS ) . '}}';
+		return '{{' . $this->getParameter( self::IDX_TEMPLATENAME ) . $this->getParameter( self::IDX_TEMPLATEPARAMETERS ) . '}}';
 	}
 
 	private function getEscapedParameter( int $key ): string {
