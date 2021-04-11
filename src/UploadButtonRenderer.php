@@ -25,7 +25,7 @@
 namespace SimpleBatchUpload;
 use Parser;
 use PPFrame;
-
+use Html;
 
 /**
  * Class UploadButtonRenderer
@@ -85,10 +85,14 @@ class UploadButtonRenderer {
 	protected function getHtml( ParameterProvider $paramProvider ) {
 
 		$escapedUploadComment = $paramProvider->getEscapedUploadComment();
-		$escapedUploadPageText = $paramProvider->getEscapedUploadPageText();
+		$uploadPageText = $paramProvider->getUploadPageText();
 
 		return
 
+			'<label for="wfUploadDescription">' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':</label><br>'.
+			'<span class="mw-input">' .
+			Html::element('textarea', ['name' => 'wfUploadDescription', 'id' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8'], $uploadPageText) .
+			'</span><br> ' .
 			'<span class="fileupload-container"> ' .
 			'<span class="fileupload-dropzone fileinput-button"> ' .
 			'<i class="glyphicon glyphicon-plus"></i> ' .
@@ -97,7 +101,6 @@ class UploadButtonRenderer {
 			'<input class="fileupload" type="file" name="file" multiple ' .
 			'    data-url="' . wfScript( 'api' ) . '" ' .
 			'    data-comment="' . $escapedUploadComment . '" ' .
-			'    data-text="' . $escapedUploadPageText . '" ' .
 			'> ' .
 			'</span><ul class="fileupload-results"></ul> ' .
 			'</span>';
