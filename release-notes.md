@@ -4,6 +4,7 @@
 
 Under development
 
+* Added description field to the file upload form (by @thijskh)
 * Added `+rename` parameter to `#batchupload` to enable renaming of files via regex (by @ankostis)
 * Added file number to alert message (by @Abijeet)
 
