@@ -97,6 +97,12 @@ class SimpleBatchUpload {
 	}
 
 	protected function getUploadSupportModuleDefinition(): array {
+		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.35.0', '>' ) ) {
+			$dependencies = [ 'jquery.ui' ];
+		} else {
+			$dependencies = [ 'jquery.ui.widget' ];
+		}
+
 		return [ 'ext.SimpleBatchUpload.jquery-file-upload' =>
 
 			$this->getBasePathsForNonComposerModules() +
@@ -105,7 +111,7 @@ class SimpleBatchUpload {
 				'scripts' => [ 'res/jquery.fileupload.js' ],
 				'styles' => [ 'res/jquery.fileupload.css' ],
 				'position' => 'top',
-				'dependencies' => [ 'jquery.ui.widget' ],
+				'dependencies' => $dependencies,
 			],
 		];
 	}
