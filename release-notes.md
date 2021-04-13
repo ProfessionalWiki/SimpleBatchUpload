@@ -2,11 +2,12 @@
 
 ### SimpleBatchUpload 1.7.0
 
-Under development
+Released on April 13, 2021.
 
 * Added description field to the file upload form (by @thijskh)
 * Added `+rename` parameter to `#batchupload` to enable renaming of files via regex (by @ankostis)
 * Added file number to alert message (by @Abijeet)
+* Fixed compatibility issue with MediaWiki 1.35+ (by @thijskh)
 
 ### SimpleBatchUpload 1.6.0
 
