@@ -1,5 +1,11 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.8.0
+
+Not released yet
+
+* 
+
 ### SimpleBatchUpload 1.7.0
 
 Released on April 13, 2021.
