@@ -89,20 +89,21 @@ class UploadButtonRenderer {
 
 		return
 
-			'<label for="wfUploadDescription">' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':</label><br>'.
-			'<span class="mw-input">' .
-			Html::element('textarea', ['name' => 'wfUploadDescription', 'id' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8'], $uploadPageText) .
-			'</span><br> ' .
+			'<label>' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':<br>'.
+				'<span class="mw-input">' .
+					Html::element('textarea', ['name' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8'], $uploadPageText) .
+				'</span>' .
+			'</label><br> '.
 			'<span class="fileupload-container"> ' .
-			'<span class="fileupload-dropzone fileinput-button"> ' .
-			'<i class="glyphicon glyphicon-plus"></i> ' .
-			'<span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span> ' .
-			'<!-- The file input field used as target for the file upload widget -->' .
-			'<input class="fileupload" type="file" name="file" multiple ' .
-			'    data-url="' . wfScript( 'api' ) . '" ' .
-			'    data-comment="' . $escapedUploadComment . '" ' .
-			'> ' .
-			'</span><ul class="fileupload-results"></ul> ' .
+				'<span class="fileupload-dropzone fileinput-button"> ' .
+					'<i class="glyphicon glyphicon-plus"></i> ' .
+					'<span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span> ' .
+					'<!-- The file input field used as target for the file upload widget -->' .
+					'<input class="fileupload" type="file" name="file" multiple ' .
+					'    data-url="' . wfScript( 'api' ) . '" ' .
+					'    data-comment="' . $escapedUploadComment . '" ' .
+					'> ' .
+				'</span><ul class="fileupload-results"></ul> ' .
 			'</span>';
 	}
 
