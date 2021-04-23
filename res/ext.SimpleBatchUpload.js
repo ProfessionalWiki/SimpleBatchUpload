@@ -67,7 +67,7 @@
 					var src_filename = data.files[ 0 ].name;
 					var filenode_text = src_filename;
 					var dst_filename = src_filename
-					var textdata = $("#wfUploadDescription").val();
+					var textdata = $(container).find('[name="wfUploadDescription"]').val();
                     // It matches: 
                     //   other| +rename = !(\w+)[ -_/]*! =$1-}} 
                     // where: 
