@@ -4,7 +4,7 @@
 
 Not released yet
 
-* 
+* Fix issues with multiple instances of `#batchupload` always inserting the content of the first instance.
 
 ### SimpleBatchUpload 1.7.0
 
