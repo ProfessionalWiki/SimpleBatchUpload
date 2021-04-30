@@ -2,7 +2,7 @@
 
 ### SimpleBatchUpload 1.8.0
 
-Not released yet
+Released on April 30, 2021.
 
 * Fix issues with multiple instances of `#batchupload` always inserting the content of the first instance.
 
