@@ -40,7 +40,7 @@
 			} );
 		}
 
-		$( 'span.fileupload-container' ).each( function () {
+		$( 'div.fileupload-container' ).each( function () {
 
 			var container = this;
 
@@ -68,13 +68,13 @@
 					var filenode_text = src_filename;
 					var dst_filename = src_filename
 					var textdata = $(container).find('[name="wfUploadDescription"]').val();
-                    // It matches: 
-                    //   other| +rename = !(\w+)[ -_/]*! =$1-}} 
-                    // where: 
-                    //   what: (\w+)[ -_/]*
-                    //   with: $1-
-                    // Spaces are important in subst-pattern (after 2nd '=').
-                    var rename_regex = /\|\s*\+rename\s*=\s*([#\/@!])(.+)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
+					// It matches:
+					//   other| +rename = !(\w+)[ -_/]*! =$1-}}
+					// where:
+					//   what: (\w+)[ -_/]*
+					//   with: $1-
+					// Spaces are important in subst-pattern (after 2nd '=').
+					var rename_regex = /\|\s*\+rename\s*=\s*([#\/@!])(.+)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
 					var match = rename_regex.exec(textdata);
 					if ( match ) {
 						var pattern = RegExp(match[2], match[3]);

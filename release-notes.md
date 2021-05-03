@@ -1,5 +1,11 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.8.1
+
+Not released yet
+
+* Fix an issue in the previous patch causing batch uploading to break.
+
 ### SimpleBatchUpload 1.8.0
 
 Released on April 30, 2021.
