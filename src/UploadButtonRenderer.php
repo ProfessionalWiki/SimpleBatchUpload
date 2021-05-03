@@ -89,12 +89,12 @@ class UploadButtonRenderer {
 
 		return
 
-			'<label>' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':<br>'.
-				'<span class="mw-input">' .
-					Html::element('textarea', ['name' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8'], $uploadPageText) .
-				'</span>' .
-			'</label><br> '.
-			'<span class="fileupload-container"> ' .
+			'<div class="fileupload-container"> ' .
+				'<label>' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':<br>'.
+					'<span class="mw-input">' .
+						Html::element('textarea', ['name' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8'], $uploadPageText) .
+					'</span>' .
+				'</label><br> '.
 				'<span class="fileupload-dropzone fileinput-button"> ' .
 					'<i class="glyphicon glyphicon-plus"></i> ' .
 					'<span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span> ' .
@@ -104,7 +104,7 @@ class UploadButtonRenderer {
 					'    data-comment="' . $escapedUploadComment . '" ' .
 					'> ' .
 				'</span><ul class="fileupload-results"></ul> ' .
-			'</span>';
+			'</div>';
 	}
 
 	/**
