@@ -97,7 +97,7 @@ class SimpleBatchUpload {
 	}
 
 	protected function getUploadSupportModuleDefinition(): array {
-		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.35.0', '>' ) ) {
+		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.35.0', '>=' ) ) {
 			$dependencies = [ 'jquery.ui' ];
 		} else {
 			$dependencies = [ 'jquery.ui.widget' ];
