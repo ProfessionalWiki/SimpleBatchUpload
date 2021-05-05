@@ -1,5 +1,11 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.8.2
+
+Released on May 5, 2021.
+
+* Fixed JavaScript loading issue on MediaWiki 1.35.x (thanks @MtMNC)
+
 ### SimpleBatchUpload 1.8.1
 
 Released on May 3, 2021.
