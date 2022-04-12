@@ -31,13 +31,9 @@ installation directory.
 }
 ```
 
-(Alternatively you can download a tar ball or zip file from
-[GitHub](https://github.com/ProfessionalWiki/SimpleBatchUpload/releases/latest)
-and extract it into the `extensions` directory of your MediaWiki installation.)
-
 Then add the following line to your "LocalSettings.php" file:
 ```php
-wfLoadExtension('SimpleBatchUpload');
+wfLoadExtension( 'SimpleBatchUpload' );
 ```
 
 **Note:** To use the extension [`$wgEnableWriteAPI`][$wgEnableWriteAPI] needs to
