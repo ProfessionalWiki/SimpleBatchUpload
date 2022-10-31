@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Meno25"
+		]
+	},
+	"simplebatchupload-desc": "يسمح بتحميل دفعة بسيطة من الملفات",
+	"batchupload": "تحميل ملفات متعددة",
+	"simplebatchupload-buttonlabel": "حدد الملفات (أو أسقطها هنا) ...",
+	"simplebatchupload-comment": "تم التحميل باستخدام [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "لا يمكنك تحميل أكثر من $1 {{PLURAL:$1| file | files}} في وقت واحد."
+}
