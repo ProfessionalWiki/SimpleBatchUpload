@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Hamilton Abreu"
+		]
+	},
+	"simplebatchupload-desc": "Permite o carregamento simples de ficheiros em segundo plano",
+	"batchupload": "Carregar vários ficheiros",
+	"simplebatchupload-buttonlabel": "Selecionar ficheiros (ou largue-os aqui)...",
+	"simplebatchupload-comment": "Carregado com o [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Não pode carregar mais de $1 {{PLURAL:$1|ficheiro|ficheiros}} ao mesmo tempo."
+}
