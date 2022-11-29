@@ -51,10 +51,6 @@ There are four ways to upload files using this extension:
 * Add `{{#batchupload:Foo|Bar|Baz}}` to any wikipage to get an upload button
   that sets `{{Foo|Bar|Baz}}` as the wikitext of the uploaded file's page  
 
-**Note:** The wikitext will only be set for newly uploaded files. If the file
-exists already, subsequent uploads of new versions of the file will not change
-the wikitext.
-
 ## Customization
 
 It is possible to specify dedicated parameter sets for the upload of specific
