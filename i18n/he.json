@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80",
+			"YaronSh"
+		]
+	},
+	"simplebatchupload-desc": "אפשרות העלאה פשוטה של קבצים באצווה",
+	"batchupload": "העלאת קבצים מרובים",
+	"simplebatchupload-buttonlabel": "נא לבחור קבצים (או לגרור ולהשלליך אותם לכאן)…",
+	"simplebatchupload-comment": "הועלה עם [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "אין לך אפשרות להעלות יותר {{PLURAL:$1|מקובץ אחד|מ־$1 קבצים}} בכל פעם."
+}
