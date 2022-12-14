@@ -1,5 +1,12 @@
 ## Release Notes
 
+### SimpleBatchUpload 1.9.0
+
+Released on December 14, 2022
+
+* Fix jQuery Promise methods (thanks @malberts)
+* Updated `blueimp-file-upload` dependency to v10.32.0 (thanks @malberts)
+
 ### SimpleBatchUpload 1.8.2
 
 Released on May 5, 2021.
