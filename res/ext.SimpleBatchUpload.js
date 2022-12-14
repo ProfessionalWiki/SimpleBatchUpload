@@ -83,7 +83,7 @@
 						filenode_text = ( dst_filename == src_filename ) ?
 							src_filename : `${src_filename} --> ${dst_filename}`;
 					}
-					
+
 					var status = $( '<li>' )
 					.attr( 'id', data.id )
 					.text( filenode_text )
@@ -117,7 +117,7 @@
 							};
 
 							data.submit()
-							.success( function ( result /*, textStatus, jqXHR */ ) {
+							.done( function ( result /*, textStatus, jqXHR */ ) {
 
 								if ( result.error !== undefined ) {
 
@@ -136,7 +136,7 @@
 								}
 
 							} )
-							.error( function ( /* jqXHR, textStatus, errorThrown */ ) {
+							.fail( function ( /* jqXHR, textStatus, errorThrown */ ) {
 								status.text( status.text() + " ERROR: Server communication failed." ).addClass( 'ful-error server-error' );
 								// console.log( JSON.stringify( arguments ) );
 							} );
