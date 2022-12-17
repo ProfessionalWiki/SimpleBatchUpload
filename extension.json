@@ -41,8 +41,7 @@
 	},
 	"Hooks": {
 		"ParserFirstCallInit": "SimpleBatchUpload\\SimpleBatchUpload::registerParserFunction",
-		"MakeGlobalVariablesScript": "SimpleBatchUpload\\SimpleBatchUpload::onMakeGlobalVariablesScript",
-		"@SetupAfterCache": "SimpleBatchUpload\\SimpleBatchUpload::onSetupAfterCache"
+		"MakeGlobalVariablesScript": "SimpleBatchUpload\\SimpleBatchUpload::onMakeGlobalVariablesScript"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "res",
