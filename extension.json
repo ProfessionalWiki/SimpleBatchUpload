@@ -29,6 +29,57 @@
 	"AutoloadNamespaces": {
 		"SimpleBatchUpload\\": "src/"
 	},
-	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
+	"TestAutoloadNamespaces": {
+		"SimpleBatchUpload\\Tests": "tests/phpunit/"
+	},
+	"ExtensionMessagesFiles": {
+		"SimpleBatchUploadAlias": "src/SimpleBatchUpload.alias.php",
+		"SimpleBatchUploadMagic": "src/SimpleBatchUpload.magic.php"
+	},
+	"SpecialPages": {
+		"BatchUpload": "SimpleBatchUpload\\SpecialBatchUpload"
+	},
+	"Hooks": {
+		"ParserFirstCallInit": "SimpleBatchUpload\\SimpleBatchUpload::registerParserFunction",
+		"MakeGlobalVariablesScript": "SimpleBatchUpload\\SimpleBatchUpload::onMakeGlobalVariablesScript",
+		"@SetupAfterCache": "SimpleBatchUpload\\SimpleBatchUpload::onSetupAfterCache"
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "res",
+		"remoteExtPath": "SimpleBatchUpload/res"
+	},
+	"ResourceModules": {
+		"ext.SimpleBatchUpload.jquery-file-upload": {
+			"scripts": [
+				"jquery.fileupload.js"
+			],
+			"styles": [
+				"jquery.fileupload.css"
+			],
+			"position": "top",
+			"dependencies": [
+				"jquery.ui"
+			]
+		},
+		"ext.SimpleBatchUpload": {
+			"scripts": [
+				"ext.SimpleBatchUpload.js"
+			],
+			"styles": [
+				"ext.SimpleBatchUpload.css"
+			],
+			"position": "top",
+			"dependencies": [
+				"ext.SimpleBatchUpload.jquery-file-upload",
+				"mediawiki.Title",
+				"mediawiki.jqueryMsg",
+				"mediawiki.api"
+			],
+			"messages": [
+				"simplebatchupload-comment",
+				"simplebatchupload-max-files-alert"
+			]
+		}
+	},
 	"manifest_version": 2
 }

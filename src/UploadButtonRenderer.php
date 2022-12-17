@@ -111,7 +111,7 @@ class UploadButtonRenderer {
 	 * @param \ParserOutput | \OutputPage $output
 	 */
 	protected function addModulesToOutput( $output ) {
-		$output->addModules( 'ext.SimpleBatchUpload' );
+		$output->addModules( [ 'ext.SimpleBatchUpload' ] );
 		$output->addModuleStyles( [ 'ext.SimpleBatchUpload', 'ext.SimpleBatchUpload.jquery-file-upload' ] );
 	}
 
