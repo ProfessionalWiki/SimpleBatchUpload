@@ -134,33 +134,36 @@ class SimpleBatchUploadTest extends PHPUnit_Framework_TestCase {
 		$this->assertArrayHasKey( 'wgResourceModules', $configuration );
 
 		$this->assertArrayHasKey( 'ext.SimpleBatchUpload.jquery-file-upload', $configuration[ 'wgResourceModules' ] );
-		$this->assertTrue( $configuration[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload.jquery-file-upload' ] === [
+		$this->assertSame(
+			$configuration[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload.jquery-file-upload' ],
+			[
 				'localBasePath'  => dirname( dirname( __DIR__ ) ),
 				'remoteBasePath' => $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload',
 				'scripts'        => [ 'res/jquery.fileupload.js' ],
 				'styles'         => [ 'res/jquery.fileupload.css' ],
 				'position'       => 'top',
-				'dependencies'   => [ 'jquery.ui.widget' ],
-			] );
-
-		$dependencies = [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.jqueryMsg' ];
-
-		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.32.0', '>' ) ) {
-			$dependencies[] = 'mediawiki.api';
-		} else {
-			$dependencies[] = 'mediawiki.api.edit';
-		}
+				'dependencies'   => [ 'jquery.ui' ],
+			]
+		);
 
 		$this->assertArrayHasKey( 'ext.SimpleBatchUpload', $configuration[ 'wgResourceModules' ] );
-		$this->assertTrue( $configuration[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload' ] === [
+		$this->assertSame(
+			$configuration[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload' ],
+			[
 				'localBasePath'  => dirname( dirname( __DIR__ ) ),
 				'remoteBasePath' => $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload',
 				'scripts'        => [ 'res/ext.SimpleBatchUpload.js' ],
 				'styles'         => [ 'res/ext.SimpleBatchUpload.css' ],
 				'position'       => 'top',
-				'dependencies'   => $dependencies,
+				'dependencies'   => [
+					'ext.SimpleBatchUpload.jquery-file-upload',
+					'mediawiki.Title',
+					'mediawiki.jqueryMsg',
+					'mediawiki.api'
+				],
 				'messages'       => [ 'simplebatchupload-comment', 'simplebatchupload-max-files-alert' ],
-		]);
+			]
+		);
 
 	}
 

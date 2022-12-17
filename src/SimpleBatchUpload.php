@@ -97,12 +97,6 @@ class SimpleBatchUpload {
 	}
 
 	protected function getUploadSupportModuleDefinition(): array {
-		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.35.0', '>=' ) ) {
-			$dependencies = [ 'jquery.ui' ];
-		} else {
-			$dependencies = [ 'jquery.ui.widget' ];
-		}
-
 		return [ 'ext.SimpleBatchUpload.jquery-file-upload' =>
 
 			$this->getBasePathsForNonComposerModules() +
@@ -111,20 +105,12 @@ class SimpleBatchUpload {
 				'scripts' => [ 'res/jquery.fileupload.js' ],
 				'styles' => [ 'res/jquery.fileupload.css' ],
 				'position' => 'top',
-				'dependencies' => $dependencies,
+				'dependencies' => [ 'jquery.ui' ],
 			],
 		];
 	}
 
 	protected function getUploadModuleDefinition(): array {
-
-		$dependencies = [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.jqueryMsg' ];
-
-		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.32.0', '>' ) ) {
-			$dependencies[] = 'mediawiki.api';
-		} else {
-			$dependencies[] = 'mediawiki.api.edit';
-		}
 
 		return [ 'ext.SimpleBatchUpload' =>
 
@@ -134,7 +120,12 @@ class SimpleBatchUpload {
 				'scripts' => [ 'res/ext.SimpleBatchUpload.js' ],
 				'styles' => [ 'res/ext.SimpleBatchUpload.css' ],
 				'position' => 'top',
-				'dependencies' => $dependencies,
+				'dependencies' => [
+					'ext.SimpleBatchUpload.jquery-file-upload',
+					'mediawiki.Title',
+					'mediawiki.jqueryMsg',
+					'mediawiki.api'
+				],
 				'messages' => [ 'simplebatchupload-comment', 'simplebatchupload-max-files-alert' ],
 			],
 		];
