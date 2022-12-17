@@ -7,6 +7,8 @@ Under development.
 * Raised minimum required versions to
   * MediaWiki 1.35
   * PHP 8.0
+* Added PHP 8.1 support (thanks @malberts)
+* Fixed deprecation warning in MediaWiki 1.38 (thanks @malberts)
 
 ### SimpleBatchUpload 1.9.0
 
