@@ -13,8 +13,8 @@ It is maintained by [Professional.Wiki](https://professional.wiki/).
 
 ## Requirements
 
-- PHP 7.0 or later
-- MediaWiki 1.31 or later
+- PHP 8.0 or later
+- MediaWiki 1.35 or later
 
 ## Installation
 
@@ -26,7 +26,7 @@ installation directory.
 ```json
 {
 	"require": {
-		"mediawiki/simple-batch-upload": "^1.0"
+		"mediawiki/simple-batch-upload": "^2.0"
 	}
 }
 ```
@@ -36,8 +36,7 @@ Then add the following line to your "LocalSettings.php" file:
 wfLoadExtension( 'SimpleBatchUpload' );
 ```
 
-**Note:** To use the extension [`$wgEnableWriteAPI`][$wgEnableWriteAPI] needs to
-be enabled and the user needs the [`writeapi`][writeapi] right. Both is the
+**Note:** To use the extension the user needs the [`writeapi`][writeapi] right. This is the
 default MediaWiki setting for registered users, but it may have been changed
 during the configuration of the wiki.
 
@@ -105,5 +104,4 @@ on mediawiki.org.
 [license]: https://www.gnu.org/copyleft/gpl.html
 [mw-simple-batch-upload]: https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
 [composer]: https://getcomposer.org/
-[$wgEnableWriteAPI]: https://www.mediawiki.org/wiki/Manual:$wgEnableWriteAPI
 [writeapi]: https://www.mediawiki.org/wiki/Manual:User_rights#List_of_permissions

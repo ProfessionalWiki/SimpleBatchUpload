@@ -1,5 +1,13 @@
 ## Release Notes
 
+### SimpleBatchUpload 2.0.0
+
+Under development.
+
+* Raised minimum required versions to
+  * MediaWiki 1.35
+  * PHP 8.0
+
 ### SimpleBatchUpload 1.9.0
 
 Released on December 14, 2022.
