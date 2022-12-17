@@ -1,6 +1,6 @@
 {
 	"name": "SimpleBatchUpload",
-	"version": "1.9.0",
+	"version": "2.0.0-dev",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
 		"[https://professional.wiki/ Professional.Wiki]",
@@ -12,7 +12,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">=1.31"
+		"MediaWiki": ">=1.35"
 	},
 	"MessagesDirs": {
 		"SimpleBatchUpload": [
@@ -29,6 +29,56 @@
 	"AutoloadNamespaces": {
 		"SimpleBatchUpload\\": "src/"
 	},
-	"callback": "SimpleBatchUpload\\SimpleBatchUpload::initCallback",
+	"TestAutoloadNamespaces": {
+		"SimpleBatchUpload\\Tests": "tests/phpunit/"
+	},
+	"ExtensionMessagesFiles": {
+		"SimpleBatchUploadAlias": "src/SimpleBatchUpload.alias.php",
+		"SimpleBatchUploadMagic": "src/SimpleBatchUpload.magic.php"
+	},
+	"SpecialPages": {
+		"BatchUpload": "SimpleBatchUpload\\SpecialBatchUpload"
+	},
+	"Hooks": {
+		"ParserFirstCallInit": "SimpleBatchUpload\\SimpleBatchUpload::registerParserFunction",
+		"MakeGlobalVariablesScript": "SimpleBatchUpload\\SimpleBatchUpload::onMakeGlobalVariablesScript"
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "res",
+		"remoteExtPath": "SimpleBatchUpload/res"
+	},
+	"ResourceModules": {
+		"ext.SimpleBatchUpload.jquery-file-upload": {
+			"scripts": [
+				"jquery.fileupload.js"
+			],
+			"styles": [
+				"jquery.fileupload.css"
+			],
+			"position": "top",
+			"dependencies": [
+				"jquery.ui"
+			]
+		},
+		"ext.SimpleBatchUpload": {
+			"scripts": [
+				"ext.SimpleBatchUpload.js"
+			],
+			"styles": [
+				"ext.SimpleBatchUpload.css"
+			],
+			"position": "top",
+			"dependencies": [
+				"ext.SimpleBatchUpload.jquery-file-upload",
+				"mediawiki.Title",
+				"mediawiki.jqueryMsg",
+				"mediawiki.api"
+			],
+			"messages": [
+				"simplebatchupload-comment",
+				"simplebatchupload-max-files-alert"
+			]
+		}
+	},
 	"manifest_version": 2
 }

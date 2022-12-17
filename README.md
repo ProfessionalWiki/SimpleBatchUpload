@@ -1,9 +1,8 @@
 # SimpleBatchUpload
 
+[![GitHub Workflow Status](https://github.com/ProfessionalWiki/SimpleBatchUpload/actions/workflows/ci.yml/badge.svg)](https://github.com/ProfessionalWiki/SimpleBatchUpload/actions?query=workflow%3ACI)
 [![Latest Stable Version](https://poser.pugx.org/mediawiki/simple-batch-upload/v/stable)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Packagist download count](https://poser.pugx.org/mediawiki/simple-batch-upload/downloads)](https://packagist.org/packages/mediawiki/simple-batch-upload)
-[![Build Status](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ProfessionalWiki/SimpleBatchUpload/?branch=master)
 
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
@@ -13,8 +12,8 @@ It is maintained by [Professional.Wiki](https://professional.wiki/).
 
 ## Requirements
 
-- PHP 7.0 or later
-- MediaWiki 1.31 or later
+- PHP 8.0 or later
+- MediaWiki 1.35 or later
 
 ## Installation
 
@@ -26,7 +25,7 @@ installation directory.
 ```json
 {
 	"require": {
-		"mediawiki/simple-batch-upload": "^1.0"
+		"mediawiki/simple-batch-upload": "^2.0"
 	}
 }
 ```
@@ -36,8 +35,7 @@ Then add the following line to your "LocalSettings.php" file:
 wfLoadExtension( 'SimpleBatchUpload' );
 ```
 
-**Note:** To use the extension [`$wgEnableWriteAPI`][$wgEnableWriteAPI] needs to
-be enabled and the user needs the [`writeapi`][writeapi] right. Both is the
+**Note:** To use the extension the user needs the [`writeapi`][writeapi] right. This is the
 default MediaWiki setting for registered users, but it may have been changed
 during the configuration of the wiki.
 
@@ -105,5 +103,4 @@ on mediawiki.org.
 [license]: https://www.gnu.org/copyleft/gpl.html
 [mw-simple-batch-upload]: https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
 [composer]: https://getcomposer.org/
-[$wgEnableWriteAPI]: https://www.mediawiki.org/wiki/Manual:$wgEnableWriteAPI
 [writeapi]: https://www.mediawiki.org/wiki/Manual:User_rights#List_of_permissions

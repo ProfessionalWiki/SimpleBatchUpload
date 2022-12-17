@@ -20,6 +20,10 @@
  * @ingroup SimpleBatchUpload
  */
 
+namespace SimpleBatchUpload\Tests;
+
+use OutputPage;
+use Parser;
 use SimpleBatchUpload\SimpleBatchUpload;
 
 /**
@@ -28,7 +32,7 @@ use SimpleBatchUpload\SimpleBatchUpload;
  *
  * @since 1.5
  */
-class SimpleBatchUploadTest extends PHPUnit_Framework_TestCase {
+class SimpleBatchUploadTest extends \PHPUnit\Framework\TestCase {
 
 	public function testCanConstruct() {
 
@@ -36,28 +40,6 @@ class SimpleBatchUploadTest extends PHPUnit_Framework_TestCase {
 			'\SimpleBatchUpload\SimpleBatchUpload',
 			new SimpleBatchUpload()
 		);
-	}
-
-	public function testRegistersGlobals() {
-		$this->assertJsonConfiguration( $GLOBALS );
-		$this->assertEarlyConfiguration( $GLOBALS );
-		$this->assertLateConfiguration( $GLOBALS );
-	}
-
-	public function testRegisterEarlyConfiguraion() {
-		$sbu = new SimpleBatchUpload();
-		$config = [];
-
-		$sbu->registerEarlyConfiguration( $config );
-		$this->assertEarlyConfiguration( $config );
-	}
-
-	public function testRegisterLateConfiguraion() {
-		$sbu = new SimpleBatchUpload();
-		$config = [];
-
-		$sbu->registerLateConfiguration( $config );
-		$this->assertLateConfiguration( $config );
 	}
 
 	public function testRegisterParserFunction() {
@@ -97,71 +79,6 @@ class SimpleBatchUploadTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function assertJsonConfiguration( $configuration ) {
 		$this->assertArrayHasKey( 'wgSimpleBatchUploadMaxFilesPerBatch', $configuration );
-	}
-
-		/**
-	 * @param $configuration
-	 */
-	public function assertEarlyConfiguration( $configuration ) {
-
-		//$configuration[ 'wgExtensionMessagesFiles' ][ 'SimpleBatchUploadAlias' ] = __DIR__ . '/SimpleBatchUpload.alias.php';
-		//$configuration[ 'wgExtensionMessagesFiles' ][ 'SimpleBatchUploadMagic' ] = __DIR__ . '/SimpleBatchUpload.magic.php';
-		$this->assertArrayHasKey( 'wgExtensionMessagesFiles', $configuration );
-		$this->assertArrayHasKey( 'SimpleBatchUploadAlias', $configuration[ 'wgExtensionMessagesFiles' ] );
-		$this->assertArrayHasKey( 'SimpleBatchUploadMagic', $configuration[ 'wgExtensionMessagesFiles' ] );
-
-		//$configuration[ 'wgSpecialPages' ][ 'BatchUpload' ] = '\SimpleBatchUpload\SpecialBatchUpload';
-		$this->assertArrayHasKey( 'wgSpecialPages', $configuration );
-		$this->assertArrayHasKey( 'BatchUpload', $configuration[ 'wgSpecialPages' ] );
-
-		//$configuration[ 'wgHooks' ][ 'ParserFirstCallInit' ][ 'ext.simplebatchupload' ] = [ $this, 'registerParserFunction' ];
-		//$configuration[ 'wgHooks' ][ 'MakeGlobalVariablesScript' ][ 'ext.simplebatchupload' ] = [ $this, 'onMakeGlobalVariablesScript' ];
-		//$configuration[ 'wgHooks' ][ 'SetupAfterCache' ][ 'ext.simplebatchupload' ] = [ $this, 'onSetupAfterCache'];
-		$this->assertArrayHasKey( 'wgHooks', $configuration );
-
-		foreach ( [ 'ParserFirstCallInit', 'MakeGlobalVariablesScript', 'SetupAfterCache' ] as $hook ) {
-			$this->assertArrayHasKey( $hook, $configuration[ 'wgHooks' ] );
-			$this->assertArrayHasKey( 'ext.simplebatchupload', $configuration[ 'wgHooks' ][ $hook ] );
-			$this->assertTrue( is_callable( $configuration[ 'wgHooks' ][ $hook ][ 'ext.simplebatchupload' ] ) );
-		}
-	}
-
-	/**
-	 * @param $configuration
-	 */
-	public function assertLateConfiguration( $configuration ) {
-
-		$this->assertArrayHasKey( 'wgResourceModules', $configuration );
-
-		$this->assertArrayHasKey( 'ext.SimpleBatchUpload.jquery-file-upload', $configuration[ 'wgResourceModules' ] );
-		$this->assertTrue( $configuration[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload.jquery-file-upload' ] === [
-				'localBasePath'  => dirname( dirname( __DIR__ ) ),
-				'remoteBasePath' => $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload',
-				'scripts'        => [ 'res/jquery.fileupload.js' ],
-				'styles'         => [ 'res/jquery.fileupload.css' ],
-				'position'       => 'top',
-				'dependencies'   => [ 'jquery.ui.widget' ],
-			] );
-
-		$dependencies = [ 'ext.SimpleBatchUpload.jquery-file-upload', 'mediawiki.Title', 'mediawiki.jqueryMsg' ];
-
-		if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.32.0', '>' ) ) {
-			$dependencies[] = 'mediawiki.api';
-		} else {
-			$dependencies[] = 'mediawiki.api.edit';
-		}
-
-		$this->assertArrayHasKey( 'ext.SimpleBatchUpload', $configuration[ 'wgResourceModules' ] );
-		$this->assertTrue( $configuration[ 'wgResourceModules' ][ 'ext.SimpleBatchUpload' ] === [
-				'localBasePath'  => dirname( dirname( __DIR__ ) ),
-				'remoteBasePath' => $GLOBALS[ 'wgExtensionAssetsPath' ] . '/SimpleBatchUpload',
-				'scripts'        => [ 'res/ext.SimpleBatchUpload.js' ],
-				'styles'         => [ 'res/ext.SimpleBatchUpload.css' ],
-				'position'       => 'top',
-				'dependencies'   => $dependencies,
-				'messages'       => [ 'simplebatchupload-comment', 'simplebatchupload-max-files-alert' ],
-		]);
-
 	}
 
 }
