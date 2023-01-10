@@ -2,7 +2,7 @@
 
 ### SimpleBatchUpload 2.0.0
 
-Under development.
+Released on January 10, 2023.
 
 * Raised minimum required versions to
   * MediaWiki 1.35
