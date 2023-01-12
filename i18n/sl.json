@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"simplebatchupload-desc": "Omogoča preprosto paketno nalaganje datotek",
+	"batchupload": "Nalaganje več datotek",
+	"simplebatchupload-buttonlabel": "Izberite datoteke (ali jih izpustite tukaj)&nbsp;...",
+	"simplebatchupload-comment": "Naloženo s [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Hkrati ne morete naložiti več kot $1 {{PLURAL:$1|datoteke|datotek}}."
+}
