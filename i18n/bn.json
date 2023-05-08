@@ -7,6 +7,6 @@
 	"simplebatchupload-desc": "ফাইলগুলি সাধারণ ব্যাচে আপলোড করার জন্য মঞ্জুরি দেয়",
 	"batchupload": "একাধিক ফাইল আপলোড করুন",
 	"simplebatchupload-buttonlabel": "ফাইলগুলি নির্বাচন করুন (বা তাদের এখানে এনে ছেড়ে দিন)...",
-	"simplebatchupload-comment": "[[mw:Extension:SimpleBatchUpload|SimpleBatchUpload]] দিয়ে আপলোডকৃত",
+	"simplebatchupload-comment": "[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]] দিয়ে আপলোডকৃত",
 	"simplebatchupload-max-files-alert": "আপনি একবারে $1টির বেশি {{PLURAL:$1|ফাইল}} আপলোড করতে পারবেন না।"
 }
