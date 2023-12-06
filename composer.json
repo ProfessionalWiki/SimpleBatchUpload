@@ -24,7 +24,6 @@
 		"irc": "irc://libera.chat:6667/mediawiki"
 	},
 	"require": {
-		"mediawiki/mediawiki": ">=1.35",
 		"php": ">=8.0",
 		"composer/installers": "^2|^1.0.1"
 	},
