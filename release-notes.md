@@ -1,5 +1,12 @@
 ## Release Notes
 
+### SimpleBatchUpload 2.0.1
+
+Released on December 7, 2023.
+
+* Added support for Composer 2.2 and above
+* Improved support for MediaWiki 1.41 and above
+
 ### SimpleBatchUpload 2.0.0
 
 Released on January 10, 2023.
