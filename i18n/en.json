@@ -10,5 +10,7 @@
 	"batchupload": "Upload multiple files",
 	"simplebatchupload-buttonlabel": "Select files (or drop them here)...",
 	"simplebatchupload-comment": "Uploaded with [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "You cannot upload more than $1 {{PLURAL:$1|file|files}} at a time."
+	"simplebatchupload-filesummary": "<!-- Default file summary for uploaded new files via SimpleBatchUpload. -->",
+	"simplebatchupload-max-files-alert": "You cannot upload more than $1 {{PLURAL:$1|file|files}} at a time.",
+	"simplebatchupload-parameters": "<!-- Customization settings for SimpleBatchUpload subpages, see mw:Special:MyLanguage/Extension:SimpleBatchUpload#Customization for details. -->"
 }
