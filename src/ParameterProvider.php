@@ -61,7 +61,7 @@ class ParameterProvider {
 		$fileSummaryMsg = Message::newFromKey( $msgKey, $templateParams );
 
 		if ( $fileSummaryMsg->exists() ) {
-			return preg_replace( '/^<!--.*?-->\n*/s', '', $fileSummaryMsg->plain() );
+			return preg_replace( '/^[\s\n]*<!--[\s\S]*?-->[\s\n]*/', '', $fileSummaryMsg->plain() );
 		}
 		else {
 			return '{{' . $templateName . $templateParams . '}}';
@@ -95,7 +95,7 @@ class ParameterProvider {
 
 		if ( $paramMsg->exists() ) {
 
-			$paramLines = explode( "\n", str_replace( '*', '', $paramMsg->plain() ) );
+			$paramLines = preg_replace( '/^\s*\*\s*/', '', explode( "\n", preg_replace( '/^[\s\n]*<!--[\s\S]*?-->[\s\n]*/', '', $paramMsg->plain() ) ) );
 			$paramSet = array_map( [ $this, 'parseParamLine' ], $paramLines );
 			$paramMap = array_combine( array_column( $paramSet, 0 ), $paramSet );
 
