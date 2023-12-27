@@ -95,7 +95,7 @@ class ParameterProvider {
 
 		if ( $paramMsg->exists() ) {
 
-			$paramLines = preg_replace( '/^\s*\*\s*/', '', explode( "\n", preg_replace( '/^[\s\n]*<!--[\s\S]*?-->[\s\n]*/', '', $paramMsg->plain() ) ) );
+			$paramLines = preg_replace( '/^\*\s*/', '', explode( "\n", preg_replace( '/^[\s\n]*<!--[\s\S]*?-->[\s\n]*/', '', $paramMsg->plain() ) ) );
 			$paramSet = array_map( [ $this, 'parseParamLine' ], $paramLines );
 			$paramMap = array_combine( array_column( $paramSet, 0 ), $paramSet );
 
