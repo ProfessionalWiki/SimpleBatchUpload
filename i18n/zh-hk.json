@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Lakejason0"
+		]
+	},
+	"simplebatchupload-desc": "容許簡易批次上載檔案",
+	"batchupload": "上載多個檔案",
+	"simplebatchupload-comment": "透過[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|簡易批次上載]]來上載",
+	"simplebatchupload-max-files-alert": "您不能同時上載超過 $1 {{PLURAL:$1|個檔案}}。"
+}
