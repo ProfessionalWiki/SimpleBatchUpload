@@ -1,12 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Anterdc99"
+			"Anterdc99",
+			"LittlePaw365"
 		]
 	},
 	"simplebatchupload-desc": "允许简单地批量上传文件",
 	"batchupload": "上传多个文件",
-	"simplebatchupload-buttonlabel": "选择文件（或将其拖放到此处）...",
+	"simplebatchupload-buttonlabel": "选择文件（或拖放文件到这里）...",
 	"simplebatchupload-comment": "使用[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]上传",
 	"simplebatchupload-max-files-alert": "您不能同时上传超过 $1 {{PLURAL:$1|个文件}}。"
 }
