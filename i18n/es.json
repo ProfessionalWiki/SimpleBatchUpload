@@ -2,9 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Fitoschido",
-			"MarcoAurelio"
+			"MarcoAurelio",
+			"No se"
 		]
 	},
+	"simplebatchupload-desc": "Permite la carga por lotes sencilla de archivos",
 	"batchupload": "Cargar varios archivos",
 	"simplebatchupload-buttonlabel": "Selecciona archivos (o colócalos aquí)…",
 	"simplebatchupload-comment": "Cargado mediante [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
