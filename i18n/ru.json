@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ivan-r"
+		]
+	},
+	"simplebatchupload-desc": "Реализует простую пакетную загрузку файлов.",
+	"batchupload": "Пакетная загрузка",
+	"simplebatchupload-buttonlabel": "Выбрать файлы (или перетащите их сюда)…",
+	"simplebatchupload-comment": "Загружено через [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Вы не можете загрузить более $1 {{PLURAL:$1|файла|файлов}} за раз."
+}
