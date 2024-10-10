@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Elefentiste"
+		]
+	},
+	"batchupload": "Carga fixes multiple",
+	"simplebatchupload-buttonlabel": "Eleje fixes (o pone los asi)...",
+	"simplebatchupload-max-files-alert": "Tu no pote carga plu ca $1 {{PLURAL:$1|fix|fixes}} a un ves."
+}
