@@ -27,21 +27,21 @@
 		}
 	},
 	"AutoloadNamespaces": {
-		"SimpleBatchUpload\\": "src/"
+		"MediaWiki\\Extension\\SimpleBatchUpload\\": "src/"
 	},
 	"TestAutoloadNamespaces": {
-		"SimpleBatchUpload\\Tests": "tests/phpunit/"
+		"MediaWiki\\Extension\\SimpleBatchUpload\\Tests\\": "tests/phpunit/"
 	},
 	"ExtensionMessagesFiles": {
 		"SimpleBatchUploadAlias": "src/SimpleBatchUpload.alias.php",
 		"SimpleBatchUploadMagic": "src/SimpleBatchUpload.magic.php"
 	},
 	"SpecialPages": {
-		"BatchUpload": "SimpleBatchUpload\\SpecialBatchUpload"
+		"BatchUpload": "MediaWiki\\Extension\\SimpleBatchUpload\\SpecialBatchUpload"
 	},
 	"Hooks": {
-		"ParserFirstCallInit": "SimpleBatchUpload\\SimpleBatchUpload::registerParserFunction",
-		"MakeGlobalVariablesScript": "SimpleBatchUpload\\SimpleBatchUpload::onMakeGlobalVariablesScript"
+		"ParserFirstCallInit": "MediaWiki\\Extension\\SimpleBatchUpload\\SimpleBatchUpload::registerParserFunction",
+		"MakeGlobalVariablesScript": "MediaWiki\\Extension\\SimpleBatchUpload\\SimpleBatchUpload::onMakeGlobalVariablesScript"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "res",

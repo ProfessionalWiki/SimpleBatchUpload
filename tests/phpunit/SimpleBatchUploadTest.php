@@ -20,14 +20,14 @@
  * @ingroup SimpleBatchUpload
  */
 
-namespace SimpleBatchUpload\Tests;
+namespace MediaWiki\Extension\SimpleBatchUpload\Tests;
 
 use OutputPage;
 use Parser;
-use SimpleBatchUpload\SimpleBatchUpload;
+use MediaWiki\Extension\SimpleBatchUpload\SimpleBatchUpload;
 
 /**
- * @covers \SimpleBatchUpload\SimpleBatchUpload
+ * @covers \MediaWiki\Extension\SimpleBatchUpload\SimpleBatchUpload
  * @group SimpleBatchUpload
  *
  * @since 1.5
@@ -37,7 +37,7 @@ class SimpleBatchUploadTest extends \PHPUnit\Framework\TestCase {
 	public function testCanConstruct() {
 
 		$this->assertInstanceOf(
-			'\SimpleBatchUpload\SimpleBatchUpload',
+			'\MediaWiki\Extension\SimpleBatchUpload\SimpleBatchUpload',
 			new SimpleBatchUpload()
 		);
 	}
