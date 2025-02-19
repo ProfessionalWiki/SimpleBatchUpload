@@ -17,20 +17,20 @@ It is maintained by [Professional.Wiki](https://professional.wiki/).
 
 ## Installation
 
-You need use [Composer][composer] to install this extension. Just add the
-following to the MediaWiki "composer.local.json" file and run
-`php composer.phar update mediawiki/simple-batch-upload` from the MediaWiki
-installation directory.
-
-```json
-{
-	"require": {
-		"mediawiki/simple-batch-upload": "^2.0"
-	}
-}
+### Composer
+```sh
+COMPOSER=composer.local.json composer require --no-update mediawiki/simple-batch-upload:^2.0
+```
+```sh
+composer update mediawiki/simple-batch-upload --no-dev -o
 ```
 
-Then add the following line to your "LocalSettings.php" file:
+### Manual installation
+
+[Download](https://github.com/ProfessionalWiki/SimpleBatchUpload/releases) and place the files in a directory called `SimpleBatchUpload` in your `extensions/` folder.
+
+
+Enable the extension by adding the following to your LocalSettings.php:
 ```php
 wfLoadExtension( 'SimpleBatchUpload' );
 ```
