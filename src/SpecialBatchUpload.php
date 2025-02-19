@@ -22,7 +22,7 @@
  * @ingroup SimpleBatchUpload
  */
 
-namespace SimpleBatchUpload;
+namespace MediaWiki\Extension\SimpleBatchUpload;
 
 use SpecialPage;
 

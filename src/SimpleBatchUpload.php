@@ -20,7 +20,7 @@
  * @ingroup SimpleBatchUpload
  */
 
-namespace SimpleBatchUpload;
+namespace MediaWiki\Extension\SimpleBatchUpload;
 
 use MediaWiki\MediaWikiServices;
 use Parser;
