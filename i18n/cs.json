@@ -2,12 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Matěj Suchánek",
+			"Nesuprachy",
 			"Petr Urbanec"
 		]
 	},
-	"simplebatchupload-desc": "Umožňuje jednoduché hromadné nahrávání souborů",
-	"batchupload": "Nahrát více souborů najednou",
-	"simplebatchupload-buttonlabel": "Vyber soubory (nebo je sem přetáhni myší)...",
-	"simplebatchupload-comment": "Nahráno pomocí  [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "Nemůžete najednou nahrát více než $1 {{PLURAL:$1|soubor|soubory|souborů}}."
+	"simplebatchupload-desc": "Umožňuje jednoduché načítání více souborů",
+	"batchupload": "Načíst více souborů najednou",
+	"simplebatchupload-buttonlabel": "Vyberte soubory (nebo je sem přetáhněte)...",
+	"simplebatchupload-comment": "Načteno pomocí [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Nemůžete najednou načíst více než $1 {{PLURAL:$1|soubor|soubory|souborů}}."
 }
