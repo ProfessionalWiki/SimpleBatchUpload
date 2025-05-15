@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"SongNgu.xyz"
+		]
+	},
+	"simplebatchupload-desc": "Đơn giản hóa việc tải lên tập tin hàng loạt",
+	"batchupload": "Tải lên nhiều tập tin",
+	"simplebatchupload-buttonlabel": "Chọn tập tin (hoặc thả chúng vào đây)...",
+	"simplebatchupload-comment": "Đã tải lên với [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Bạn không thể tải lên nhiều hơn $1 tập tin cùng một lúc."
+}
