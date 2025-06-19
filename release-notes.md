@@ -1,11 +1,19 @@
 ## Release Notes
 
+### SimpleBatchUpload 2.0.2
+
+Released on June 19, 2025.
+
+* Improved support for MediaWiki 1.41 and above
+* Translation updates for system messages
+  
 ### SimpleBatchUpload 2.0.1
 
 Released on December 7, 2023.
 
 * Added support for Composer 2.2 and above
 * Improved support for MediaWiki 1.41 and above
+* Translation updates for system messages
 
 ### SimpleBatchUpload 2.0.0
 
@@ -16,6 +24,7 @@ Released on January 10, 2023.
   * PHP 8.0
 * Added PHP 8.1 support (thanks @malberts)
 * Fixed deprecation warning in MediaWiki 1.38 (thanks @malberts)
+* Translation updates for system messages
 
 ### SimpleBatchUpload 1.9.0
 
