@@ -7,7 +7,7 @@
 The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
 
-It is maintained by [Professional.Wiki](https://professional.wiki/).
+It is maintained by [Professional Wiki](https://professional.wiki/).
 [Contact us](https://professional.wiki/en/contact) for commercial support or development work.
 
 ## Requirements
@@ -35,7 +35,7 @@ Enable the extension by adding the following to your LocalSettings.php:
 wfLoadExtension( 'SimpleBatchUpload' );
 ```
 
-**Note:** To use the extension the user needs the [`writeapi`][writeapi] right. This is the
+**Note:** To use the extension, the user needs the [`writeapi`][writeapi] right. This is the
 default MediaWiki setting for registered users, but it may have been changed
 during the configuration of the wiki.
 
