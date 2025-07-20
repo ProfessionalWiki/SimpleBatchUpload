@@ -24,7 +24,7 @@
 
 namespace MediaWiki\Extension\SimpleBatchUpload;
 
-use Message;
+use MediaWiki\Message\Message;
 
 /**
  * Class ParameterProvider
