@@ -23,9 +23,9 @@
  */
 
 namespace MediaWiki\Extension\SimpleBatchUpload;
-use Parser;
-use PPFrame;
-use Html;
+use MediaWiki\Html\Html;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\PPFrame;
 
 /**
  * Class UploadButtonRenderer

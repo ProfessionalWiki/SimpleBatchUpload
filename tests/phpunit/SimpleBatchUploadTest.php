@@ -22,8 +22,8 @@
 
 namespace MediaWiki\Extension\SimpleBatchUpload\Tests;
 
-use OutputPage;
-use Parser;
+use MediaWiki\Output\OutputPage;
+use MediaWiki\Parser\Parser;
 use MediaWiki\Extension\SimpleBatchUpload\SimpleBatchUpload;
 
 /**

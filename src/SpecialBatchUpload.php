@@ -24,7 +24,7 @@
 
 namespace MediaWiki\Extension\SimpleBatchUpload;
 
-use SpecialPage;
+use MediaWiki\SpecialPage\SpecialPage;
 
 /**
  * Class SpecialBatchUpload

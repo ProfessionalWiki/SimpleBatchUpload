@@ -23,7 +23,7 @@
 namespace MediaWiki\Extension\SimpleBatchUpload;
 
 use MediaWiki\MediaWikiServices;
-use Parser;
+use MediaWiki\Parser\Parser;
 
 /**
  * Class ExtensionManager

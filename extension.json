@@ -1,9 +1,9 @@
 {
 	"name": "SimpleBatchUpload",
-	"version": "2.0.1",
+	"version": "3.0.0",
 	"author": [
 		"[https://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
-		"[https://professional.wiki/ Professional.Wiki]",
+		"[https://professional.wiki/ Professional Wiki]",
 		"..."
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
@@ -12,7 +12,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">=1.35"
+		"MediaWiki": ">=1.43"
 	},
 	"MessagesDirs": {
 		"SimpleBatchUpload": [
