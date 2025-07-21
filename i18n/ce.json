@@ -4,6 +4,9 @@
 			"Умар"
 		]
 	},
+	"simplebatchupload-desc": "Кхочушдо цхьалха пакетан файлаш чуйахар",
 	"batchupload": "Дукху чуйахар",
-	"simplebatchupload-buttonlabel": "Файлаш харжа (йа кхуза йихка уьш)..."
+	"simplebatchupload-buttonlabel": "Файлаш харжа (йа кхуза йихка уьш)...",
+	"simplebatchupload-comment": "Чуйаьккхина [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]] чухула",
+	"simplebatchupload-max-files-alert": "Цхьана хенахь $1 {{PLURAL:$1|файлал}} сов чуйаккха йиш йац хьан."
 }
