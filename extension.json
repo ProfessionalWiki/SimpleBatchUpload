@@ -6,7 +6,7 @@
 		"[https://professional.wiki/ Professional Wiki]",
 		"..."
 	],
-	"url": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
+	"url": "https://professional.wiki/en/extension/simplebatchupload",
 	"descriptionmsg": "simplebatchupload-desc",
 	"namemsg": "simplebatchupload-name",
 	"license-name": "GPL-2.0-or-later",

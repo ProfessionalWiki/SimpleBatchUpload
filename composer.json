@@ -7,7 +7,7 @@
 		"MediaWiki",
 		"extension"
 	],
-	"homepage": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
+	"homepage": "https://professional.wiki/en/extension/simplebatchupload",
 	"license": "GPL-2.0-or-later",
 	"authors": [
 		{
@@ -22,11 +22,9 @@
 		}
 	],
 	"support": {
-		"wiki": "https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload",
-		"forum": "https://www.mediawiki.org/wiki/Extension_talk:SimpleBatchUpload",
+		"docs": "https://professional.wiki/en/extension/simplebatchupload",
 		"source": "https://github.com/ProfessionalWiki/SimpleBatchUpload",
-		"issues": "https://github.com/ProfessionalWiki/SimpleBatchUpload/issues",
-		"irc": "irc://libera.chat:6667/mediawiki"
+		"issues": "https://github.com/ProfessionalWiki/SimpleBatchUpload/issues"
 	},
 	"require": {
 		"php": ">=8.0",
