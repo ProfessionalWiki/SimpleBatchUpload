@@ -2,6 +2,8 @@
 
 ### SimpleBatchUpload 3.0.0
 
+Released on August 15, 2025.
+
 * Raised minimum MediaWiki version to 1.43
 * Added support for MediaWiki 1.44
 

@@ -4,22 +4,24 @@
 [![Latest Stable Version](https://poser.pugx.org/mediawiki/simple-batch-upload/v/stable)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 [![Packagist download count](https://poser.pugx.org/mediawiki/simple-batch-upload/downloads)](https://packagist.org/packages/mediawiki/simple-batch-upload)
 
-The [SimpleBatchUpload][mw-simple-batch-upload] extension provides basic,
+The [SimpleBatchUpload] extension provides basic,
 no-frills uploading of multiple files to MediaWiki.
 
-It is maintained by [Professional.Wiki](https://professional.wiki/).
-[Contact us](https://professional.wiki/en/contact) for commercial support or development work.
+It is maintained by [Professional Wiki](https://professional.wiki/).
+[Contact us](https://professional.wiki/en/contact) for commercial support or [MediaWiki development].
 
 ## Requirements
 
 - PHP 8.0 or later
-- MediaWiki 1.35 or later
+- MediaWiki 1.43 or later
+
+Use SimpleBatchUpload 2.x for older versions
 
 ## Installation
 
 ### Composer
 ```sh
-COMPOSER=composer.local.json composer require --no-update mediawiki/simple-batch-upload:^2.0
+COMPOSER=composer.local.json composer require --no-update mediawiki/simple-batch-upload:^3.0
 ```
 ```sh
 composer update mediawiki/simple-batch-upload --no-dev -o
@@ -35,19 +37,9 @@ Enable the extension by adding the following to your LocalSettings.php:
 wfLoadExtension( 'SimpleBatchUpload' );
 ```
 
-**Note:** To use the extension the user needs the [`writeapi`][writeapi] right. This is the
-default MediaWiki setting for registered users, but it may have been changed
-during the configuration of the wiki.
-
 ## Usage
 
-There are four ways to upload files using this extension:
-* Go to _Special:BatchUpload_ to get a plain upload page
-* Go to _Special:BatchUpload/Foo_ to get an upload page that sets `{{Foo}}` as
-  the wikitext of the uploaded file's page
-* Add `{{#batchupload:}}` to any wikipage to get a simple upload button
-* Add `{{#batchupload:Foo|Bar|Baz}}` to any wikipage to get an upload button
-  that sets `{{Foo|Bar|Baz}}` as the wikitext of the uploaded file's page  
+See the [SimpleBatchUpload usage documentation](https://professional.wiki/en/extension/simplebatchupload).
 
 ## Customization
 
@@ -100,7 +92,8 @@ on mediawiki.org.
 
 [GNU General Public License 2.0][license] or later
 
+[SimpleBatchUpload]: https://professional.wiki/en/extension/simplebatchupload
 [license]: https://www.gnu.org/copyleft/gpl.html
-[mw-simple-batch-upload]: https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload
 [composer]: https://getcomposer.org/
 [writeapi]: https://www.mediawiki.org/wiki/Manual:User_rights#List_of_permissions
+[MediaWiki development]: https://professional.wiki/en/mediawiki-development
