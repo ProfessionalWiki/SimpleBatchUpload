@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"simplebatchupload-desc": "Permite a subida sinxela por lotes de ficheiros",
+	"batchupload": "Cargar varios ficheiros",
+	"simplebatchupload-buttonlabel": "Seleccionar os ficheiros (ou soltalos aquí)...",
+	"simplebatchupload-comment": "Subido con [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-max-files-alert": "Non podes subir máis {{PLURAL:$1|dun ficheiro|de $1 ficheiros}} á vez."
+}
