@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ant176",
+			"Omotecho"
+		]
+	},
+	"simplebatchupload-desc": "ファイルの容易な一括アップロードを可能にします",
+	"batchupload": "複数のファイルをアップロード",
+	"simplebatchupload-buttonlabel": "ファイルを選択(またはここにドロップ)...",
+	"simplebatchupload-comment": "投稿には[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]を利用",
+	"simplebatchupload-max-files-alert": "一度に$1個以上の{{PLURAL:$1|ファイル}}をアップロードすることはできません。"
+}
