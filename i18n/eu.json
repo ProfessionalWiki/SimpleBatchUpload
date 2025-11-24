@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Iñaki LL",
+			"Theklan"
+		]
+	},
+	"batchupload": "Hainbat fitxategi igo",
+	"simplebatchupload-buttonlabel": "Hautatu fitxategiak (edo askatu hemen)...",
+	"simplebatchupload-max-files-alert": "Ezin duzu igo {{PLURAL:$1|fitxategi}} baino gehiago aldi berean."
+}
