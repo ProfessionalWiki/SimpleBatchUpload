@@ -10,5 +10,7 @@
 	"batchupload": "{{doc-special|BatchUpload}}",
 	"simplebatchupload-buttonlabel": "The label for the upload button",
 	"simplebatchupload-comment": "Comment saved with the upload. Do not translate '[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]'",
-	"simplebatchupload-max-files-alert": "Alert saying there are too many files in a batch"
+	"simplebatchupload-filesummary": "Default file summary. Do not add anything outside the first comment. Do not translate 'SimpleBatchUpload'",
+	"simplebatchupload-max-files-alert": "Alert saying there are too many files in a batch",
+	"simplebatchupload-parameters": "Customization settings. Do not add anything outside the first comment. Do not translate 'SimpleBatchUpload' and 'mw:Special:MyLanguage/Extension:SimpleBatchUpload#Customization'"
 }
