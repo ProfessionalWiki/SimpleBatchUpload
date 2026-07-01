@@ -1,5 +1,11 @@
 ## Release Notes
 
+### SimpleBatchUpload 3.0.1
+
+Released on July 1, 2026.
+
+* Fixed ResourceLoader errors logged on pages that display the upload button
+
 ### SimpleBatchUpload 3.0.0
 
 Released on August 15, 2025.
