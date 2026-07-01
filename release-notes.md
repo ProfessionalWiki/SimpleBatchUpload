@@ -1,5 +1,11 @@
 ## Release Notes
 
+### SimpleBatchUpload 3.0.2
+
+Released on July 1, 2026.
+
+* Re-release of 3.0.1 to correct a bad release tag; no code changes
+
 ### SimpleBatchUpload 3.0.1
 
 Released on July 1, 2026.
