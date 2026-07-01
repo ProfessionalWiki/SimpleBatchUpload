@@ -94,20 +94,3 @@ jobs:
             composer phpunit:config
             MEDIAWIKI_HAS_INTEGRATION_TESTS=1 vendor/bin/phpunit -c phpunit.xml extensions/SimpleBatchUpload/tests/phpunit
           fi
-
-      - name: Run PHPUnit with code coverage
-        run: |
-          if [ -f tests/phpunit/phpunit.php ]; then
-            php tests/phpunit/phpunit.php -c extensions/SimpleBatchUpload/ --coverage-clover coverage.xml
-          else
-            # MW 1.46 and later
-            if [ ! -f phpunit.xml.template ]; then
-              wget -q -O phpunit.xml.template "https://raw.githubusercontent.com/wikimedia/mediawiki/${{ matrix.mw }}/phpunit.xml.template"
-            fi
-            composer phpunit:config
-            MEDIAWIKI_HAS_INTEGRATION_TESTS=1 vendor/bin/phpunit -c phpunit.xml extensions/SimpleBatchUpload/tests/phpunit --coverage-clover coverage.xml
-          fi
-
-      - name: Upload code coverage
-        run: bash <(curl -s https://codecov.io/bash)
-        if: github.ref == 'refs/heads/master'
