@@ -111,8 +111,9 @@ class UploadButtonRenderer {
 	 * @param \ParserOutput | \OutputPage $output
 	 */
 	protected function addModulesToOutput( $output ) {
+		// addModules() also loads the modules' CSS (jquery-file-upload comes in as a
+		// dependency); they are general modules and must not go through addModuleStyles().
 		$output->addModules( [ 'ext.SimpleBatchUpload' ] );
-		$output->addModuleStyles( [ 'ext.SimpleBatchUpload', 'ext.SimpleBatchUpload.jquery-file-upload' ] );
 	}
 
 	/**
