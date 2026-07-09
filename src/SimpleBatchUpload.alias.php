@@ -29,3 +29,21 @@ $specialPageAliases = [];
 $specialPageAliases['en'] = [
 	'BatchUpload' => [ 'BatchUpload' ],
 ];
+
+/** Simplified Chinese
+ */
+$specialPageAliases['zh-hans'] = [
+	'BatchUpload' => [ '批量上传' ],
+];
+
+/** Traditional Chinese
+ */
+$specialPageAliases['zh-hant'] = [
+	'BatchUpload' => [ '批次上傳' ],
+];
+
+/** Traditional Chinese, Hong Kong
+ */
+$specialPageAliases['zh-hk'] = [
+	'BatchUpload' => [ '批次上載' ],
+];
