@@ -33,13 +33,12 @@ use MediaWiki\SpecialPage\SpecialPage;
  */
 class SpecialBatchUpload extends SpecialPage {
 
-	/**
-	 * @param string $name Name of the special page, as seen in links and URLs
-	 * @param string $restriction User right required, e.g. "block" or "delete"
-	 * @param bool $listed Whether the page is listed in Special:Specialpages
-	 */
-	public function __construct( $name = '', $restriction = '', $listed = true ) {
-		parent::__construct( 'BatchUpload', 'upload', $listed );
+	public function __construct() {
+		parent::__construct( 'BatchUpload' );
+	}
+
+	public function getRestriction(): string {
+		return 'upload';
 	}
 
 	/**
