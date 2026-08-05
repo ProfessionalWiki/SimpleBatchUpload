@@ -1,5 +1,11 @@
 ## Release Notes
 
+### SimpleBatchUpload 3.0.3
+
+Released on August 5, 2026.
+
+* Fixed deprecation warning shown on MediaWiki 1.46
+
 ### SimpleBatchUpload 3.0.2
 
 Released on July 1, 2026.
