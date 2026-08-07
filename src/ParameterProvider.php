@@ -50,11 +50,23 @@ class ParameterProvider {
 
 	public function getUploadPageText(): string {
 
-		if ( $this->templateName === '' ) {
-			return '';
+		$msgKey = 'simplebatchupload-filesummary';
+		$templateName = $this->getParameter( self::IDX_TEMPLATENAME );
+		$templateParams = preg_replace( '/^\|+/', '|', $this->getParameter( self::IDX_TEMPLATEPARAMETERS ) );
+
+		if ( $this->templateName !== '' ) {
+			$msgKey = $msgKey . '-' . $templateName;
 		}
 
-		return '{{' . $this->getParameter( self::IDX_TEMPLATENAME ) . $this->getParameter( self::IDX_TEMPLATEPARAMETERS ) . '}}';
+		$fileSummaryMsg = Message::newFromKey( $msgKey, $templateParams );
+
+		if ( $fileSummaryMsg->exists() ) {
+			return preg_replace( '/^[\s\n]*<!--[\s\S]*?-->[\s\n]*/', '', $fileSummaryMsg->plain() );
+		}
+		else {
+			return '{{' . $templateName . $templateParams . '}}';
+		}
+
 	}
 
 	private function getEscapedParameter( int $key ): string {
@@ -83,7 +95,7 @@ class ParameterProvider {
 
 		if ( $paramMsg->exists() ) {
 
-			$paramLines = explode( "\n", $paramMsg->plain() );
+			$paramLines = preg_replace( '/^\*\s*/', '', explode( "\n", preg_replace( '/^[\s\n]*<!--[\s\S]*?-->[\s\n]*/', '', $paramMsg->plain() ) ) );
 			$paramSet = array_map( [ $this, 'parseParamLine' ], $paramLines );
 			$paramMap = array_combine( array_column( $paramSet, 0 ), $paramSet );
 

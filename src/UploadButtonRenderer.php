@@ -126,10 +126,11 @@ class UploadButtonRenderer {
 
 		if ( $templateName !== '' ) {
 			array_shift( $args );
-			foreach ( $args as $node ) {
-				$paramProvider->addTemplateParameter( $node );
-			}
 		}
+		foreach ( $args as $node ) {
+			$paramProvider->addTemplateParameter( $node );
+		}
+
 		return $paramProvider;
 	}
 
