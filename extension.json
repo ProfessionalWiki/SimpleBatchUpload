@@ -94,6 +94,7 @@
 				"simplebatchupload-result-unknown-error",
 				"simplebatchupload-warning-duplicate",
 				"simplebatchupload-warning-exists",
+				"simplebatchupload-warning-no-change",
 				"simplebatchupload-warning-other"
 			]
 		}

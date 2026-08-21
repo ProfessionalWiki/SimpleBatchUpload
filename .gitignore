@@ -8,3 +8,4 @@ composer.lock
 coverage
 .eslintcache
 .phpunit.result.cache
+.playwright-cli

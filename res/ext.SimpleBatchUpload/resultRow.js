@@ -25,8 +25,13 @@ function describeWarnings( warnings ) {
 		notes.push( mw.msg( 'simplebatchupload-warning-exists', reported.exists ) );
 	}
 
-	const others = Object.keys( reported )
-		.filter( ( name ) => name !== 'duplicate' && name !== 'exists' );
+	if ( reported[ 'no-change' ] ) {
+		notes.push( mw.msg( 'simplebatchupload-warning-no-change' ) );
+	}
+
+	const others = Object.keys( reported ).filter(
+		( name ) => name !== 'duplicate' && name !== 'exists' && name !== 'no-change'
+	);
 
 	if ( others.length ) {
 		notes.push( mw.msg(
