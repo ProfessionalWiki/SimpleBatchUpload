@@ -3,14 +3,9 @@
 /**
  * How much longer a rate limited batch has to run.
  *
- * This is not a measurement. The gate hands out one upload slot per interval
- * and already knows when the next one is due, so the figure is arithmetic on a
- * schedule the client is itself enforcing. That is why there is no smoothing
- * here: there is no noisy throughput to smooth.
- *
- * It excludes the time the files themselves take to transfer, which is additive
- * and matters for large ones, and it can grow if the wiki refuses again. Hence
- * "about", and hence whole minutes rather than a countdown.
+ * Arithmetic on the schedule the gate already enforces, not a measurement of
+ * throughput, so there is nothing here to smooth. It excludes transfer time and
+ * can grow if the wiki refuses again, hence "about" and whole minutes.
  */
 
 const MS_PER_MINUTE = 60000;
@@ -42,9 +37,8 @@ function describeRemaining( ms ) {
 		return mw.msg( 'simplebatchupload-estimate-under-a-minute' );
 	}
 
-	// Rounded up, so it never reads as no time left while files remain. Whole
-	// minutes are also what keeps the live region quiet: the text changes once
-	// a minute rather than on every refresh.
+	// Rounded up so it never reads as no time left, and whole minutes keep the
+	// live region quiet: the text changes once a minute, not on every refresh.
 	return mw.msg(
 		'simplebatchupload-estimate-minutes',
 		Math.ceil( ms / MS_PER_MINUTE )

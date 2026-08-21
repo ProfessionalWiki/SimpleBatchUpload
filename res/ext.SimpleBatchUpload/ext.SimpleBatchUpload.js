@@ -50,10 +50,7 @@ $( () => {
 	/**
 	 * Shows how much longer the wiki's rate limit will hold the batch up.
 	 *
-	 * Refreshed only where its inputs change -- a file admitted, a file
-	 * finished, an upload refused -- never on a timer. Because the text is
-	 * whole minutes, it changes at most once a minute, which is what keeps the
-	 * live region from announcing on every refresh.
+	 * Refreshed where its inputs change, never on a timer.
 	 */
 	function refreshEstimate() {
 		const text = describeRemaining(

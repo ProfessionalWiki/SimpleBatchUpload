@@ -106,12 +106,7 @@ function createRateLimitGate( options ) {
 	/**
 	 * The schedule the gate is currently enforcing.
 	 *
-	 * Everything here is already computed to decide when to release the next
-	 * upload; exposing it lets the UI say how much longer the batch has rather
-	 * than only that it is waiting.
-	 *
-	 * @return {?{waitMs: number, intervalMs: number}} Null when nothing is
-	 *  being paced, so there is no wait to report
+	 * @return {?{waitMs: number, intervalMs: number}} Null when nothing is paced
 	 */
 	function schedule() {
 		if ( halted || !pacing || refusalsAreStale() ) {

@@ -50,10 +50,8 @@ function createBatchLimit( limit ) {
 		admit: admit,
 		release: release,
 		remaining: () => Math.max( 0, limit - active ),
-		// Files admitted but not yet finished. Counted here rather than from
-		// the upload queue because a file being retried has left the queue and
-		// not yet rejoined it, so the queue undercounts exactly when a rate
-		// limit refusal is being handled.
+		// Admitted but not finished. Not queue.running() + queue.waiting(): a
+		// file being retried has left the queue and not yet rejoined it.
 		active: () => active,
 		limit: () => limit
 	};
