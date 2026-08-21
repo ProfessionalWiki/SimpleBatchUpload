@@ -28,6 +28,11 @@ function createMwMock() {
 			get: vi.fn( () => null )
 		},
 
+		// Monotonic in the real thing (navigationStart + performance.now()).
+		// Anything under test that cares about elapsed time takes an injected
+		// clock instead, so this only has to exist, not advance realistically.
+		now: vi.fn( () => 0 ),
+
 		msg: vi.fn( ( key, ...params ) => formatMessage( key, params ) ),
 
 		message: vi.fn( ( key, ...params ) => ( {

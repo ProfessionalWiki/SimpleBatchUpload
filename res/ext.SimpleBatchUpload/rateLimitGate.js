@@ -41,7 +41,13 @@ function retryDelay( rejections ) {
  */
 function createRateLimitGate( options ) {
 	const settings = options || {};
-	const now = settings.now || ( () => Date.now() );
+	// mw.now(), not Date.now(): the gate measures an elapsed duration, and
+	// Date.now() is a wall clock that can step backwards on an NTP correction.
+	// A backward step lengthens an in-progress wait by exactly the size of the
+	// step, and a paced batch now stays open for minutes. mw.now() is
+	// navigationStart + performance.now() where available, so it is monotonic,
+	// and falls back to Date.now() where it is not.
+	const now = settings.now || ( () => mw.now() );
 	const sleep = settings.sleep ||
 		( ( ms ) => new Promise( ( resolve ) => {
 			setTimeout( resolve, ms );
