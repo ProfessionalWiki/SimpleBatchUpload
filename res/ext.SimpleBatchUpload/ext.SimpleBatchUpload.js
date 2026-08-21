@@ -13,7 +13,7 @@
 const { resolveUserLimit, createBatchLimit } = require( './batchLimit.js' );
 const { parseRenameDirective } = require( './renamePattern.js' );
 const { createRateLimitGate } = require( './rateLimitGate.js' );
-const { bindingLimit } = require( './rateLimits.js' );
+const { limitFromUserInfo } = require( './rateLimits.js' );
 const { createUploadQueue } = require( './uploadQueue.js' );
 const { createUploadRunner } = require( './uploadRunner.js' );
 const { createResultRow, pruneFinishedRows } = require( './resultRow.js' );
@@ -36,13 +36,8 @@ $( () => {
 	// gate does not pace until something is refused anyway. A failed query
 	// simply means no pacing.
 	api.get( { action: 'query', meta: 'userinfo', uiprop: 'ratelimits' } ).then(
-		( response ) => {
-			gate.useLimit( bindingLimit(
-				response && response.query && response.query.userinfo &&
-					response.query.userinfo.ratelimits
-			) );
-		},
-		() => {}
+		( response ) => gate.useLimit( limitFromUserInfo( response ) ),
+		( error ) => mw.log.warn( 'SimpleBatchUpload: could not read the rate limits', error )
 	);
 	const batchLimit = createBatchLimit( resolveUserLimit(
 		mw.config.get( 'simpleBatchUploadMaxFilesPerBatch' ),

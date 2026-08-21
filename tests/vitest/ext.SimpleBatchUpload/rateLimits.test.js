@@ -1,5 +1,6 @@
 const {
-	bindingLimit
+	bindingLimit,
+	limitFromUserInfo
 } = require( '../../../res/ext.SimpleBatchUpload/rateLimits.js' );
 
 describe( 'bindingLimit', () => {
@@ -70,5 +71,45 @@ describe( 'bindingLimit', () => {
 
 	it( 'ignores a malformed bucket rather than pacing on a NaN', () => {
 		expect( bindingLimit( { upload: { user: { hits: 0, seconds: 60 } } } ) ).toBeNull();
+	} );
+} );
+
+describe( 'limitFromUserInfo', () => {
+	// A real body from action=query&meta=userinfo&uiprop=ratelimits. The
+	// ratelimits object is identical under formatversion 1 and 2.
+	const REAL_RESPONSE = {
+		batchcomplete: '',
+		query: {
+			userinfo: {
+				id: 0,
+				name: '127.0.0.1',
+				anon: '',
+				ratelimits: {
+					// DevelopmentSettings and some wikis disable a limit by setting
+					// it to PHP_INT_MAX, which arrives as a very large float.
+					edit: { ip: { hits: Number.MAX_SAFE_INTEGER, seconds: 60 } },
+					upload: { ip: { hits: 8, seconds: 60 } }
+				}
+			}
+		}
+	};
+
+	it( 'reads the limit out of a real API response', () => {
+		const limit = limitFromUserInfo( REAL_RESPONSE );
+
+		// The edit bucket is effectively unlimited, so upload binds.
+		expect( limit.hits ).toBe( 8 );
+		expect( limit.intervalMs ).toBe( 7500 );
+	} );
+
+	it( 'reports no limit when the query came back empty or malformed', () => {
+		expect( limitFromUserInfo( undefined ) ).toBeNull();
+		expect( limitFromUserInfo( {} ) ).toBeNull();
+		expect( limitFromUserInfo( { query: {} } ) ).toBeNull();
+		expect( limitFromUserInfo( { query: { userinfo: {} } } ) ).toBeNull();
+	} );
+
+	it( 'reports no limit for a user the wiki does not limit', () => {
+		expect( limitFromUserInfo( { query: { userinfo: { ratelimits: {} } } } ) ).toBeNull();
 	} );
 } );

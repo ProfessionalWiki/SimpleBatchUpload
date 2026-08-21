@@ -157,21 +157,29 @@ describe( 'pacing to the advertised limit', () => {
 		expect( clock.now() - second ).toBe( 7500 );
 	} );
 
-	it( 'waits up to the advertised window rather than a fixed minute', async () => {
-		const clock = createFakeClock();
-		// A wiki with a daily cap: the useful wait is hours, not a minute.
-		const gate = pacedGate( clock, { intervalMs: 864000, windowMs: 86400000 } );
-
-		for ( let refusals = 0; refusals < 20; refusals++ ) {
-			gate.noteRateLimited();
-			gate.noteProgress();
-		}
-
-		expect( retryDelay( 20, 86400000 ) ).toBe( 86400000 );
+	it( 'shortens the ladder for a wiki whose window is tighter than the ladder', () => {
+		// The cap only ever binds below ~64s, which is where the ladder tops
+		// out. A wiki refilling every 10s should not be made to wait a minute.
+		expect( [ 1, 2, 3, 4, 5, 6 ].map( ( n ) => retryDelay( n, 10000 ) ) )
+			.toEqual( [ 2000, 4000, 8000, 10000, 10000, 10000 ] );
 	} );
 
 	it( 'still caps at a minute when the wiki advertises nothing', () => {
 		expect( retryDelay( 20 ) ).toBe( 60000 );
+	} );
+
+	it( 'spaces attempts by the advertised rate on a wiki with a long window', async () => {
+		const clock = createFakeClock();
+		// 3 uploads per 150s: pacing, not the cap, is what carries a file past
+		// a window far longer than the retry ladder.
+		const gate = pacedGate( clock, { intervalMs: 50000, windowMs: 150000 } );
+
+		gate.noteRateLimited();
+		await gate.wait();
+		const first = clock.now();
+		await gate.wait();
+
+		expect( clock.now() - first ).toBe( 50000 );
 	} );
 } );
 
@@ -203,5 +211,55 @@ describe( 'learning the limit after the widget is already usable', () => {
 		await gate.wait();
 
 		expect( clock.now() - first ).toBe( 0 );
+	} );
+} );
+
+describe( 'pacing stops once the budget has demonstrably refilled', () => {
+	const EIGHT_PER_MINUTE = { intervalMs: 7500, windowMs: 60000 };
+
+	it( 'stops pacing a later batch once a full window has passed without a refusal', async () => {
+		const clock = createFakeClock();
+		const gate = createRateLimitGate( {
+			now: clock.now,
+			sleep: clock.sleep,
+			limit: EIGHT_PER_MINUTE
+		} );
+
+		gate.noteRateLimited();
+		await gate.wait();
+
+		// The user goes away for longer than the limit window, so whatever the
+		// wiki was refusing has long since refilled.
+		clock.advance( 120000 );
+		gate.resume();
+
+		const before = clock.now();
+		await gate.wait();
+		await gate.wait();
+		await gate.wait();
+
+		// A batch that fits must not be slowed just because an earlier one was
+		// refused several minutes ago.
+		expect( clock.now() - before ).toBe( 0 );
+	} );
+
+	it( 'keeps pacing while refusals are still recent', async () => {
+		const clock = createFakeClock();
+		const gate = createRateLimitGate( {
+			now: clock.now,
+			sleep: clock.sleep,
+			limit: EIGHT_PER_MINUTE
+		} );
+
+		gate.noteRateLimited();
+		await gate.wait();
+
+		clock.advance( 5000 );
+		gate.resume();
+
+		const before = clock.now();
+		await gate.wait();
+
+		expect( clock.now() - before ).toBeGreaterThan( 0 );
 	} );
 } );

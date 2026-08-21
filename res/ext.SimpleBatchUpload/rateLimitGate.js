@@ -17,11 +17,16 @@ const FIRST_RETRY_DELAY_MS = 2000;
 const MAX_RETRY_DELAY_MS = 60000;
 const MAX_CONSECUTIVE_RETRIES = 6;
 
+// Browsers fire a timer immediately above this, so never sleep for longer.
+const MAX_TIMEOUT_MS = 2147483647;
+
 /**
  * @param {number} rejections Consecutive rate limit rejections, 1 for the first
  * @param {number} [capMs] Longest useful wait, normally the advertised window.
- *  Defaults to a minute, which is only right for a wiki using the default
- *  window; a wiki with a daily cap needs to be able to wait hours.
+ *  Only ever binds below about 64 seconds, where the ladder tops out, so this
+ *  shortens the wait for a wiki that refills quickly rather than lengthening it
+ *  for one that refills slowly. Spacing the attempts is what carries a file
+ *  past a long window.
  * @return {number} Milliseconds to wait before the next attempt
  */
 function retryDelay( rejections, capMs ) {
@@ -74,6 +79,22 @@ function createRateLimitGate( options ) {
 	// bursting is what makes the ordinary case fast, and it succeeds.
 	let pacing = false;
 	let nextReleaseAt = 0;
+	let lastRefusalAt = 0;
+
+	/**
+	 * Stops pacing once the wiki has gone a full window without refusing
+	 * anything, because by then whatever was exhausted has refilled.
+	 *
+	 * Without this, one refusal at the tail of a batch would slow every later
+	 * selection on the page for as long as the tab stayed open, including
+	 * batches small enough to fit comfortably.
+	 */
+	function forgetStaleRefusals() {
+		if ( pacing && now() - lastRefusalAt >= capMs ) {
+			pacing = false;
+			nextReleaseAt = 0;
+		}
+	}
 
 	/**
 	 * Adopts the limit the wiki advertises.
@@ -103,6 +124,8 @@ function createRateLimitGate( options ) {
 				return false;
 			}
 
+			forgetStaleRefusals();
+
 			const releaseAt = pacing ? Math.max( openAt, nextReleaseAt ) : openAt;
 			const remaining = releaseAt - now();
 
@@ -116,7 +139,9 @@ function createRateLimitGate( options ) {
 				return true;
 			}
 
-			await sleep( remaining );
+			// Above 2^31-1 ms a browser timer fires immediately, which would turn
+			// this loop hot. The loop re-checks, so clamping is safe.
+			await sleep( Math.min( remaining, MAX_TIMEOUT_MS ) );
 		}
 	}
 
@@ -132,6 +157,8 @@ function createRateLimitGate( options ) {
 			halted = true;
 			return;
 		}
+
+		lastRefusalAt = now();
 
 		if ( intervalMs > 0 ) {
 			// The budget is demonstrably tight, so stop bursting.

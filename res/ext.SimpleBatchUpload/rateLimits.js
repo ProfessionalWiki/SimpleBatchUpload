@@ -65,4 +65,23 @@ function bindingLimit( ratelimits ) {
 	};
 }
 
-module.exports = { bindingLimit: bindingLimit };
+/**
+ * The binding limit, read straight out of an API response.
+ *
+ * Kept here rather than in the DOM glue so the shape of the response is
+ * covered by a test: a wrong path would otherwise degrade silently to "this
+ * user is not limited", which is indistinguishable from the real thing.
+ *
+ * @param {?Object} response From action=query&meta=userinfo&uiprop=ratelimits
+ * @return {?Object} See bindingLimit()
+ */
+function limitFromUserInfo( response ) {
+	const userinfo = response && response.query && response.query.userinfo;
+
+	return bindingLimit( userinfo && userinfo.ratelimits );
+}
+
+module.exports = {
+	bindingLimit: bindingLimit,
+	limitFromUserInfo: limitFromUserInfo
+};
