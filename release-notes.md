@@ -1,20 +1,25 @@
 ## Release Notes
 
-### Unreleased
+### SimpleBatchUpload 3.1.0
 
-* Fixed uploads refused by the wiki's rate limit being reported as permanent errors
-  * Refused files are now retried, so a rate-limited batch takes longer rather than partly failing
-  * A batch that keeps hitting the limit stops and asks for the remaining files to be selected again
+Released on August 21, 2026.
+
+* Added an estimate of how much longer a batch has left while the wiki is rate limiting it
+* Added the wiki's upload warnings, such as a duplicate or an overwrite, to the result list
+* Made the upload status messages translatable
+* Changed the maximum files per batch to count uploads that are still in progress
 * Changed uploading to pace itself to the rate limit the wiki advertises, once the wiki has refused an upload
   * Batches that fit inside the limit are unaffected and still upload at full speed
   * Batches on wikis with a long limit window now retry for much longer before giving up
-* Added an estimate of how much longer a batch has left while the wiki is rate limiting it
+* Fixed uploads refused by the wiki's rate limit being reported as permanent errors
+  * Refused files are now retried, so a rate-limited batch takes longer rather than partly failing
+  * A batch that keeps hitting the limit stops and asks for the remaining files to be selected again
 * Fixed files reported as uploaded when the wiki did not store them
 * Fixed an invalid `+rename` pattern cancelling the rest of the batch with no error shown
 * Fixed the result list losing uploads that were still running when more files were selected
-* Added the wiki's upload warnings to the result list
-* Made the upload status messages translatable
-* Changed the maximum files per batch to count uploads that are still in progress
+
+Wikis that customised `MediaWiki:Simplebatchupload-max-files-alert` should move that customisation to
+`MediaWiki:Simplebatchupload-max-files-reached`, which replaces it and takes different parameters.
 
 ### SimpleBatchUpload 3.0.3
 
