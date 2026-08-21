@@ -1,5 +1,17 @@
 ## Release Notes
 
+### Unreleased
+
+* Fixed uploads refused by the wiki's rate limit being reported as permanent errors
+  * Refused files are now retried, so a rate-limited batch takes longer rather than partly failing
+  * A batch that keeps hitting the limit stops and asks for the remaining files to be selected again
+* Fixed files reported as uploaded when the wiki did not store them
+* Fixed an invalid `+rename` pattern cancelling the rest of the batch with no error shown
+* Fixed the result list losing uploads that were still running when more files were selected
+* Added the wiki's upload warnings to the result list
+* Made the upload status messages translatable
+* Changed the maximum files per batch to count uploads that are still in progress
+
 ### SimpleBatchUpload 3.0.3
 
 Released on August 5, 2026.
