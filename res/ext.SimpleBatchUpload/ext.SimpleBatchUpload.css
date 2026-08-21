@@ -42,3 +42,7 @@ ul.fileupload-results li.ful-error {
 ul.fileupload-results li.ful-notice {
 	background-color: #fafad2;
 }
+
+ul.fileupload-results li.ful-estimate {
+	font-style: italic;
+}

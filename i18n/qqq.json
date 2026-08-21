@@ -10,6 +10,8 @@
 	"simplebatchupload-comment": "Comment saved with the upload. Do not translate '[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]'",
 	"simplebatchupload-desc": "{{desc|name=SimpleBatchUpload|url=https://www.mediawiki.org/wiki/Extension:SimpleBatchUpload}}",
 	"simplebatchupload-error-rename-pattern": "Reason shown when the +rename directive in the upload description is not a valid regular expression. Do not translate '+rename'. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
+	"simplebatchupload-estimate-minutes": "Shown above the result list while the wiki is rate limiting the batch. Parameters:\n* $1 - a whole number of minutes, rounded up",
+	"simplebatchupload-estimate-under-a-minute": "Shown above the result list while the wiki is rate limiting the batch and less than a minute of waiting is left. Used instead of {{msg-mw|simplebatchupload-estimate-minutes}} so that no countdown in seconds is shown.",
 	"simplebatchupload-max-files-reached": "Shown once in the result list when a file selection does not fit in the current batch. Parameters:\n* $1 - the number of files that were added\n* $2 - the number of files that were selected",
 	"simplebatchupload-name": "{{Notranslate}} The name of the extesion as shown on special page 'Version'",
 	"simplebatchupload-rename-label": "Label of a result row for a file that is renamed while uploading. Parameters:\n* $1 - the name of the selected file\n* $2 - the name it is uploaded under",

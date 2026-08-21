@@ -8,6 +8,7 @@
 * Changed uploading to pace itself to the rate limit the wiki advertises, once the wiki has refused an upload
   * Batches that fit inside the limit are unaffected and still upload at full speed
   * Batches on wikis with a long limit window now retry for much longer before giving up
+* Added an estimate of how much longer a batch has left while the wiki is rate limiting it
 * Fixed files reported as uploaded when the wiki did not store them
 * Fixed an invalid `+rename` pattern cancelling the rest of the batch with no error shown
 * Fixed the result list losing uploads that were still running when more files were selected

@@ -82,6 +82,13 @@ function createRateLimitGate( options ) {
 	let lastRefusalAt = 0;
 
 	/**
+	 * @return {boolean} True once a full window has passed with nothing refused
+	 */
+	function refusalsAreStale() {
+		return pacing && now() - lastRefusalAt >= capMs;
+	}
+
+	/**
 	 * Stops pacing once the wiki has gone a full window without refusing
 	 * anything, because by then whatever was exhausted has refilled.
 	 *
@@ -90,10 +97,26 @@ function createRateLimitGate( options ) {
 	 * batches small enough to fit comfortably.
 	 */
 	function forgetStaleRefusals() {
-		if ( pacing && now() - lastRefusalAt >= capMs ) {
+		if ( refusalsAreStale() ) {
 			pacing = false;
 			nextReleaseAt = 0;
 		}
+	}
+
+	/**
+	 * The schedule the gate is currently enforcing.
+	 *
+	 * @return {?{waitMs: number, intervalMs: number}} Null when nothing is paced
+	 */
+	function schedule() {
+		if ( halted || !pacing || refusalsAreStale() ) {
+			return null;
+		}
+
+		return {
+			waitMs: Math.max( 0, Math.max( openAt, nextReleaseAt ) - now() ),
+			intervalMs: intervalMs
+		};
 	}
 
 	/**
@@ -186,6 +209,7 @@ function createRateLimitGate( options ) {
 
 	return {
 		useLimit: useLimit,
+		schedule: schedule,
 		wait: wait,
 		noteRateLimited: noteRateLimited,
 		noteProgress: noteProgress,

@@ -50,6 +50,9 @@ function createBatchLimit( limit ) {
 		admit: admit,
 		release: release,
 		remaining: () => Math.max( 0, limit - active ),
+		// Admitted but not finished. Not queue.running() + queue.waiting(): a
+		// file being retried has left the queue and not yet rejoined it.
+		active: () => active,
 		limit: () => limit
 	};
 }

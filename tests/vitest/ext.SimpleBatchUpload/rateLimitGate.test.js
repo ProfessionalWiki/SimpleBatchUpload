@@ -263,3 +263,84 @@ describe( 'pacing stops once the budget has demonstrably refilled', () => {
 		expect( clock.now() - before ).toBeGreaterThan( 0 );
 	} );
 } );
+
+describe( 'reporting the schedule it is enforcing', () => {
+	const EIGHT_PER_MINUTE = { intervalMs: 7500, windowMs: 60000 };
+
+	function limitedGate( clock, maxRetries ) {
+		return createRateLimitGate( {
+			now: clock.now,
+			sleep: clock.sleep,
+			limit: EIGHT_PER_MINUTE,
+			maxRetries: maxRetries
+		} );
+	}
+
+	it( 'offers no schedule before the wiki has refused an upload', () => {
+		expect( limitedGate( createFakeClock() ).schedule() ).toBeNull();
+	} );
+
+	it( 'offers no schedule for a user the wiki does not limit', () => {
+		const clock = createFakeClock();
+		const gate = createRateLimitGate( { now: clock.now, sleep: clock.sleep } );
+
+		gate.noteRateLimited();
+
+		expect( gate.schedule() ).toBeNull();
+	} );
+
+	it( 'reports the wait left on the current backoff and the spacing behind it', () => {
+		const clock = createFakeClock();
+		const gate = limitedGate( clock );
+
+		gate.noteRateLimited();
+
+		expect( gate.schedule() ).toEqual( { waitMs: 2000, intervalMs: 7500 } );
+	} );
+
+	it( 'counts the wait down as time passes', () => {
+		const clock = createFakeClock();
+		const gate = limitedGate( clock );
+
+		gate.noteRateLimited();
+		clock.advance( 1500 );
+
+		expect( gate.schedule().waitMs ).toBe( 500 );
+	} );
+
+	it( 'offers no schedule once a full window has passed without a refusal', () => {
+		const clock = createFakeClock();
+		const gate = limitedGate( clock );
+
+		gate.noteRateLimited();
+		clock.advance( 120000 );
+
+		expect( gate.schedule() ).toBeNull();
+	} );
+
+	it( 'offers no schedule once the batch has been given up on', () => {
+		const clock = createFakeClock();
+		const gate = limitedGate( clock, 1 );
+
+		gate.noteRateLimited();
+		expect( gate.schedule() ).not.toBeNull();
+
+		// Past openAt, or the second refusal is dismissed as the same overrun.
+		clock.advance( 2000 );
+		gate.noteRateLimited();
+
+		expect( gate.schedule() ).toBeNull();
+	} );
+
+	it( 'reports the spacing to the next slot once the backoff has expired', async () => {
+		const clock = createFakeClock();
+		const gate = limitedGate( clock );
+
+		gate.noteRateLimited();
+		await gate.wait();
+
+		// openAt is now in the past; the spacing behind the slot just claimed
+		// is the only thing left holding the next file up.
+		expect( gate.schedule() ).toEqual( { waitMs: 7500, intervalMs: 7500 } );
+	} );
+} );
