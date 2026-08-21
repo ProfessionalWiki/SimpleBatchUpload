@@ -3,7 +3,7 @@
  * File containing the ParameterProvider class
  *
  * @copyright (C) 2016 - 2017, Stephan Gambke
- * @license   GNU General Public License, version 2 (or any later version)
+ * @license GPL-2.0-or-later
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,10 +33,10 @@ use MediaWiki\Message\Message;
  */
 class ParameterProvider {
 
-	const IDX_TEMPLATENAME = 0;
-	const IDX_TEMPLATEPARAMETERS = 1;
-	const IDX_COMMENT = 2;
-	const IDX_SPECIALPAGETITLE = 3;
+	private const IDX_TEMPLATENAME = 0;
+	private const IDX_TEMPLATEPARAMETERS = 1;
+	private const IDX_COMMENT = 2;
+	private const IDX_SPECIALPAGETITLE = 3;
 
 	private $templateName;
 	private $parameters = null;
@@ -49,7 +49,6 @@ class ParameterProvider {
 	}
 
 	public function getUploadPageText(): string {
-
 		if ( $this->templateName === '' ) {
 			return '';
 		}
@@ -123,7 +122,6 @@ class ParameterProvider {
 	}
 
 	public function addTemplateParameter( string $parameter ) {
-
 		if ( $this->parameters === null ) {
 			$this->populateParameters();
 		}
