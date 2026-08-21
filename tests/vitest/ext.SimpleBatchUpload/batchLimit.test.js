@@ -46,3 +46,25 @@ describe( 'createBatchLimit', () => {
 		expect( batch.admit() ).toBe( true );
 	} );
 } );
+
+describe( 'counting what is still in the batch', () => {
+	it( 'reports how many files are still queued or in flight', () => {
+		const batch = createBatchLimit( 10 );
+
+		batch.admit();
+		batch.admit();
+		batch.admit();
+		batch.release();
+
+		expect( batch.active() ).toBe( 2 );
+	} );
+
+	it( 'reports nothing left once every file has finished', () => {
+		const batch = createBatchLimit( 10 );
+
+		batch.admit();
+		batch.release();
+
+		expect( batch.active() ).toBe( 0 );
+	} );
+} );

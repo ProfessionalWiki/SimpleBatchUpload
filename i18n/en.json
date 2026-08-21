@@ -10,6 +10,8 @@
 	"simplebatchupload-comment": "Uploaded with [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-desc": "Allows for simple batch uploading of of files",
 	"simplebatchupload-error-rename-pattern": "The +rename pattern is not a valid regular expression.",
+	"simplebatchupload-estimate-minutes": "About $1 {{PLURAL:$1|minute|minutes}} left at this wiki's upload rate limit.",
+	"simplebatchupload-estimate-under-a-minute": "Less than a minute left at this wiki's upload rate limit.",
 	"simplebatchupload-max-files-reached": "Added $1 of $2 selected {{PLURAL:$2|file|files}}. No more can be added until the current uploads finish.",
 	"simplebatchupload-name": "SimpleBatchUpload",
 	"simplebatchupload-rename-label": "$1 → $2",

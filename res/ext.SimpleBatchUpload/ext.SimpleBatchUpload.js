@@ -18,6 +18,7 @@ const { createUploadQueue } = require( './uploadQueue.js' );
 const { createUploadRunner } = require( './uploadRunner.js' );
 const { createResultRow, pruneFinishedRows } = require( './resultRow.js' );
 const { filePageUrl } = require( './uploadResult.js' );
+const { estimateRemainingMs, describeRemaining } = require( './remainingTime.js' );
 
 // The rate limit is per user, so one gate and one queue serve every widget on
 // the page. blueimp's own limit is set to the same number as a backstop.
@@ -43,6 +44,46 @@ $( () => {
 		mw.config.get( 'simpleBatchUploadMaxFilesPerBatch' ),
 		mw.config.get( 'wgUserGroups' )
 	) );
+
+	const resultLists = [];
+
+	/**
+	 * Shows how much longer the wiki's rate limit will hold the batch up.
+	 *
+	 * Refreshed only where its inputs change -- a file admitted, a file
+	 * finished, an upload refused -- never on a timer. Because the text is
+	 * whole minutes, it changes at most once a minute, which is what keeps the
+	 * live region from announcing on every refresh.
+	 */
+	function refreshEstimate() {
+		const text = describeRemaining(
+			estimateRemainingMs( batchLimit.active(), gate.schedule() )
+		);
+
+		resultLists.forEach( ( results ) => {
+			let row = results.querySelector( 'li.ful-estimate' );
+
+			if ( !text ) {
+				if ( row ) {
+					row.remove();
+				}
+
+				return;
+			}
+
+			if ( !row ) {
+				row = document.createElement( 'li' );
+				row.className = 'ful-estimate';
+				row.setAttribute( 'role', 'status' );
+				results.insertBefore( row, results.firstChild );
+			}
+
+			// Guarded, so an unchanged figure is not re-announced.
+			if ( row.textContent !== text ) {
+				row.textContent = text;
+			}
+		} );
+	}
 
 	function appendNotice( results, text ) {
 		const notice = document.createElement( 'li' );
@@ -96,7 +137,10 @@ $( () => {
 
 			const outcome = await runner.run(
 				() => data.submit(),
-				() => row.showWaiting(),
+				() => {
+					row.showWaiting();
+					refreshEstimate();
+				},
 				async () => {
 					api.badToken( 'csrf' );
 					data.formData.token = await api.getToken( 'csrf' );
@@ -112,11 +156,13 @@ $( () => {
 			}
 		} finally {
 			batchLimit.release();
+			refreshEstimate();
 		}
 	}
 
 	function initContainer( container ) {
 		const results = container.querySelector( 'ul.fileupload-results' );
+		resultLists.push( results );
 
 		// blueimp calls add() once per file and hands every file of one
 		// selection the same originalFiles array, which is how a new selection
@@ -157,6 +203,7 @@ $( () => {
 				}
 
 				admitted += 1;
+				refreshEstimate();
 				startUpload( this, container, results, data );
 			},
 

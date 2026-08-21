@@ -89,11 +89,39 @@ function createRateLimitGate( options ) {
 	 * selection on the page for as long as the tab stayed open, including
 	 * batches small enough to fit comfortably.
 	 */
+	/**
+	 * @return {boolean} True once a full window has passed with nothing refused
+	 */
+	function refusalsAreStale() {
+		return pacing && now() - lastRefusalAt >= capMs;
+	}
+
 	function forgetStaleRefusals() {
-		if ( pacing && now() - lastRefusalAt >= capMs ) {
+		if ( refusalsAreStale() ) {
 			pacing = false;
 			nextReleaseAt = 0;
 		}
+	}
+
+	/**
+	 * The schedule the gate is currently enforcing.
+	 *
+	 * Everything here is already computed to decide when to release the next
+	 * upload; exposing it lets the UI say how much longer the batch has rather
+	 * than only that it is waiting.
+	 *
+	 * @return {?{waitMs: number, intervalMs: number}} Null when nothing is
+	 *  being paced, so there is no wait to report
+	 */
+	function schedule() {
+		if ( halted || !pacing || refusalsAreStale() ) {
+			return null;
+		}
+
+		return {
+			waitMs: Math.max( 0, Math.max( openAt, nextReleaseAt ) - now() ),
+			intervalMs: intervalMs
+		};
 	}
 
 	/**
@@ -186,6 +214,7 @@ function createRateLimitGate( options ) {
 
 	return {
 		useLimit: useLimit,
+		schedule: schedule,
 		wait: wait,
 		noteRateLimited: noteRateLimited,
 		noteProgress: noteProgress,
