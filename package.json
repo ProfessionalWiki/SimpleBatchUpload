@@ -3,6 +3,9 @@
 	"description": "Basic, no-frills uploading of multiple files to MediaWiki",
 	"author": "Stephan Gambke",
 	"license": "GPL-2.0-or-later",
+	"engines": {
+		"node": ">=22"
+	},
 	"private": true,
 	"scripts": {
 		"test": "npm -s run test:unit",
