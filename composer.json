@@ -27,7 +27,6 @@
 		"issues": "https://github.com/ProfessionalWiki/SimpleBatchUpload/issues"
 	},
 	"require": {
-		"php": ">=8.0",
 		"composer/installers": "^2|^1.0.1"
 	},
 	"require-dev": {
