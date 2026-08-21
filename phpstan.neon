@@ -1,0 +1,13 @@
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+	level: 9
+	paths:
+		- src
+	scanDirectories:
+		- ../../includes
+		- ../../tests/phpunit
+		- ../../vendor
+	bootstrapFiles:
+		- ../../includes/AutoLoader.php
