@@ -82,6 +82,13 @@ function createRateLimitGate( options ) {
 	let lastRefusalAt = 0;
 
 	/**
+	 * @return {boolean} True once a full window has passed with nothing refused
+	 */
+	function refusalsAreStale() {
+		return pacing && now() - lastRefusalAt >= capMs;
+	}
+
+	/**
 	 * Stops pacing once the wiki has gone a full window without refusing
 	 * anything, because by then whatever was exhausted has refilled.
 	 *
@@ -89,13 +96,6 @@ function createRateLimitGate( options ) {
 	 * selection on the page for as long as the tab stayed open, including
 	 * batches small enough to fit comfortably.
 	 */
-	/**
-	 * @return {boolean} True once a full window has passed with nothing refused
-	 */
-	function refusalsAreStale() {
-		return pacing && now() - lastRefusalAt >= capMs;
-	}
-
 	function forgetStaleRefusals() {
 		if ( refusalsAreStale() ) {
 			pacing = false;

@@ -169,6 +169,9 @@ function createResultRow( sourceName, targetName ) {
 
 // A row is finished once it carries one of these. Anything else is still
 // queued, waiting on the rate limit, or uploading.
+//
+// ful-estimate is deliberately absent: it is not an upload row, and it has to
+// survive a new selection started while an earlier batch is still going.
 const FINISHED_ROW_CLASSES = [ 'ful-success', 'ful-error', 'ful-notice' ];
 
 /**

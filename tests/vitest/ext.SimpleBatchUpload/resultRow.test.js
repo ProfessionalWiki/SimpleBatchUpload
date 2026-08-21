@@ -106,6 +106,15 @@ describe( 'pruneFinishedRows', () => {
 		expect( list.children.length ).toBe( 0 );
 	} );
 
+	it( 'keeps the rate limit estimate, which is not an upload row', () => {
+		const list = listWith( [ 'ful-estimate', 'ful-success' ] );
+
+		pruneFinishedRows( list );
+
+		expect( list.children.length ).toBe( 1 );
+		expect( list.children[ 0 ].className ).toBe( 'ful-estimate' );
+	} );
+
 	it( 'keeps rows whose upload is still running', () => {
 		const list = listWith( [ 'ful-success', '', 'ful-error' ] );
 

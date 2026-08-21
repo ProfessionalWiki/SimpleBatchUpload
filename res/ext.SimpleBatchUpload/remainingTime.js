@@ -21,7 +21,11 @@ function estimateRemainingMs( pending, schedule ) {
 		return null;
 	}
 
-	return schedule.waitMs + ( pending - 1 ) * schedule.intervalMs;
+	const remaining = schedule.waitMs + ( pending - 1 ) * schedule.intervalMs;
+
+	// A single file released immediately is not being held up by anything, so
+	// there is nothing to announce.
+	return remaining > 0 ? remaining : null;
 }
 
 /**
@@ -37,7 +41,8 @@ function describeRemaining( ms ) {
 		return mw.msg( 'simplebatchupload-estimate-under-a-minute' );
 	}
 
-	// Rounded up so it never reads as no time left, and whole minutes keep the
+	// Rounded up because the figure excludes transfer time and so is already an
+	// underestimate; ceil keeps it an upper bound. Whole minutes also keep the
 	// live region quiet: the text changes once a minute, not on every refresh.
 	return mw.msg(
 		'simplebatchupload-estimate-minutes',

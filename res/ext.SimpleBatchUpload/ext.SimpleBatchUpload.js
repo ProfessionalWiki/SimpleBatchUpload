@@ -19,6 +19,7 @@ const { createUploadRunner } = require( './uploadRunner.js' );
 const { createResultRow, pruneFinishedRows } = require( './resultRow.js' );
 const { filePageUrl } = require( './uploadResult.js' );
 const { estimateRemainingMs, describeRemaining } = require( './remainingTime.js' );
+const { showEstimate } = require( './estimateRow.js' );
 
 // The rate limit is per user, so one gate and one queue serve every widget on
 // the page. blueimp's own limit is set to the same number as a backstop.
@@ -50,36 +51,17 @@ $( () => {
 	/**
 	 * Shows how much longer the wiki's rate limit will hold the batch up.
 	 *
-	 * Refreshed where its inputs change, never on a timer.
+	 * Refreshed where its inputs change -- a file admitted, an upload refused,
+	 * a file finished -- and never on a timer.
 	 */
 	function refreshEstimate() {
 		const text = describeRemaining(
 			estimateRemainingMs( batchLimit.active(), gate.schedule() )
 		);
 
-		resultLists.forEach( ( results ) => {
-			let row = results.querySelector( 'li.ful-estimate' );
-
-			if ( !text ) {
-				if ( row ) {
-					row.remove();
-				}
-
-				return;
-			}
-
-			if ( !row ) {
-				row = document.createElement( 'li' );
-				row.className = 'ful-estimate';
-				row.setAttribute( 'role', 'status' );
-				results.insertBefore( row, results.firstChild );
-			}
-
-			// Guarded, so an unchanged figure is not re-announced.
-			if ( row.textContent !== text ) {
-				row.textContent = text;
-			}
-		} );
+		// Gate, queue and batch limit are page-wide, so every widget shows the
+		// same figure.
+		resultLists.forEach( ( results ) => showEstimate( results, text ) );
 	}
 
 	function appendNotice( results, text ) {

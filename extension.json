@@ -65,6 +65,7 @@
 				"ext.SimpleBatchUpload/batchLimit.js",
 				"ext.SimpleBatchUpload/rateLimitGate.js",
 				"ext.SimpleBatchUpload/rateLimits.js",
+				"ext.SimpleBatchUpload/estimateRow.js",
 				"ext.SimpleBatchUpload/remainingTime.js",
 				"ext.SimpleBatchUpload/renamePattern.js",
 				"ext.SimpleBatchUpload/resultRow.js",

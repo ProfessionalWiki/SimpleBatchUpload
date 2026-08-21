@@ -320,10 +320,27 @@ describe( 'reporting the schedule it is enforcing', () => {
 
 	it( 'offers no schedule once the batch has been given up on', () => {
 		const clock = createFakeClock();
-		const gate = limitedGate( clock, 0 );
+		const gate = limitedGate( clock, 1 );
 
+		gate.noteRateLimited();
+		expect( gate.schedule() ).not.toBeNull();
+
+		// Past openAt, or the second refusal is dismissed as the same overrun.
+		clock.advance( 2000 );
 		gate.noteRateLimited();
 
 		expect( gate.schedule() ).toBeNull();
+	} );
+
+	it( 'reports the spacing to the next slot once the backoff has expired', async () => {
+		const clock = createFakeClock();
+		const gate = limitedGate( clock );
+
+		gate.noteRateLimited();
+		await gate.wait();
+
+		// openAt is now in the past; the spacing behind the slot just claimed
+		// is the only thing left holding the next file up.
+		expect( gate.schedule() ).toEqual( { waitMs: 7500, intervalMs: 7500 } );
 	} );
 } );
