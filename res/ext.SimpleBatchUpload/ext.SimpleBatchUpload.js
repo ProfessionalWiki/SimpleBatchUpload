@@ -13,6 +13,7 @@
 const { resolveUserLimit, createBatchLimit } = require( './batchLimit.js' );
 const { parseRenameDirective } = require( './renamePattern.js' );
 const { createRateLimitGate } = require( './rateLimitGate.js' );
+const { limitFromUserInfo } = require( './rateLimits.js' );
 const { createUploadQueue } = require( './uploadQueue.js' );
 const { createUploadRunner } = require( './uploadRunner.js' );
 const { createResultRow, pruneFinishedRows } = require( './resultRow.js' );
@@ -28,6 +29,16 @@ const runner = createUploadRunner( { gate: gate, queue: queue } );
 
 $( () => {
 	const api = new mw.Api();
+
+	// The wiki publishes the limits it will enforce, so the queue can pace
+	// itself to them instead of discovering them by being refused. Deliberately
+	// not awaited: the widget has to work the moment the page is ready, and the
+	// gate does not pace until something is refused anyway. A failed query
+	// simply means no pacing.
+	api.get( { action: 'query', meta: 'userinfo', uiprop: 'ratelimits' } ).then(
+		( response ) => gate.useLimit( limitFromUserInfo( response ) ),
+		( error ) => mw.log.warn( 'SimpleBatchUpload: could not read the rate limits', error )
+	);
 	const batchLimit = createBatchLimit( resolveUserLimit(
 		mw.config.get( 'simpleBatchUploadMaxFilesPerBatch' ),
 		mw.config.get( 'wgUserGroups' )

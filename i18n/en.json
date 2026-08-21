@@ -17,7 +17,7 @@
 	"simplebatchupload-result-network-error": "Server communication failed.",
 	"simplebatchupload-result-not-uploaded": "The file was not uploaded ($1).",
 	"simplebatchupload-result-queued": "queued",
-	"simplebatchupload-result-rate-limit-stopped": "Stopped: this wiki's upload rate limit was reached repeatedly. Wait a moment, then select the remaining files again.",
+	"simplebatchupload-result-rate-limit-stopped": "Stopped: this wiki's upload rate limit was reached repeatedly. Select the remaining files again once the limit has reset.",
 	"simplebatchupload-result-rate-limited": "waiting for the upload rate limit",
 	"simplebatchupload-result-success": "OK",
 	"simplebatchupload-result-token-error": "Could not get an edit token.",

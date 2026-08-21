@@ -17,7 +17,7 @@
 	"simplebatchupload-result-network-error": "Reason shown when the upload request never reached the server. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
 	"simplebatchupload-result-not-uploaded": "Reason shown when the server accepted the request but did not store the file. Used as $1 of {{msg-mw|simplebatchupload-result-error}}. Parameters:\n* $1 - a comma separated list of the server's warning identifiers, which are not translatable",
 	"simplebatchupload-result-queued": "Status of a file that is waiting for its turn to upload. Keep it short, it is shown after the file name.",
-	"simplebatchupload-result-rate-limit-stopped": "Reason shown when the batch was given up on after repeatedly hitting the wiki's rate limit. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
+	"simplebatchupload-result-rate-limit-stopped": "Shown on every remaining row when the batch gave up because the wiki refused uploads repeatedly. Used as $1 of {{msg-mw|simplebatchupload-result-error}}. Do not name a specific duration: the wait depends on the wiki's configuration.",
 	"simplebatchupload-result-rate-limited": "Status of a file whose upload was refused by the wiki's rate limit and will be retried. Keep it short, it is shown after the file name.",
 	"simplebatchupload-result-success": "Status of a file that was uploaded. Keep it short, it is shown after the file name.",
 	"simplebatchupload-result-token-error": "Reason shown when the edit token could not be obtained. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
