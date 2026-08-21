@@ -3,19 +3,30 @@
 	"description": "Basic, no-frills uploading of multiple files to MediaWiki",
 	"author": "Stephan Gambke",
 	"license": "GPL-2.0-or-later",
+	"private": true,
 	"scripts": {
-		"pretest": "npm install",
-		"test": "grunt test",
-		"lint": "grunt lint",
-		"preinstall": "rm -f res/jquery.fileupload.*",
-		"install": "cp node_modules/blueimp-file-upload/js/jquery.fileupload.js node_modules/blueimp-file-upload/css/jquery.fileupload.css res"
+		"test": "npm -s run test:unit",
+		"test:unit": "vitest run --passWithNoTests",
+		"test:unit:watch": "vitest",
+		"lint": "npm -s run lint:js && npm -s run lint:styles && npm -s run lint:i18n",
+		"lint:js": "eslint --cache --max-warnings 0 .",
+		"lint:styles": "stylelint --allow-empty-input \"**/*.css\"",
+		"lint:i18n": "banana-checker i18n/",
+		"lint:fix:js": "npm -s run lint:js -- --fix",
+		"lint:fix:styles": "npm -s run lint:styles -- --fix",
+		"blueimp:check": "diff -q node_modules/blueimp-file-upload/js/jquery.fileupload.js res/jquery.fileupload.js && diff -q node_modules/blueimp-file-upload/css/jquery.fileupload.css res/jquery.fileupload.css",
+		"blueimp:update": "cp node_modules/blueimp-file-upload/js/jquery.fileupload.js node_modules/blueimp-file-upload/css/jquery.fileupload.css res/",
+		"preflight": "npm -s run lint && npm -s run test:unit && npm -s run blueimp:check"
 	},
 	"devDependencies": {
-		"grunt": "^1.6.2",
-		"grunt-cli": "^0.1.13",
-		"grunt-banana-checker": "^0.4.0",
-		"grunt-contrib-jshint": "^1.0.0",
-		"grunt-jsonlint": "^1.0.7",
-		"blueimp-file-upload": "^v10.32.0"
+		"blueimp-file-upload": "10.32.0",
+		"eslint": "8.57.1",
+		"eslint-config-wikimedia": "0.32.5",
+		"eslint-plugin-no-jquery": "6.0.0",
+		"grunt-banana-checker": "0.13.0",
+		"jsdom": "^30.0.1",
+		"stylelint": "17.6.0",
+		"stylelint-config-wikimedia": "0.19.3",
+		"vitest": "^4.1.10"
 	}
 }

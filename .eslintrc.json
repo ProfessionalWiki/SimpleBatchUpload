@@ -1,0 +1,36 @@
+{
+	"root": true,
+	"extends": [
+		"wikimedia/server"
+	],
+	"overrides": [
+		{
+			"files": [ "vitest.config.mjs" ],
+			"parserOptions": {
+				"sourceType": "module"
+			},
+			"rules": {
+				"n/no-missing-require": "off"
+			}
+		},
+		{
+			"files": [ "tests/vitest/**/*.js" ],
+			"globals": {
+				"vi": "readonly",
+				"describe": "readonly",
+				"it": "readonly",
+				"expect": "readonly",
+				"beforeEach": "readonly",
+				"afterEach": "readonly",
+				"beforeAll": "readonly",
+				"afterAll": "readonly"
+			},
+			"rules": {
+				"n/no-missing-require": "off",
+				"no-undef": "off",
+				"strict": "off",
+				"no-underscore-dangle": "off"
+			}
+		}
+	]
+}

@@ -1,0 +1,6 @@
+node_modules/
+vendor/
+res/jquery.fileupload.css
+
+# Removed together with the legacy stylesheet in a later commit.
+res/ext.SimpleBatchUpload.css

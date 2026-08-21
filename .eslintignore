@@ -1,0 +1,10 @@
+/node_modules/
+/vendor/
+/coverage/
+/i18n/
+/package-lock.json
+/composer.lock
+/res/jquery.fileupload.js
+
+# Removed together with the legacy glue file in a later commit.
+/res/ext.SimpleBatchUpload.js
