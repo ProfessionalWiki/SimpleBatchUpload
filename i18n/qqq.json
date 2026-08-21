@@ -10,5 +10,19 @@
 	"batchupload": "{{doc-special|BatchUpload}}",
 	"simplebatchupload-buttonlabel": "The label for the upload button",
 	"simplebatchupload-comment": "Comment saved with the upload. Do not translate '[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]'",
-	"simplebatchupload-max-files-alert": "Alert saying there are too many files in a batch"
+	"simplebatchupload-max-files-reached": "Shown once in the result list when a file selection does not fit in the current batch. Parameters:\n* $1 - the number of files that were added\n* $2 - the number of files that were selected",
+	"simplebatchupload-rename-label": "Label of a result row for a file that is renamed while uploading. Parameters:\n* $1 - the name of the selected file\n* $2 - the name it is uploaded under",
+	"simplebatchupload-result-queued": "Status of a file that is waiting for its turn to upload. Keep it short, it is shown after the file name.",
+	"simplebatchupload-result-rate-limited": "Status of a file whose upload was refused by the wiki's rate limit and will be retried. Keep it short, it is shown after the file name.",
+	"simplebatchupload-result-success": "Status of a file that was uploaded. Keep it short, it is shown after the file name.",
+	"simplebatchupload-result-error": "Status of a file that could not be uploaded. Parameters:\n* $1 - the reason: one of the other simplebatchupload-result-* messages, {{msg-mw|simplebatchupload-error-rename-pattern}}, or an error message from the server",
+	"simplebatchupload-result-network-error": "Reason shown when the upload request never reached the server. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
+	"simplebatchupload-result-token-error": "Reason shown when the edit token could not be obtained. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
+	"simplebatchupload-result-unknown-error": "Reason shown when the server's answer could not be interpreted. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
+	"simplebatchupload-result-not-uploaded": "Reason shown when the server accepted the request but did not store the file. Used as $1 of {{msg-mw|simplebatchupload-result-error}}. Parameters:\n* $1 - a comma separated list of the server's warning identifiers, which are not translatable",
+	"simplebatchupload-result-rate-limit-stopped": "Reason shown when the batch was given up on after repeatedly hitting the wiki's rate limit. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
+	"simplebatchupload-error-rename-pattern": "Reason shown when the +rename directive in the upload description is not a valid regular expression. Do not translate '+rename'. Used as $1 of {{msg-mw|simplebatchupload-result-error}}.",
+	"simplebatchupload-warning-duplicate": "Shown after a successful upload when the wiki already holds identical files. Parameters:\n* $1 - a comma separated list of file names\n* $2 - the number of those files",
+	"simplebatchupload-warning-exists": "Shown after a successful upload that replaced a file of the same name. Parameters:\n* $1 - the name of the replaced file",
+	"simplebatchupload-warning-other": "Shown after a successful upload that the server commented on. Parameters:\n* $1 - a comma separated list of the server's warning identifiers, which are not translatable\n* $2 - the number of those identifiers"
 }

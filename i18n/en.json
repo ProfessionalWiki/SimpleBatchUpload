@@ -10,5 +10,19 @@
 	"batchupload": "Upload multiple files",
 	"simplebatchupload-buttonlabel": "Select files (or drop them here)...",
 	"simplebatchupload-comment": "Uploaded with [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "You cannot upload more than $1 {{PLURAL:$1|file|files}} at a time."
+	"simplebatchupload-max-files-reached": "Added $1 of $2 selected {{PLURAL:$2|file|files}}. No more can be added until the current uploads finish.",
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-queued": "queued",
+	"simplebatchupload-result-rate-limited": "waiting for the upload rate limit",
+	"simplebatchupload-result-success": "OK",
+	"simplebatchupload-result-error": "ERROR: $1",
+	"simplebatchupload-result-network-error": "Server communication failed.",
+	"simplebatchupload-result-token-error": "Could not get an edit token.",
+	"simplebatchupload-result-unknown-error": "The server returned an unexpected response.",
+	"simplebatchupload-result-not-uploaded": "The file was not uploaded ($1).",
+	"simplebatchupload-result-rate-limit-stopped": "Stopped: this wiki's upload rate limit was reached repeatedly. Wait a moment, then select the remaining files again.",
+	"simplebatchupload-error-rename-pattern": "The +rename pattern is not a valid regular expression.",
+	"simplebatchupload-warning-duplicate": "Duplicate of {{PLURAL:$2|the existing file|the existing files}} $1.",
+	"simplebatchupload-warning-exists": "Overwrote the existing file $1.",
+	"simplebatchupload-warning-other": "Server {{PLURAL:$2|warning|warnings}}: $1."
 }
