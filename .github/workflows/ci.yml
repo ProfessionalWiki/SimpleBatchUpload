@@ -51,7 +51,7 @@ jobs:
 
       - name: Cache MediaWiki
         id: cache-mediawiki
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             mediawiki
@@ -60,12 +60,12 @@ jobs:
           key: mw_${{ matrix.mw }}-php${{ matrix.php }}_v4
 
       - name: Cache Composer cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.composer/cache
           key: composer-php${{ matrix.php }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: EarlyCopy
 
@@ -74,7 +74,7 @@ jobs:
         working-directory: ~
         run: bash EarlyCopy/.github/workflows/installMediaWiki.sh ${{ matrix.mw }} SimpleBatchUpload
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: mediawiki/extensions/SimpleBatchUpload
 
@@ -115,7 +115,7 @@ jobs:
 
       - name: Cache MediaWiki
         id: cache-mediawiki
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             mediawiki
@@ -124,12 +124,12 @@ jobs:
           key: mw_REL1_43-php8.3_v4
 
       - name: Cache Composer cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.composer/cache
           key: composer_static_analysis
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: EarlyCopy
 
@@ -138,7 +138,7 @@ jobs:
         working-directory: ~
         run: bash EarlyCopy/.github/workflows/installMediaWiki.sh REL1_43 SimpleBatchUpload
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: mediawiki/extensions/SimpleBatchUpload
 
@@ -167,12 +167,12 @@ jobs:
           extensions: mbstring, intl
           tools: composer
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           path: mediawiki/extensions/SimpleBatchUpload
 
       - name: Cache Composer cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.composer/cache
           key: composer_static_analysis
@@ -188,10 +188,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Silence warnings
@@ -220,10 +220,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Setup NPM dependencies
