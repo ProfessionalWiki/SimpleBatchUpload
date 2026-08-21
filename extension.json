@@ -21,7 +21,7 @@
 	},
 	"config": {
 		"SimpleBatchUploadMaxFilesPerBatch": {
-			"value":{
+			"value": {
 				"*": 1000
 			}
 		}
