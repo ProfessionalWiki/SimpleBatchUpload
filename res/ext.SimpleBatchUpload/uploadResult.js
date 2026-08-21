@@ -33,6 +33,15 @@ function classifyUploadResponse( response ) {
 			return uploadOutcome( 'ratelimited' );
 		}
 
+		// Refused because the wiki already holds this exact content under this
+		// exact title. LocalFile::recordUpload3 returns this before writing
+		// anything, so the file is present with the content that was selected.
+		// Reporting it as a failure would make a retry after an ambiguous
+		// result look like an error when nothing is wrong.
+		if ( body.error.code === 'fileexists-no-change' ) {
+			return uploadOutcome( 'success', { warnings: { 'no-change': [] } } );
+		}
+
 		// The token is fetched once per batch, so a session that rotates midway
 		// through invalidates every file still to come. Recoverable, once.
 		if ( body.error.code === 'badtoken' ) {

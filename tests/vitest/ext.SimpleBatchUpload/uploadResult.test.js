@@ -70,3 +70,19 @@ describe( 'filePageUrl', () => {
 		expect( filePageUrl( null ) ).toBeNull();
 	} );
 } );
+
+describe( 'a file the wiki already holds unchanged', () => {
+	it( 'counts an identical re-upload as stored rather than as an error', () => {
+		// MediaWiki refuses a byte-identical re-upload to the same title before
+		// it writes anything, so the file is on the wiki with exactly the
+		// content that was selected. That is what makes retrying safe.
+		const outcome = classifyUploadResponse( {
+			error: {
+				code: 'fileexists-no-change',
+				info: 'The upload is an exact duplicate of the current version of [[:File:A.png]].'
+			}
+		} );
+
+		expect( outcome.status ).toBe( 'success' );
+	} );
+} );
