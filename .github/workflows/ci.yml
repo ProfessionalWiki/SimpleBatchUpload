@@ -51,7 +51,7 @@ jobs:
 
       - name: Cache MediaWiki
         id: cache-mediawiki
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             mediawiki
@@ -60,7 +60,7 @@ jobs:
           key: mw_${{ matrix.mw }}-php${{ matrix.php }}_v4
 
       - name: Cache Composer cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache
           key: composer-php${{ matrix.php }}
@@ -115,7 +115,7 @@ jobs:
 
       - name: Cache MediaWiki
         id: cache-mediawiki
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: |
             mediawiki
@@ -124,7 +124,7 @@ jobs:
           key: mw_REL1_43-php8.3_v4
 
       - name: Cache Composer cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache
           key: composer_static_analysis
@@ -172,7 +172,7 @@ jobs:
           path: mediawiki/extensions/SimpleBatchUpload
 
       - name: Cache Composer cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.composer/cache
           key: composer_static_analysis
