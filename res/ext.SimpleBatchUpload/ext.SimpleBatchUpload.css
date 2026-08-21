@@ -1,0 +1,44 @@
+span.fileinput-button {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 0.875em;
+	font-weight: normal;
+	line-height: 1.42857;
+	vertical-align: middle;
+	color: #333;
+	text-align: center;
+	white-space: nowrap;
+	cursor: pointer;
+	-moz-user-select: none;
+	background-color: #f9f9f9;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+ul.fileupload-results {
+	padding-left: 0;
+	margin-top: 1em;
+	list-style: outside none none;
+}
+
+ul.fileupload-results li {
+	padding: 0.2em 1em;
+}
+
+ul.fileupload-results li.ful-success {
+	background-color: #90ee90;
+}
+
+ul.fileupload-results li.ful-success a {
+	color: #0645ad;
+}
+
+ul.fileupload-results li.ful-error {
+	background-color: #ffb6c1;
+}
+
+ul.fileupload-results li.ful-notice {
+	background-color: #fafad2;
+}

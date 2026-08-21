@@ -55,28 +55,46 @@
 			"styles": [
 				"jquery.fileupload.css"
 			],
-			"position": "top",
 			"dependencies": [
 				"jquery.ui"
 			]
 		},
 		"ext.SimpleBatchUpload": {
-			"scripts": [
-				"ext.SimpleBatchUpload.js"
+			"packageFiles": [
+				"ext.SimpleBatchUpload/ext.SimpleBatchUpload.js",
+				"ext.SimpleBatchUpload/batchLimit.js",
+				"ext.SimpleBatchUpload/rateLimitGate.js",
+				"ext.SimpleBatchUpload/renamePattern.js",
+				"ext.SimpleBatchUpload/resultRow.js",
+				"ext.SimpleBatchUpload/uploadQueue.js",
+				"ext.SimpleBatchUpload/uploadResult.js",
+				"ext.SimpleBatchUpload/uploadRunner.js"
 			],
 			"styles": [
-				"ext.SimpleBatchUpload.css"
+				"ext.SimpleBatchUpload/ext.SimpleBatchUpload.css"
 			],
-			"position": "top",
 			"dependencies": [
 				"ext.SimpleBatchUpload.jquery-file-upload",
 				"mediawiki.Title",
-				"mediawiki.jqueryMsg",
-				"mediawiki.api"
+				"mediawiki.api",
+				"mediawiki.jqueryMsg"
 			],
 			"messages": [
-				"simplebatchupload-comment",
-				"simplebatchupload-max-files-alert"
+				"simplebatchupload-error-rename-pattern",
+				"simplebatchupload-max-files-reached",
+				"simplebatchupload-rename-label",
+				"simplebatchupload-result-error",
+				"simplebatchupload-result-network-error",
+				"simplebatchupload-result-not-uploaded",
+				"simplebatchupload-result-queued",
+				"simplebatchupload-result-rate-limit-stopped",
+				"simplebatchupload-result-rate-limited",
+				"simplebatchupload-result-success",
+				"simplebatchupload-result-token-error",
+				"simplebatchupload-result-unknown-error",
+				"simplebatchupload-warning-duplicate",
+				"simplebatchupload-warning-exists",
+				"simplebatchupload-warning-other"
 			]
 		}
 	},

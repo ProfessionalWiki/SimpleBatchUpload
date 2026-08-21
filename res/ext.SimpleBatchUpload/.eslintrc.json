@@ -1,0 +1,26 @@
+{
+	"extends": [
+		"wikimedia/client/es2017",
+		"wikimedia/mediawiki",
+		"wikimedia/jquery"
+	],
+	"env": {
+		"browser": true,
+		"node": false
+	},
+	"rules": {
+		"jsdoc/no-undefined-types": "off",
+		"max-len": "off"
+	},
+	"overrides": [
+		{
+			"files": [ "*.js" ],
+			"excludedFiles": [ "ext.SimpleBatchUpload.js" ],
+			"extends": [ "plugin:no-jquery/all" ],
+			"globals": {
+				"$": "off",
+				"jQuery": "off"
+			}
+		}
+	]
+}
