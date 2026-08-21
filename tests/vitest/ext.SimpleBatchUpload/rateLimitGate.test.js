@@ -116,3 +116,92 @@ describe( 'resuming a given up batch', () => {
 		expect( clock.now() - waitingSince ).toBe( 2000 );
 	} );
 } );
+
+describe( 'pacing to the advertised limit', () => {
+	const EIGHT_PER_MINUTE = { intervalMs: 7500, windowMs: 60000 };
+
+	function pacedGate( clock, limit ) {
+		return createRateLimitGate( {
+			now: clock.now,
+			sleep: clock.sleep,
+			limit: limit || EIGHT_PER_MINUTE
+		} );
+	}
+
+	it( 'does not slow anything down before the wiki has refused an upload', async () => {
+		const clock = createFakeClock();
+		const gate = pacedGate( clock );
+
+		await gate.wait();
+		await gate.wait();
+		await gate.wait();
+
+		// A batch that fits inside the budget must not be paced: bursting is
+		// what makes the common case fast, and it succeeds.
+		expect( clock.now() ).toBe( 0 );
+	} );
+
+	it( 'spaces releases once refused, so they do not burst back into the limiter', async () => {
+		const clock = createFakeClock();
+		const gate = pacedGate( clock );
+
+		gate.noteRateLimited();
+
+		await gate.wait();
+		const first = clock.now();
+		await gate.wait();
+		const second = clock.now();
+		await gate.wait();
+
+		expect( second - first ).toBe( 7500 );
+		expect( clock.now() - second ).toBe( 7500 );
+	} );
+
+	it( 'waits up to the advertised window rather than a fixed minute', async () => {
+		const clock = createFakeClock();
+		// A wiki with a daily cap: the useful wait is hours, not a minute.
+		const gate = pacedGate( clock, { intervalMs: 864000, windowMs: 86400000 } );
+
+		for ( let refusals = 0; refusals < 20; refusals++ ) {
+			gate.noteRateLimited();
+			gate.noteProgress();
+		}
+
+		expect( retryDelay( 20, 86400000 ) ).toBe( 86400000 );
+	} );
+
+	it( 'still caps at a minute when the wiki advertises nothing', () => {
+		expect( retryDelay( 20 ) ).toBe( 60000 );
+	} );
+} );
+
+describe( 'learning the limit after the widget is already usable', () => {
+	it( 'adopts a limit that arrives once the query returns', async () => {
+		const clock = createFakeClock();
+		// Created before the API call resolves, so the button works immediately.
+		const gate = createRateLimitGate( { now: clock.now, sleep: clock.sleep } );
+
+		gate.useLimit( { intervalMs: 5000, windowMs: 86400000 } );
+		gate.noteRateLimited();
+
+		await gate.wait();
+		const first = clock.now();
+		await gate.wait();
+
+		expect( clock.now() - first ).toBe( 5000 );
+	} );
+
+	it( 'ignores an absent limit, so an unlimited user is never paced', async () => {
+		const clock = createFakeClock();
+		const gate = createRateLimitGate( { now: clock.now, sleep: clock.sleep } );
+
+		gate.useLimit( null );
+		gate.noteRateLimited();
+
+		await gate.wait();
+		const first = clock.now();
+		await gate.wait();
+
+		expect( clock.now() - first ).toBe( 0 );
+	} );
+} );
