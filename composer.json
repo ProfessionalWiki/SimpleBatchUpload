@@ -30,6 +30,25 @@
 		"php": ">=8.0",
 		"composer/installers": "^2|^1.0.1"
 	},
+	"require-dev": {
+		"mediawiki/mediawiki-codesniffer": "^52.0.0",
+		"phpstan/phpstan": "^2.0.1"
+	},
+	"scripts": {
+		"fix": "phpcbf",
+		"phpcs": "phpcs -p -s",
+		"phpstan": "phpstan analyse --memory-limit=512M",
+		"phpunit": "cd ../../ && composer phpunit -- extensions/SimpleBatchUpload/tests/phpunit/",
+		"test": [
+			"@phpcs",
+			"@phpstan"
+		],
+		"preflight": [
+			"@phpcs",
+			"@phpstan",
+			"@phpunit"
+		]
+	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "3.x-dev"
@@ -37,7 +56,8 @@
 	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	}
 }
