@@ -3,7 +3,7 @@
  * File containing the ParameterProvider class
  *
  * @copyright (C) 2016 - 2017, Stephan Gambke
- * @license   GNU General Public License, version 2 (or any later version)
+ * @license GPL-2.0-or-later
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,6 +23,7 @@
  */
 
 namespace MediaWiki\Extension\SimpleBatchUpload;
+
 use MediaWiki\Html\Html;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\PPFrame;
@@ -83,18 +84,17 @@ class UploadButtonRenderer {
 	 * @return string
 	 */
 	protected function getHtml( ParameterProvider $paramProvider ) {
-
 		$escapedUploadComment = $paramProvider->getEscapedUploadComment();
 		$uploadPageText = $paramProvider->getUploadPageText();
 
 		return
 
 			'<div class="fileupload-container"> ' .
-				'<label>' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':<br>'.
+				'<label>' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':<br>' .
 					'<span class="mw-input">' .
-						Html::element('textarea', ['name' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8'], $uploadPageText) .
+						Html::element( 'textarea', [ 'name' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8' ], $uploadPageText ) .
 					'</span>' .
-				'</label><br> '.
+				'</label><br> ' .
 				'<span class="fileupload-dropzone fileinput-button"> ' .
 					'<i class="glyphicon glyphicon-plus"></i> ' .
 					'<span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span> ' .
@@ -119,7 +119,6 @@ class UploadButtonRenderer {
 	 * @return ParameterProvider
 	 */
 	protected function prepareParameterProvider( $args ): ParameterProvider {
-
 		$templateName = $args[ 0 ];
 
 		$paramProvider = new ParameterProvider( $templateName );

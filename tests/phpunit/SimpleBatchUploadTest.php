@@ -3,7 +3,7 @@
  * File containing the SimpleBatchUploadTest class
  *
  * @copyright (C) 2016 - 2019, Stephan Gambke
- * @license   GNU General Public License, version 2 (or any later version)
+ * @license GPL-2.0-or-later
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,7 +35,6 @@ use MediaWiki\Extension\SimpleBatchUpload\SimpleBatchUpload;
 class SimpleBatchUploadTest extends \PHPUnit\Framework\TestCase {
 
 	public function testCanConstruct() {
-
 		$this->assertInstanceOf(
 			'\MediaWiki\Extension\SimpleBatchUpload\SimpleBatchUpload',
 			new SimpleBatchUpload()
@@ -43,7 +42,6 @@ class SimpleBatchUploadTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testRegisterParserFunction() {
-
 		$parser = $this->getMockBuilder( Parser::class )
 			->disableOriginalConstructor()
 			->getMock();

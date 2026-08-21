@@ -3,7 +3,7 @@
  * File containing the SpecialBatchUpload class
  *
  * @copyright (C) 2016 - 2017, Stephan Gambke
- * @license   GNU General Public License, version 2 (or any later version)
+ * @license GPL-2.0-or-later
  *
  * This software is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,7 +57,6 @@ class SpecialBatchUpload extends SpecialPage {
 	 * @throws \MWException
 	 */
 	public function execute( $subpage ) {
-
 		$this->setHeaders();
 		$this->checkPermissions();
 
