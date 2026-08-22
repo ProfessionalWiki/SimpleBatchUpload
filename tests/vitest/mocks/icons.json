@@ -1,0 +1,9 @@
+{
+	"cdxIconSuccess": "<path d=\"M1 0h1v1z\"/>",
+	"cdxIconError": "<path d=\"M2 0h1v1z\"/>",
+	"cdxIconCancel": "<path d=\"M3 0h1v1z\"/>",
+	"cdxIconReload": "<path d=\"M5 0h1v1z\"/>",
+	"cdxIconAlert": "<path d=\"M6 0h1v1z\"/>",
+	"cdxIconImage": "<path d=\"M7 0h1v1z\"/>",
+	"cdxIconUpload": "<path d=\"M8 0h1v1z\"/>"
+}

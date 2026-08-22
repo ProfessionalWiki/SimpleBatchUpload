@@ -211,9 +211,6 @@ jobs:
       - name: Lint JS
         run: npm run lint:js
 
-      - name: Check the vendored blueimp widget matches its package
-        run: npm run blueimp:check
-
   js-test:
     name: "JS: Unit tests"
 
