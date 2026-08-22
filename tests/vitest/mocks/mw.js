@@ -14,11 +14,29 @@ function formatMessage( key, params ) {
 	return params.length === 0 ? key : key + '(' + params.join( '|' ) + ')';
 }
 
+/**
+ * MediaWiki normalises a file name before it becomes a title: underscores are
+ * spaces, runs of whitespace collapse, and the first letter is capitalised on a
+ * wiki with the default $wgCapitalLinks. Two uploads whose names differ only by
+ * those things land on one file page, so anything comparing names has to see
+ * the normalised form or it will miss real collisions.
+ *
+ * @param {string} fileName
+ * @return {string}
+ */
+function normaliseFileName( fileName ) {
+	const spaced = fileName.replace( /[_\s]+/g, ' ' ).trim();
+
+	return spaced.charAt( 0 ).toUpperCase() + spaced.slice( 1 );
+}
+
 function createTitleStub( fileName ) {
+	const normalised = normaliseFileName( fileName );
+
 	return {
-		getUrl: () => '/index.php/File:' + fileName,
-		getPrefixedText: () => 'File:' + fileName,
-		getMain: () => fileName
+		getUrl: () => '/index.php/File:' + normalised.replace( / /g, '_' ),
+		getPrefixedText: () => 'File:' + normalised,
+		getMain: () => normalised
 	};
 }
 
@@ -52,7 +70,7 @@ function createMwMock() {
 			// The real mw.Title.newFromFileName returns null for names it cannot
 			// turn into a title. Model that, so the guard stays reachable.
 			newFromFileName: vi.fn(
-				( fileName ) => ( fileName ? createTitleStub( fileName ) : null )
+				( fileName ) => ( fileName && fileName.trim() ? createTitleStub( fileName ) : null )
 			)
 		},
 
