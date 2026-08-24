@@ -1,10 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
 	"batchupload": "Méi Fichieren eroplueden",
 	"simplebatchupload-comment": "Eropgeluede mam [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "Dir kënnt net méi wéi {{PLURAL:$1|ee Fichier|$1 Fichiere}} mateneen eroplueden."
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-error": "FEELER: $1",
+	"simplebatchupload-result-not-uploaded": "De Fichier gouf net eropgelueden ($1).",
+	"simplebatchupload-result-success": "OK",
+	"simplebatchupload-warning-other": "{{PLURAL:$2|Serverwarnung|Serverwarnungen}}: $1."
 }

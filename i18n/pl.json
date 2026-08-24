@@ -6,9 +6,8 @@
 			"WaldiSt"
 		]
 	},
-	"simplebatchupload-desc": "Proste przesyłanie grup plików",
 	"batchupload": "Prześlij wiele plików",
 	"simplebatchupload-buttonlabel": "Wybierz pliki (lub upuść je tutaj)…",
 	"simplebatchupload-comment": "Przesłano z\n[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "Nie możesz przesłać więcej niż $1 {{PLURAL:$1|pliku|plików}} na raz."
+	"simplebatchupload-desc": "Proste przesyłanie grup plików"
 }

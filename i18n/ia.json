@@ -4,9 +4,8 @@
 			"McDutchie"
 		]
 	},
-	"simplebatchupload-desc": "Permitte le incargamento simple in lot de files",
 	"batchupload": "Incargar plure files",
 	"simplebatchupload-buttonlabel": "Selige files (o depone los hic)…",
 	"simplebatchupload-comment": "Incargate con [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "Non es possibile incargar plus de $1 file{{PLURAL:$1||s}} al vice."
+	"simplebatchupload-desc": "Permitte le incargamento simple in lot de files"
 }

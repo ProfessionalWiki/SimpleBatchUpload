@@ -4,6 +4,5 @@
 			"Obsuser"
 		]
 	},
-	"simplebatchupload-buttonlabel": "Одаберите датотеке (или их отпустите овде)...",
-	"simplebatchupload-max-files-alert": "Не можете да отпремите више од $1 {{PLURAL:$1|датотеке|датотеке|датотека}} у исто време."
+	"simplebatchupload-buttonlabel": "Одаберите датотеке (или их отпустите овде)..."
 }

@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"CalER08"
+		]
+	},
+	"simplebatchupload-estimate-minutes": "Sekitar $1 {{PLURAL:$1| menit|menit}} tersisa pada batas laju unggahan wiki ini.",
+	"simplebatchupload-estimate-under-a-minute": "Kurang dari satu menit tersisa sebelum batas unggahan di wiki ini berakhir.",
+	"simplebatchupload-rename-label": "$1 / $2",
+	"simplebatchupload-result-error": "KESALAHAN: $1",
+	"simplebatchupload-result-not-uploaded": "File tidak berhasil diunggah ($1).",
+	"simplebatchupload-result-queued": "Dalam antrean",
+	"simplebatchupload-result-unknown-error": "Server memberikan respons yang tidak terduga.",
+	"simplebatchupload-warning-duplicate": "Duplikat dari {{PLURAL:$2| file yang ada|file-file yang ada}} $1.",
+	"simplebatchupload-warning-exists": "Menimpa file $1 yang sudah ada.",
+	"simplebatchupload-warning-other": "Server {{PLURAL:$2| peringatan|peringatan}}: $1."
+}

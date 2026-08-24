@@ -4,9 +4,8 @@
 			"شاه زمان پټان"
 		]
 	},
-	"simplebatchupload-desc": "د دوتنو د ساده ډله‌ييزه راپورته‌کولو ته اجازه ورکوي.",
 	"batchupload": "گڼ شمېر دوتنې راپورته‌کول",
 	"simplebatchupload-buttonlabel": "دوتنې غوره کړئ (يا يې دلته خوشې کړئ)...",
 	"simplebatchupload-comment": "[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|ساده‌ډله‌ييزه‌راپورته‌کولو]] سره راپورته شوی",
-	"simplebatchupload-max-files-alert": "تاسو په يو وخت کې له $1 {{PLURAL:$1|دوتنې|دوتنو}} څخه زيات نشئ راپورته کولی."
+	"simplebatchupload-desc": "د دوتنو د ساده ډله‌ييزه راپورته‌کولو ته اجازه ورکوي."
 }

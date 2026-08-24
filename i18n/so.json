@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"AhmedG612"
+		]
+	},
+	"batchupload": "Soo geli faylal badan",
+	"simplebatchupload-buttonlabel": "Dooro faylasha (ama halkan ku soo jiid)...",
+	"simplebatchupload-comment": "Waxaa lagu soo geliyay [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-desc": "Waxay oggolaanaysaa in faylal badan si fudud hal mar loo soo geliyo",
+	"simplebatchupload-error-rename-pattern": "Qaabka +rename ma aha tibaax joogto ah oo sax ah.",
+	"simplebatchupload-estimate-minutes": "Waxaa ka haray $1 {{PLURAL:$1|daqiiqo|daqiiqadood}} xadka heerka soo gelinta ee wikitigan.",
+	"simplebatchupload-estimate-under-a-minute": "Wax ka yar hal daqiiqo ayaa ka hartay xadka heerka soo gelinta ee wikigan.",
+	"simplebatchupload-max-files-reached": "Waxaa lagu daray $1 oo ka mid ah $2 {{PLURAL:$2|faylka|faylasha}} la doortay. Wax intaas ka badan lama dari karo ilaa soo gelinta hadda socota ay dhammaato.",
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-error": "KHALAD: $1",
+	"simplebatchupload-result-network-error": "Isgaarsiinta server-ka ayaa fashilantay.",
+	"simplebatchupload-result-not-uploaded": "Faylka lama soo gelin ($1).",
+	"simplebatchupload-result-queued": "saf ku jira",
+	"simplebatchupload-result-rate-limit-stopped": "La joojiyay: xadka heerka soo gelinta ee wikigan ayaa si isdaba joog ah loo gaadhay. Mar kale dooro faylasha haray marka xadku dib u bilaabmo.",
+	"simplebatchupload-result-rate-limited": "sugaya xadka heerka soo gelinta",
+	"simplebatchupload-result-success": "Waayahay",
+	"simplebatchupload-result-token-error": "Lama heli karin calaamadda tafatirka.",
+	"simplebatchupload-result-unknown-error": "Server-ku wuxuu soo celiyay jawaab aan la filayn.",
+	"simplebatchupload-warning-duplicate": "Nuqul ka mid ah {{PLURAL:$2|faylka jira|faylasha jira}} $1.",
+	"simplebatchupload-warning-exists": "Waxaa lagu dul qoray faylka jiray $1.",
+	"simplebatchupload-warning-no-change": "Hore ayuu wikigan ugu jiray isagoo leh nuxur isku mid ah.",
+	"simplebatchupload-warning-other": "{{PLURAL:$2|digniin|digniino}} server-ka: $1."
+}

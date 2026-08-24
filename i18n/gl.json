@@ -4,9 +4,26 @@
 			"Toliño"
 		]
 	},
-	"simplebatchupload-desc": "Permite a subida sinxela por lotes de ficheiros",
-	"batchupload": "Cargar varios ficheiros",
-	"simplebatchupload-buttonlabel": "Seleccionar os ficheiros (ou soltalos aquí)...",
+	"batchupload": "Subir varios ficheiros",
+	"simplebatchupload-buttonlabel": "Selecciona os ficheiros (ou sóltaos aquí)...",
 	"simplebatchupload-comment": "Subido con [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "Non podes subir máis {{PLURAL:$1|dun ficheiro|de $1 ficheiros}} á vez."
+	"simplebatchupload-desc": "Permite a subida sinxela por lotes de ficheiros",
+	"simplebatchupload-error-rename-pattern": "O patrón «+rename» non é unha expresión regular válida.",
+	"simplebatchupload-estimate-minutes": "{{PLURAL:$1|Queda|Quedan}} aproximadamente {{PLURAL:$1|un minuto|$1 minutos}} para acadar o límite de taxa de subida deste wiki.",
+	"simplebatchupload-estimate-under-a-minute": "Queda menos dun minuto para acadar o límite de taxa de subida deste wiki.",
+	"simplebatchupload-max-files-reached": "Engadíronse $1 de $2 {{PLURAL:$2|ficheiro seleccionado|ficheiros seleccionados}}. Non se poden engadir máis ata que rematen as subidas actuais.",
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-error": "ERRO: $1",
+	"simplebatchupload-result-network-error": "Fallou a comunicación co servidor.",
+	"simplebatchupload-result-not-uploaded": "Non se subiu o ficheiro ($1).",
+	"simplebatchupload-result-queued": "en cola",
+	"simplebatchupload-result-rate-limit-stopped": "Detido: alcanzouse repetidamente o límite de taxa de subida deste wiki. Selecciona os ficheiros restantes de novo cando se restableza o límite.",
+	"simplebatchupload-result-rate-limited": "agardando polo límite de taxa de subida",
+	"simplebatchupload-result-success": "Ben",
+	"simplebatchupload-result-token-error": "Non se puido obter un token de edición.",
+	"simplebatchupload-result-unknown-error": "O servidor devolveu unha resposta inesperada.",
+	"simplebatchupload-warning-duplicate": "Duplicado {{PLURAL:$2|do ficheiro existente «$1»|dos seguintes ficheiros existentes: $1}}.",
+	"simplebatchupload-warning-exists": "Sobrescribiuse o ficheiro existente «$1».",
+	"simplebatchupload-warning-no-change": "Xa está no wiki con contido idéntico.",
+	"simplebatchupload-warning-other": "{{PLURAL:$2|Aviso|Avisos}} do servidor: $1."
 }

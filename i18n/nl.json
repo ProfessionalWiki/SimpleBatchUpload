@@ -2,13 +2,16 @@
 	"@metadata": {
 		"authors": [
 			"Mainframe98",
+			"McDutchie",
 			"Tkinkhorst",
 			"Xbaked potatox"
 		]
 	},
-	"simplebatchupload-desc": "Maakt uploaden van meerdere bestanden eenvoudig mogelijk",
 	"batchupload": "Meerdere bestanden uploaden",
 	"simplebatchupload-buttonlabel": "Selecteer bestanden (of sleep ze hier naar toe)...",
 	"simplebatchupload-comment": "Geüpload met [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-max-files-alert": "U kunt niet meer dan $1 {{PLURAL:$1|bestand|bestanden}} tegelijkertijd uploaden."
+	"simplebatchupload-desc": "Maakt uploaden van meerdere bestanden eenvoudig mogelijk",
+	"simplebatchupload-error-rename-pattern": "Het ‘+rename’-patroon is geen geldige reguliere expressie.",
+	"simplebatchupload-estimate-minutes": "Ongeveer $1 {{PLURAL:$1|minuut|minuten}} over, gegeven de uploadsnelheidsbeperking van deze wiki.",
+	"simplebatchupload-estimate-under-a-minute": "Minder dan een minuut over, gegeven de uploadsnelheidsbeperking van deze wiki."
 }
