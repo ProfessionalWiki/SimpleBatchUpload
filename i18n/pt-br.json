@@ -3,11 +3,15 @@
 		"authors": [
 			"Eduardo Addad de Oliveira",
 			"Eduardoaddad",
-			"Jhonnatanricardo"
+			"Jhonnatanricardo",
+			"User3412"
 		]
 	},
 	"batchupload": "Carregar vários arquivos",
 	"simplebatchupload-buttonlabel": "Selecione os arquivos (ou solte-os aqui)...",
 	"simplebatchupload-comment": "Carregado com [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-desc": "Permite o carregamento em lote simples de arquivos"
+	"simplebatchupload-desc": "Permite o carregamento em lote simples de arquivos",
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-error": "ERRO: $1",
+	"simplebatchupload-result-success": "OK"
 }

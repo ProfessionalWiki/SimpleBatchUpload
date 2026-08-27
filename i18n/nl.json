@@ -3,6 +3,7 @@
 		"authors": [
 			"Mainframe98",
 			"McDutchie",
+			"Siebrand",
 			"Tkinkhorst",
 			"Xbaked potatox"
 		]
@@ -13,5 +14,20 @@
 	"simplebatchupload-desc": "Maakt uploaden van meerdere bestanden eenvoudig mogelijk",
 	"simplebatchupload-error-rename-pattern": "Het ‘+rename’-patroon is geen geldige reguliere expressie.",
 	"simplebatchupload-estimate-minutes": "Ongeveer $1 {{PLURAL:$1|minuut|minuten}} over, gegeven de uploadsnelheidsbeperking van deze wiki.",
-	"simplebatchupload-estimate-under-a-minute": "Minder dan een minuut over, gegeven de uploadsnelheidsbeperking van deze wiki."
+	"simplebatchupload-estimate-under-a-minute": "Minder dan een minuut over, gegeven de uploadsnelheidsbeperking van deze wiki.",
+	"simplebatchupload-max-files-reached": "$1 van {{PLURAL:$2|$2 geselecteerd bestand|de $2 geselecteerde bestanden}} {{PLURAL:$1|is|zijn}} toegevoegd. Er kunnen er geen meer bij totdat de huidige uploads klaar zijn.",
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-error": "FOUT: $1",
+	"simplebatchupload-result-network-error": "Servercommunicatie mislukt.",
+	"simplebatchupload-result-not-uploaded": "Het bestand is niet geüpload ($1).",
+	"simplebatchupload-result-queued": "in wachtrij",
+	"simplebatchupload-result-rate-limit-stopped": "Gestopt: de grenswaarde voor de uploadbeperking van deze wiki is herhaaldelijk bereikt. Selecteer de resterende bestanden opnieuw zodra uploaden weer mogelijk is.",
+	"simplebatchupload-result-rate-limited": "in de wacht wegens uploadbeperking",
+	"simplebatchupload-result-success": "OK",
+	"simplebatchupload-result-token-error": "Kon geen bewerkingstoken verkrijgen.",
+	"simplebatchupload-result-unknown-error": "De server gaf een onverwachte reactie.",
+	"simplebatchupload-warning-duplicate": "Duplicaat van {{PLURAL:$2|het bestaande bestand|de bestaande bestanden}} $1.",
+	"simplebatchupload-warning-exists": "Het bestaande bestand $1 is overschreven.",
+	"simplebatchupload-warning-no-change": "Staat al op de wiki met identieke inhoud.",
+	"simplebatchupload-warning-other": "{{PLURAL:$2|Serverwaarschuwing|Serverwaarschuwingen}}: $1."
 }
