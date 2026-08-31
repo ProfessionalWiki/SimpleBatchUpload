@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wikipeedikko"
+		]
+	},
+	"simplebatchupload-max-files-reached": "$2 valitusta {{PLURAL:$2|tiedostosta}} lisättiin $1. Enempää ei voida lisätä ennen nykyisten latausten päättymistä.",
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-error": "VIRHE: $1",
+	"simplebatchupload-result-network-error": "Palvelinyhteys epäonnistui.",
+	"simplebatchupload-result-not-uploaded": "Tiedostoa ei ladattu ($1).",
+	"simplebatchupload-result-success": "OK",
+	"simplebatchupload-result-token-error": "Muokkaustunnusta ei voitu noutaa.",
+	"simplebatchupload-result-unknown-error": "Palvelin antoi odottamattoman vastauksen.",
+	"simplebatchupload-warning-exists": "Nykyinen tiedosto $1 korvattiin."
+}

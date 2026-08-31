@@ -1,0 +1,24 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jeeputer"
+		]
+	},
+	"simplebatchupload-error-rename-pattern": "الگوی +rename یک عبارت باقاعدهٔ معتبر نیست.",
+	"simplebatchupload-estimate-minutes": "با محدودیت نرخ بارگذاری این ویکی، حدود $1 {{PLURAL:$1|دقیقه}} باقی مانده است.",
+	"simplebatchupload-estimate-under-a-minute": "با محدودیت نرخ بارگذاری این ویکی، کمتر از یک دقیقه باقی مانده است.",
+	"simplebatchupload-max-files-reached": "$1 پرونده از $2 پروندهٔ انتخاب‌شده افزوده {{PLURAL:$2|شد|شدند}}. تا پیش از پایان بارگذاری‌های فعلی، نمی‌توان پروندهٔ دیگری را افزود.",
+	"simplebatchupload-rename-label": "$1 ← $2",
+	"simplebatchupload-result-error": "خطا: $1",
+	"simplebatchupload-result-network-error": "ارتباط با سرور ناموفق بود.",
+	"simplebatchupload-result-not-uploaded": "پرونده بارگذاری نشد ($1).",
+	"simplebatchupload-result-queued": "در صف",
+	"simplebatchupload-result-rate-limit-stopped": "متوقف شد: محدودیت نرخ بارگذاری این ویکی چندین بار پر شد. به محض بازنشانی محدودیت، پرونده‌های باقی‌مانده را انتخاب کنید.",
+	"simplebatchupload-result-rate-limited": "در انتظار محدودیت نرخ بارگذاری",
+	"simplebatchupload-result-success": "باشه",
+	"simplebatchupload-result-token-error": "ناتوان از دریافت توکن ویرایش.",
+	"simplebatchupload-result-unknown-error": "سرور پاسخ غیرمنتظره‌ای را برگرداند.",
+	"simplebatchupload-warning-duplicate": "تکرار {{PLURAL:$2|پروندهٔ|پرونده‌های}} از پیش موجود $1.",
+	"simplebatchupload-warning-no-change": "از پیش ب محتوای یکسان در این ویکی موجود است.",
+	"simplebatchupload-warning-other": "{{PLURAL:$2|هشدار|هشدارهای}} سرور: $1."
+}
