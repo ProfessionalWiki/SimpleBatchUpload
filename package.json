@@ -30,6 +30,6 @@
 		"jsdom": "^30.0.1",
 		"stylelint": "17.15.0",
 		"stylelint-config-wikimedia": "0.19.3",
-		"vitest": "^4.1.10"
+		"vitest": "^5.0.0"
 	}
 }
