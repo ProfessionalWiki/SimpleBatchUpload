@@ -29,7 +29,7 @@
 		"grunt-banana-checker": "0.13.0",
 		"jsdom": "^30.0.1",
 		"stylelint": "17.15.0",
-		"stylelint-config-wikimedia": "0.19.3",
+		"stylelint-config-wikimedia": "0.19.4",
 		"vitest": "^5.0.0"
 	}
 }
