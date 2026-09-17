@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Addonian1123",
 			"Kly",
 			"Lakejason0"
 		]
@@ -8,5 +9,23 @@
 	"batchupload": "上傳多個檔案",
 	"simplebatchupload-buttonlabel": "選擇檔案（或拖曳至此）…",
 	"simplebatchupload-comment": "透過[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|簡易批次上傳]]來上傳",
-	"simplebatchupload-desc": "允許簡易批次上傳檔案"
+	"simplebatchupload-desc": "允許簡易批次上傳檔案",
+	"simplebatchupload-error-rename-pattern": "+rename模式不是有效的正規表示式。",
+	"simplebatchupload-estimate-minutes": "本wiki上傳速率限制剩下約$1{{PLURAL:$1|分鐘}}。",
+	"simplebatchupload-estimate-under-a-minute": "本wiki的上傳速率限制還剩不到一分鐘。",
+	"simplebatchupload-max-files-reached": "已新增$2個選定的{{PLURAL:$2|檔案}}中的$1個。在目前的上傳完成前無法新增更多檔案。",
+	"simplebatchupload-rename-label": "$1→$2",
+	"simplebatchupload-result-error": "錯誤：$1",
+	"simplebatchupload-result-network-error": "伺服器通訊失敗。",
+	"simplebatchupload-result-not-uploaded": "文件未上傳（$1）。",
+	"simplebatchupload-result-queued": "已排隊",
+	"simplebatchupload-result-rate-limit-stopped": "已停止：此wiki的上傳速率已多次達到上限。請在上限重置後再次選擇剩餘檔案。",
+	"simplebatchupload-result-rate-limited": "等待上傳速率限制",
+	"simplebatchupload-result-success": "確定",
+	"simplebatchupload-result-token-error": "無法取得編輯令牌。",
+	"simplebatchupload-result-unknown-error": "伺服器回傳了預期外的回應。",
+	"simplebatchupload-warning-duplicate": "與{{PLURAL:$2|現有檔案}}$1重複。",
+	"simplebatchupload-warning-exists": "覆蓋了現有文件$1。",
+	"simplebatchupload-warning-no-change": "wiki上已有內容完全相同的檔案。",
+	"simplebatchupload-warning-other": "伺服器{{PLURAL:$2|警告}}：$1。"
 }

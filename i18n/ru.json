@@ -1,11 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ivan-r"
+			"Ivan-r",
+			"Yurina Tatiana"
 		]
 	},
 	"batchupload": "Пакетная загрузка",
 	"simplebatchupload-buttonlabel": "Выбрать файлы (или перетащите их сюда)…",
 	"simplebatchupload-comment": "Загружено через [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-desc": "Реализует простую пакетную загрузку файлов."
+	"simplebatchupload-desc": "Реализует простую пакетную загрузку файлов.",
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-result-error": "ОШИБКА: $1"
 }
