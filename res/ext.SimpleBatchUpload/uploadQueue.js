@@ -3,10 +3,7 @@
 /**
  * Runs at most `limit` tasks at a time, in the order they were queued.
  *
- * blueimp has its own slot queue (limitConcurrentUploads), but a file that is
- * already queued there starts as soon as a slot frees, with no chance to
- * reconsider. That is fine for concurrency and useless for backing off: the
- * rate limit gate has to be consulted from inside a task that already holds a
+ * The rate limit gate is consulted from inside a task that already holds a
  * permit, so a batch that runs into the limit stops after at most `limit`
  * further requests instead of offering the whole selection to the limiter.
  *

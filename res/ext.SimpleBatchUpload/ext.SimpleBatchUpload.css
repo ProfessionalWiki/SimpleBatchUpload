@@ -1,48 +1,21 @@
-span.fileinput-button {
-	display: inline-block;
-	padding: 6px 12px;
-	margin-bottom: 0;
-	font-size: 0.875em;
-	font-weight: normal;
-	line-height: 1.42857;
-	vertical-align: middle;
-	color: #333;
-	text-align: center;
+/**
+ * What more than one component needs. Everything else is in the component that
+ * draws it; ResourceLoader concatenates the style blocks of the .vue files into
+ * this module's stylesheet, so a rule's home is the file it belongs to.
+ */
+
+/* Read aloud, never drawn: the file a row's button acts on, the figure behind a
+   ring, and the panel's announcements. Clipped rather than display: none, which
+   would take it out of the accessibility tree along with the pixels. */
+.ext-sbu-visually-hidden {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+	clip-path: inset( 50% );
 	white-space: nowrap;
-	cursor: pointer;
-	-moz-user-select: none;
-	background-color: #f9f9f9;
-	background-image: none;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-ul.fileupload-results {
-	padding-left: 0;
-	margin-top: 1em;
-	list-style: outside none none;
-}
-
-ul.fileupload-results li {
-	padding: 0.2em 1em;
-}
-
-ul.fileupload-results li.ful-success {
-	background-color: #90ee90;
-}
-
-ul.fileupload-results li.ful-success a {
-	color: #0645ad;
-}
-
-ul.fileupload-results li.ful-error {
-	background-color: #ffb6c1;
-}
-
-ul.fileupload-results li.ful-notice {
-	background-color: #fafad2;
-}
-
-ul.fileupload-results li.ful-estimate {
-	font-style: italic;
 }

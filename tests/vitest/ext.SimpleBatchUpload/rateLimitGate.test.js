@@ -91,6 +91,16 @@ describe( 'createRateLimitGate', () => {
 		expect( gate.stopped() ).toBe( true );
 	} );
 
+	it( 'wakes a file already waiting when it gives up on the batch', async () => {
+		const gate = gateOn( createFakeClock(), 1 );
+
+		gate.noteRateLimited();
+		const waiting = gate.wait();
+		gate.noteRateLimited();
+
+		await expect( waiting ).resolves.toBe( false );
+	} );
+
 	it( 'accepts uploads again after resuming', async () => {
 		const clock = createFakeClock();
 		const gate = gateOn( clock, 0 );
@@ -155,6 +165,22 @@ describe( 'pacing to the advertised limit', () => {
 
 		expect( second - first ).toBe( 7500 );
 		expect( clock.now() - second ).toBe( 7500 );
+	} );
+
+	it( 'gives no turn to a wait that was given up on, so it delays nobody', async () => {
+		// A paused batch's files are still in the queue. Taking turns they no
+		// longer want would hold back every other upload on the page.
+		const clock = createFakeClock();
+		const gate = pacedGate( clock );
+
+		gate.noteRateLimited();
+		let withdrawn = false;
+		const given = gate.wait( () => withdrawn );
+		withdrawn = true;
+		await gate.wait();
+
+		expect( await given ).toBe( false );
+		expect( clock.now() ).toBe( 2000 );
 	} );
 
 	it( 'shortens the ladder for a wiki whose window is tighter than the ladder', () => {

@@ -1,5 +1,40 @@
 ## Release Notes
 
+### Unreleased
+
+* Added a new upload interface, built with Vue and Codex, replacing the jQuery File Upload widget
+  * The whole list is the drop target, and dropping a folder adds what is inside it, subfolders included
+  * Each file shows a preview, its size, and its upload progress
+  * An uploaded file links to its page on the wiki
+* Added a prompt before a file is uploaded over one the wiki already holds, instead of overwriting it
+  * The file waits in the upload stash while it is asked about, so going ahead does not upload it again
+* Added a prompt when files in one batch would be uploaded under the same name, instead of letting the
+  last one win
+* Files no longer upload as soon as they are added: they wait in the list until Upload is pressed, and a
+  running batch can be paused and carried on
+* Added a Rename files section, with Find and Replace with fields and an option for regular expressions;
+  each file shows its new name before it is uploaded. A `+rename` parameter fills the fields in
+* Added a button to take a file out of the batch before it is uploaded, and to add it back
+* Added a button to try a failed file again
+* Removed the vendored jQuery File Upload widget and the extension's own use of jQuery
+
+Pages using `{{#batchupload:}}` should be purged after upgrading, or `$wgCacheEpoch` bumped. The markup
+the parser function emits has changed, and a page served from the parser cache keeps the old markup for
+up to `$wgParserCacheExpireTime`, during which the upload area on that page does not work.
+`Special:BatchUpload` does not need purging.
+
+Wikis that style the upload interface from `MediaWiki:Common.css`, or reach into it from
+`MediaWiki:Common.js` or a gadget, will need to update those rules. The `fileupload-*`,
+`fileinput-button` and `ful-*` classes are all gone; everything this extension renders now carries an
+`ext-sbu-` prefix.
+
+Wikis that customised any of `MediaWiki:Simplebatchupload-result-error`, `-result-not-uploaded`,
+`-result-queued`, `-result-rate-limited`, `-result-rate-limit-stopped`, `-result-success` or
+`-result-token-error` should delete those pages: the messages no longer exist.
+`MediaWiki:Simplebatchupload-buttonlabel` should be checked instead of deleted — it now labels the file
+picker alone, with dropping described beside it — and so should `-max-files-reached` and
+`-error-rename-pattern`, which now say something different.
+
 ### SimpleBatchUpload 3.1.0
 
 Released on August 21, 2026.

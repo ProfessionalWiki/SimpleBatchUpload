@@ -9,11 +9,9 @@
  * plugin `Vue.createMwApp()` installs, which plain Vue does not have, so a
  * component template calling `$i18n( key ).text()` works in both places.
  *
- * `$` and `jQuery` are deliberately NOT stubbed. Everything under test here is
- * jQuery free by construction — res/ext.SimpleBatchUpload/.eslintrc.json
- * enforces that for every file except ext.SimpleBatchUpload.js, which stays
- * untestable DOM wiring. An accidental jQuery call should throw a
- * ReferenceError, not quietly hit a shim.
+ * `$` and `jQuery` are deliberately NOT stubbed: res/ext.SimpleBatchUpload/.eslintrc.json
+ * leaves them undefined, so an accidental jQuery call throws a ReferenceError
+ * rather than quietly hitting a shim.
  */
 
 const { config } = require( '@vue/test-utils' );

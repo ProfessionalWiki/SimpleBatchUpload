@@ -4,6 +4,6 @@
 		"stylelint-config-wikimedia/mediawiki"
 	],
 	"rules": {
-		"selector-class-pattern": "^(ext|mw|oo-ui|cdx|client|skin|fileupload|fileinput|ful|api-error|server-error)"
+		"selector-class-pattern": "^(ext-sbu|cdx)-"
 	}
 }

@@ -2,12 +2,11 @@
 
 const { classifyUploadResponse, uploadOutcome } = require( './uploadResult.js' );
 
-// A second bound on the retry loop, independent of the gate, so a gate that
-// never halts cannot spin forever. Deliberately generous: the gate is the
-// user-facing bound, and it resets its own counter whenever any file in the
-// batch succeeds, so a file queued behind a long run of successes can legitimately
-// be refused many times before its turn comes. Too low a number here shows up as
-// a spurious failure on the last file of a heavily limited batch.
+// A second bound on the retry loop, independent of the gate. The gate is the
+// one that gives up on a batch, and it starts counting again whenever an attempt
+// is not refused, so a file queued behind a long run of others getting through
+// can be refused many times before its turn comes. One that reaches this bound is not failed: it
+// goes back among the files waiting, and the batch sends it again.
 const MAX_ATTEMPTS_PER_FILE = 40;
 
 /**
@@ -95,9 +94,6 @@ function createUploadRunner( options ) {
 			}
 
 			if ( attempts >= maxAttempts ) {
-				// Same outcome the gate produces when it gives up, so the row
-				// says the batch was stopped by the rate limit rather than
-				// falling through to a generic error.
 				return uploadOutcome( 'stopped' );
 			}
 

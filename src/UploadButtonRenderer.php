@@ -27,6 +27,7 @@ namespace MediaWiki\Extension\SimpleBatchUpload;
 use MediaWiki\Html\Html;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\PPFrame;
+use MediaWiki\Parser\Sanitizer;
 
 /**
  * Class UploadButtonRenderer
@@ -41,7 +42,20 @@ class UploadButtonRenderer {
 	 * @return array
 	 */
 	public function renderParserFunction( Parser $parser, PPFrame $frame, $args ): array {
-		$args = array_map( [ $frame, 'expand' ], $args );
+		$stripState = $parser->getStripState();
+
+		// The arguments end up in an attribute, where the quotes in a strip
+		// marker are escaped and the parser can no longer put back what it set
+		// aside. So it is put back here: for a <nowiki>, the text that was
+		// written inside it, since this is wikitext for the file pages; anything
+		// else a marker stands for is HTML, and has no place there.
+		$args = array_map(
+			static fn ( $arg ) => $stripState->killMarkers( $stripState->replaceNoWikis(
+				$frame->expand( $arg ),
+				static fn ( string $content ) => Sanitizer::decodeCharReferences( $content )
+			) ),
+			$args
+		);
 		$output = $parser->getOutput();
 
 		$html = $this->renderUploadButton( $args, $output );
@@ -80,31 +94,22 @@ class UploadButtonRenderer {
 	}
 
 	/**
-	 * @param $paramProvider
+	 * The element the upload panel is mounted on.
+	 *
+	 * Empty, and everything the panel needs is on it: the interface is drawn by
+	 * ext.SimpleBatchUpload, and {{#batchupload:}} output is parser cached for
+	 * up to a day, so any markup rendered here would outlive the script that
+	 * understands it.
+	 *
+	 * @param ParameterProvider $paramProvider
 	 * @return string
 	 */
-	protected function getHtml( ParameterProvider $paramProvider ) {
-		$escapedUploadComment = $paramProvider->getEscapedUploadComment();
-		$uploadPageText = $paramProvider->getUploadPageText();
-
-		return
-
-			'<div class="fileupload-container"> ' .
-				'<label>' . \Message::newFromKey( 'upload-form-label-infoform-description' )->escaped() . ':<br>' .
-					'<span class="mw-input">' .
-						Html::element( 'textarea', [ 'name' => 'wfUploadDescription', 'cols' => '80', 'rows' => '8' ], $uploadPageText ) .
-					'</span>' .
-				'</label><br> ' .
-				'<span class="fileupload-dropzone fileinput-button"> ' .
-					'<i class="glyphicon glyphicon-plus"></i> ' .
-					'<span>' . \Message::newFromKey( 'simplebatchupload-buttonlabel' )->escaped() . '</span> ' .
-					'<!-- The file input field used as target for the file upload widget -->' .
-					'<input class="fileupload" type="file" name="file" multiple ' .
-					'    data-url="' . wfScript( 'api' ) . '" ' .
-					'    data-comment="' . $escapedUploadComment . '" ' .
-					'> ' .
-				'</span><ul class="fileupload-results"></ul> ' .
-			'</div>';
+	protected function getHtml( ParameterProvider $paramProvider ): string {
+		return Html::element( 'div', [
+			'class' => 'ext-sbu-mount',
+			'data-mw-sbu-description' => $paramProvider->getUploadPageText(),
+			'data-mw-sbu-comment' => $paramProvider->getUploadComment(),
+		] );
 	}
 
 	/**

@@ -56,14 +56,6 @@ class ParameterProvider {
 		return '{{' . $this->getParameter( self::IDX_TEMPLATENAME ) . $this->getParameter( self::IDX_TEMPLATEPARAMETERS ) . '}}';
 	}
 
-	private function getEscapedParameter( int $key ): string {
-		return $this->escape( $this->getParameter( $key ) );
-	}
-
-	private function escape( string $text ): string {
-		return htmlspecialchars( $text, ENT_QUOTES, 'UTF-8', false );
-	}
-
 	private function getParameter( int $key ): string {
 		if ( $this->parameters === null ) {
 			$this->populateParameters();
@@ -113,8 +105,8 @@ class ParameterProvider {
 		];
 	}
 
-	public function getEscapedUploadComment(): string {
-		return $this->getEscapedParameter( self::IDX_COMMENT );
+	public function getUploadComment(): string {
+		return $this->getParameter( self::IDX_COMMENT );
 	}
 
 	public function getSpecialPageTitle(): string {
