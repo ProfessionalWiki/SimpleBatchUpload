@@ -1,49 +1,113 @@
 'use strict';
 
 /**
- * The optional "+rename" directive in the upload description, e.g.
+ * Renaming the files of a batch: the rule the Rename files fields hold, and the
+ * "+rename" directive older pages put in the description instead, e.g.
  *
- *   {{Template| +rename = !(\w+)[ -_/]*! --> $1-}}
+ *   {{Template| +rename = !^IMG_(\d+)! -->Trip-$1}}
  *
- * The directive is stripped from the text that ends up on the file page.
- * An unusable pattern is reported rather than thrown, so it fails one file
- * instead of the batch.
+ * A directive is read into the fields and taken out of the text, never written
+ * back, so the fields are the one place a rule lives.
  */
+
 const RENAME_DIRECTIVE =
 	/\|\s*\+rename\s*=\s*([#/@!])(.+)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
+
+// Anything a person might have meant as a directive, correct or not.
+const LOOKS_LIKE_DIRECTIVE = /\+\s*rename\s*=/i;
+
+/**
+ * @param {string} text
+ * @return {?{text: string, find: string, flags: string, replace: string}} The
+ *  directive's parts, with the text it leaves behind; null if there is none
+ */
+function findRenameDirective( text ) {
+	const match = RENAME_DIRECTIVE.exec( text );
+
+	if ( !match ) {
+		return null;
+	}
+
+	return {
+		text: text.replace( RENAME_DIRECTIVE, '' ),
+		find: match[ 2 ],
+		flags: match[ 3 ],
+		replace: match[ 4 ]
+	};
+}
+
+/**
+ * Whether the text holds something meant as a directive that is not one, and
+ * so would be published on every file page as written.
+ *
+ * @param {string} text
+ * @return {boolean}
+ */
+function looksLikeDirective( text ) {
+	return LOOKS_LIKE_DIRECTIVE.test( text ) && !findRenameDirective( text );
+}
 
 function keepName( name ) {
 	return name;
 }
 
 /**
- * @param {?string} description
- * @return {{text: string, renameFile: Function, invalid: boolean}}
+ * Plain text: every occurrence, case for case, and never in the extension.
+ * Nothing to find means the replacement goes in front.
+ *
+ * @param {string} find
+ * @param {string} replace
+ * @return {Function}
  */
-function parseRenameDirective( description ) {
-	const text = description || '';
-	const match = RENAME_DIRECTIVE.exec( text );
+function plainRenamer( find, replace ) {
+	return ( name ) => {
+		const lastDot = name.lastIndexOf( '.' );
+		const base = lastDot > 0 ? name.slice( 0, lastDot ) : name;
+		const extension = lastDot > 0 ? name.slice( lastDot ) : '';
+		const renamed = find ? base.split( find ).join( replace ) : replace + base;
 
-	if ( !match ) {
-		return { text: text, renameFile: keepName, invalid: false };
+		return renamed + extension;
+	};
+}
+
+/**
+ * @param {{find: string, replace: string, regex: boolean, flags: string}} rule
+ *  The flags are a regular expression's; a directive brings its own
+ * @return {{renameFile: Function, invalid: boolean}} An unusable pattern is
+ *  reported rather than thrown, and renames nothing
+ */
+function createRenamer( rule ) {
+	// Nothing to find puts the replacement in front, in either mode: an empty
+	// regular expression would match between every two characters.
+	if ( !rule.regex || !rule.find ) {
+		return {
+			renameFile: plainRenamer( rule.find, rule.replace ),
+			invalid: false
+		};
 	}
 
-	const strippedText = text.replace( RENAME_DIRECTIVE, '' );
 	let pattern;
 
 	try {
-		pattern = new RegExp( match[ 2 ], match[ 3 ] );
+		pattern = new RegExp( rule.find, rule.flags );
 	} catch ( unusablePattern ) {
-		return { text: strippedText, renameFile: keepName, invalid: true };
+		return { renameFile: keepName, invalid: true };
 	}
 
-	const replacement = match[ 4 ];
-
 	return {
-		text: strippedText,
-		renameFile: ( name ) => name.replace( pattern, replacement ),
+		renameFile: ( name ) => {
+			// One pattern renames the whole batch, and a sticky one would
+			// otherwise start each name where the last match ended.
+			pattern.lastIndex = 0;
+
+			return name.replace( pattern, rule.replace );
+		},
 		invalid: false
 	};
 }
 
-module.exports = { parseRenameDirective: parseRenameDirective };
+module.exports = {
+	findRenameDirective: findRenameDirective,
+	looksLikeDirective: looksLikeDirective,
+	createRenamer: createRenamer
+};

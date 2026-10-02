@@ -5,5 +5,6 @@
 	"cdxIconReload": "<path d=\"M5 0h1v1z\"/>",
 	"cdxIconAlert": "<path d=\"M6 0h1v1z\"/>",
 	"cdxIconImage": "<path d=\"M7 0h1v1z\"/>",
-	"cdxIconUpload": "<path d=\"M8 0h1v1z\"/>"
+	"cdxIconUpload": "<path d=\"M8 0h1v1z\"/>",
+	"cdxIconClose": "<path d=\"M9 0h1v1z\"/>"
 }

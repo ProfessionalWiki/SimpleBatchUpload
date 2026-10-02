@@ -1,13 +1,22 @@
 'use strict';
 
+// Warnings that mean a file already on the wiki would be replaced. Only the
+// user can answer those. Every other warning the API raises is about something
+// that is merely worth saying -- the same bytes under another name, a name that
+// was deleted before, a similarly named file (exists-normalized, which the wiki
+// raises only when the exact name is free) -- and earlier versions of this
+// extension sent ignorewarnings=1 past all of them without asking.
+const OVERWRITE_WARNINGS = [ 'exists' ];
+
 /**
  * @param {string} status
  * @param {Object} [extra]
- * @return {{status: string, info: ?string, filename: ?string, warnings: Object}}
+ * @return {{status: string, info: ?string, filename: ?string, filekey: ?string,
+ *  warnings: Object}}
  */
 function uploadOutcome( status, extra ) {
 	return Object.assign(
-		{ status: status, info: null, filename: null, warnings: {} },
+		{ status: status, info: null, filename: null, filekey: null, warnings: {} },
 		extra || {}
 	);
 }
@@ -22,8 +31,16 @@ function uploadOutcome( status, extra ) {
  * upload (ApiUpload::performUpload), which is where duplicate and exists come
  * from.
  *
+ * Without ignorewarnings the API keeps the bytes it already received in the
+ * upload stash and answers 'Warning' with a filekey. That is what lets the
+ * interface ask before overwriting anything: going ahead afterwards costs a
+ * request carrying the key rather than the file. Where the stash cannot keep
+ * them -- it refuses anyone not logged in -- the warning comes without a key,
+ * and going ahead sends the file again.
+ *
  * @param {?Object} response
- * @return {{status: string, info: ?string, filename: ?string, warnings: Object}}
+ * @return {{status: string, info: ?string, filename: ?string, filekey: ?string,
+ *  warnings: Object}}
  */
 function classifyUploadResponse( response ) {
 	const body = response || {};
@@ -64,11 +81,61 @@ function classifyUploadResponse( response ) {
 		} );
 	}
 
-	if ( upload.result ) {
-		return uploadOutcome( 'not-uploaded', { warnings: upload.warnings || {} } );
+	if ( upload.result === 'Warning' ) {
+		const warnings = upload.warnings || {};
+		const overwrites = OVERWRITE_WARNINGS.some( ( name ) => name in warnings );
+
+		return uploadOutcome( overwrites ? 'held' : 'confirmable', {
+			filekey: upload.filekey || null,
+			warnings: warnings
+		} );
 	}
 
 	return uploadOutcome( 'error' );
+}
+
+/**
+ * ignorewarnings=1 does not silence the server's warnings, it only stops them
+ * from blocking the upload, so duplicate and exists still arrive next to a
+ * successful result and are worth showing.
+ *
+ * @param {?Object} warnings
+ * @return {string[]}
+ */
+function describeWarnings( warnings ) {
+	const reported = warnings || {};
+	const notes = [];
+	const duplicates = reported.duplicate;
+
+	if ( duplicates && duplicates.length ) {
+		notes.push( mw.msg(
+			'simplebatchupload-warning-duplicate',
+			duplicates.join( ', ' ),
+			duplicates.length
+		) );
+	}
+
+	if ( reported.exists ) {
+		notes.push( mw.msg( 'simplebatchupload-warning-exists', reported.exists ) );
+	}
+
+	if ( reported[ 'no-change' ] ) {
+		notes.push( mw.msg( 'simplebatchupload-warning-no-change' ) );
+	}
+
+	const others = Object.keys( reported ).filter(
+		( name ) => name !== 'duplicate' && name !== 'exists' && name !== 'no-change'
+	);
+
+	if ( others.length ) {
+		notes.push( mw.msg(
+			'simplebatchupload-warning-other',
+			others.join( ', ' ),
+			others.length
+		) );
+	}
+
+	return notes;
 }
 
 /**
@@ -89,6 +156,7 @@ function filePageUrl( filename ) {
 
 module.exports = {
 	classifyUploadResponse: classifyUploadResponse,
+	describeWarnings: describeWarnings,
 	filePageUrl: filePageUrl,
 	uploadOutcome: uploadOutcome
 };

@@ -2,24 +2,32 @@
 	"extends": [
 		"wikimedia/client/es2017",
 		"wikimedia/mediawiki",
-		"wikimedia/jquery"
+		"wikimedia/vue3/es2017"
 	],
 	"env": {
 		"browser": true,
 		"node": false
 	},
+	"globals": {
+		"$": "off",
+		"jQuery": "off"
+	},
 	"rules": {
 		"jsdoc/no-undefined-types": "off",
-		"max-len": "off"
+		"max-len": "off",
+		"n/no-unsupported-features/node-builtins": "off"
 	},
 	"overrides": [
 		{
-			"files": [ "*.js" ],
-			"excludedFiles": [ "ext.SimpleBatchUpload.js" ],
-			"extends": [ "plugin:no-jquery/all" ],
-			"globals": {
-				"$": "off",
-				"jQuery": "off"
+			"files": [
+				"*.vue"
+			],
+			"rules": {
+				"n/no-missing-require": "off",
+				"vue/component-name-in-template-casing": [
+					"error",
+					"kebab-case"
+				]
 			}
 		}
 	]

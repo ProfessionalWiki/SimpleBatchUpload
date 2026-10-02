@@ -8,7 +8,7 @@
  * and error.code 'ratelimited' -- no 429, no Retry-After. The limit is time
  * based, so uploading sequentially does not avoid it. Only waiting does.
  *
- * One gate serves every widget on the page, because the limit is per user.
+ * One gate serves every panel on the page, because the limit is per user.
  * A rejection that arrives while the gate is already closed does not extend
  * the wait: concurrent uploads report the same overrun, not a worse one.
  */
@@ -122,7 +122,7 @@ function createRateLimitGate( options ) {
 	/**
 	 * Adopts the limit the wiki advertises.
 	 *
-	 * Separate from construction because the widget has to work the moment the
+	 * Separate from construction because a panel has to work the moment the
 	 * page is ready, and the limit arrives from an API call. Until it does the
 	 * gate behaves as it always did, which is safe: pacing only ever starts
 	 * after a refusal, and a refusal that early is not realistic.
@@ -138,12 +138,15 @@ function createRateLimitGate( options ) {
 	useLimit( settings.limit || null );
 
 	/**
+	 * @param {Function} [abandoned] Whether the file waiting has been
+	 *  withdrawn, checked before each turn is given so a file nobody wants
+	 *  takes no turn from the files behind it
 	 * @return {Promise<boolean>} True once uploading may continue, false if the
 	 *  batch was given up on while waiting
 	 */
-	async function wait() {
+	async function wait( abandoned ) {
 		for ( ;; ) {
-			if ( halted ) {
+			if ( halted || ( abandoned && abandoned() ) ) {
 				return false;
 			}
 
@@ -196,9 +199,9 @@ function createRateLimitGate( options ) {
 	}
 
 	/**
-	 * Takes the batch off halt so a new selection can upload.
+	 * Takes the batch off halt so Upload can send files again.
 	 *
-	 * Deliberately leaves openAt alone: files from an earlier selection may be
+	 * Deliberately leaves openAt alone: files from before the halt may be
 	 * asleep in wait(), and clearing it would wake them all at once straight
 	 * into the limiter they are backing off from.
 	 */

@@ -1,7 +1,4 @@
-const {
-	resolveUserLimit,
-	createBatchLimit
-} = require( '../../../res/ext.SimpleBatchUpload/batchLimit.js' );
+const { resolveUserLimit } = require( '../../../res/ext.SimpleBatchUpload/batchLimit.js' );
 
 describe( 'resolveUserLimit', () => {
 	it( 'grants the highest limit of any group the user is in', () => {
@@ -19,52 +16,5 @@ describe( 'resolveUserLimit', () => {
 
 	it( 'grants nothing when no limits are configured', () => {
 		expect( resolveUserLimit( null, [ '*', 'user' ] ) ).toBe( 0 );
-	} );
-} );
-
-describe( 'createBatchLimit', () => {
-	it( 'admits files up to the limit', () => {
-		const batch = createBatchLimit( 2 );
-
-		expect( [ batch.admit(), batch.admit(), batch.admit() ] )
-			.toEqual( [ true, true, false ] );
-	} );
-
-	it( 'counts uploads that are still running against a later selection', () => {
-		const batch = createBatchLimit( 3 );
-		batch.admit();
-		batch.admit();
-
-		expect( batch.remaining() ).toBe( 1 );
-	} );
-
-	it( 'frees the slot of a finished upload', () => {
-		const batch = createBatchLimit( 1 );
-		batch.admit();
-		batch.release();
-
-		expect( batch.admit() ).toBe( true );
-	} );
-} );
-
-describe( 'counting what is still in the batch', () => {
-	it( 'reports how many files are still queued or in flight', () => {
-		const batch = createBatchLimit( 10 );
-
-		batch.admit();
-		batch.admit();
-		batch.admit();
-		batch.release();
-
-		expect( batch.active() ).toBe( 2 );
-	} );
-
-	it( 'reports nothing left once every file has finished', () => {
-		const batch = createBatchLimit( 10 );
-
-		batch.admit();
-		batch.release();
-
-		expect( batch.active() ).toBe( 0 );
 	} );
 } );

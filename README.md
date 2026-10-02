@@ -21,7 +21,7 @@ Use SimpleBatchUpload 2.x for older versions
 
 ### Composer
 ```sh
-COMPOSER=composer.local.json composer require --no-update mediawiki/simple-batch-upload:^3.0
+COMPOSER=composer.local.json composer require --no-update mediawiki/simple-batch-upload:^4.0
 ```
 ```sh
 composer update mediawiki/simple-batch-upload --no-dev -o
@@ -68,6 +68,42 @@ Pics | These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}Simpl
 * The title of this page will be _Upload some pics!_.
 * The comment for the upload will be _These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}SimpleBatchUpload]]_.
 * If a file with that name is uploaded for the first time it will have `{{Pics}}` as wikitext.
+
+## Renaming files on upload
+
+Files are renamed under **Rename files**, above the file list: **Find** is
+looked for in each file name and replaced with **Replace with**. Each row shows
+the name its file will be uploaded under before **Upload** is pressed, and
+renaming is applied before the batch checks whether two files would be uploaded
+under one name.
+
+* As plain text, every occurrence is replaced, matching case, and the file
+  extension is left alone. An empty **Find** puts **Replace with** in front:
+  `Trip-` uploads `IMG_0001.jpg` as `Trip-IMG_0001.jpg`.
+* With **Use regular expressions** ticked, **Find** is a JavaScript regular
+  expression matched against the whole name, extension included, and every match
+  is replaced. In **Replace with**, `$1` stands for the text matched by the first
+  `(...)` group, along with the rest of
+  [JavaScript's replacement syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#specifying_a_string_as_the_replacement).
+
+A name left without a file extension is marked on its row. The file is still
+sent, and the wiki adds an extension from what the file turns out to be.
+
+A page can bring a rule with it, as a `+rename` parameter in the parser function:
+
+```
+{{#batchupload:Pics|+rename = /^IMG_/-->Holiday-}}
+```
+
+The parameter fills in the fields when the page opens, with **Use regular
+expressions** ticked, and is not stored on the file page. It takes a regular
+expression and a replacement separated by `-->`. The pattern is delimited by
+`#`, `/`, `@` or `!` — whichever does not appear in the pattern itself — and may
+be followed by any of the flags `g` (replace every match, not just the first),
+`i` (ignore case), `m`, `u` and `y`. Typed into the text for each file page
+inside a template call, it moves into the fields when the text field is left. It
+cannot be set in a parameter line on _MediaWiki:Simplebatchupload-parameters_,
+whose first field is the template name alone.
 
 ## Configuration
 

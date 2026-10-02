@@ -67,11 +67,22 @@ function createMwMock() {
 		} ),
 
 		Title: {
-			// The real mw.Title.newFromFileName returns null for names it cannot
-			// turn into a title. Model that, so the guard stays reachable.
-			newFromFileName: vi.fn(
-				( fileName ) => ( fileName && fileName.trim() ? createTitleStub( fileName ) : null )
-			)
+			// The real mw.Title.newFromFileName cleans most of what a title
+			// cannot hold -- a # becomes a dash, as the upload API does too --
+			// and returns null for what it cannot clean: a name with no
+			// extension after its last dot, or nothing at all.
+			newFromFileName: vi.fn( ( fileName ) => {
+				const trimmed = ( fileName || '' ).trim();
+				const lastDot = trimmed.lastIndexOf( '.' );
+
+				return lastDot === -1 || lastDot === trimmed.length - 1 ?
+					null :
+					createTitleStub( trimmed );
+			} )
+		},
+
+		language: {
+			convertNumber: vi.fn( ( number ) => String( number ) )
 		},
 
 		log: {
