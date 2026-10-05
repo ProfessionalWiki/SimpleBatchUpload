@@ -1,13 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"PanWor",
 			"Rail",
 			"Railfail536",
 			"WaldiSt"
 		]
 	},
 	"batchupload": "Prześlij wiele plików",
-	"simplebatchupload-buttonlabel": "Wybierz pliki (lub upuść je tutaj)…",
+	"simplebatchupload-buttonlabel": "Wybierz pliki",
 	"simplebatchupload-comment": "Przesłano z\n[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-desc": "Proste przesyłanie grup plików"
 }

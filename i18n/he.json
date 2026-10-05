@@ -2,13 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Amire80",
+			"Neriah",
 			"YaronSh",
 			"המקיסט"
 		]
 	},
 	"batchupload": "העלאת קבצים מרובים",
-	"simplebatchupload-buttonlabel": "נא לבחור קבצים (או לגרור ולהשלליך אותם לכאן)…",
+	"simplebatchupload-buttonlabel": "בחירת קבצים",
 	"simplebatchupload-comment": "הועלה עם [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-desc": "אפשרות העלאה פשוטה של קבצים באצווה",
-	"simplebatchupload-result-success": "אישור"
+	"simplebatchupload-desc": "אפשרות העלאה פשוטה של קבצים באצווה"
 }

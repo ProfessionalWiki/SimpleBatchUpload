@@ -6,7 +6,7 @@
 		]
 	},
 	"batchupload": "여러 개의 파일 업로드",
-	"simplebatchupload-buttonlabel": "파일 선택 (또는 여기에 끌어놓으세요)...",
+	"simplebatchupload-buttonlabel": "파일 선택",
 	"simplebatchupload-comment": "[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]로 업로드됨",
 	"simplebatchupload-desc": "파일을 간단하게 일괄 업로드할 수 있음"
 }
