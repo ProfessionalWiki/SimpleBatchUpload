@@ -31,6 +31,6 @@
 		"stylelint": "17.15.0",
 		"stylelint-config-wikimedia": "0.19.4",
 		"vitest": "^5.0.2",
-		"vue": "3.4.27"
+		"vue": "3.5.43"
 	}
 }
