@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^6.0.8",
 		"@vue/test-utils": "^2.4.11",
-		"@wikimedia/codex": "1.14.0",
+		"@wikimedia/codex": "2.7.0",
 		"eslint": "8.57.1",
 		"eslint-config-wikimedia": "0.32.6",
 		"eslint-plugin-no-jquery": "6.0.0",
