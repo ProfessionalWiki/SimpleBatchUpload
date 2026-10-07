@@ -515,6 +515,10 @@ function section( wrapper, name ) {
 	return wrapper.find( 'details.ext-sbu-' + name );
 }
 
+function textWarning( wrapper ) {
+	return section( wrapper, 'text' ).find( '[role="status"]' );
+}
+
 function ruleField( wrapper, index ) {
 	return wrapper.findAll( '.ext-sbu-rename input' )[ index ];
 }
@@ -588,17 +592,23 @@ describe( 'the text for each file page', () => {
 	it( 'warns when it holds what looks like a directive but is not one', () => {
 		const wrapper = panelFor( batchHolding( [], { textLooksLikeDirective: true } ) );
 
-		expect( section( wrapper, 'text' ).text() ).toContain( 'simplebatchupload-text-looks-like-directive' );
+		expect( textWarning( wrapper ).text() ).toBe( 'simplebatchupload-text-looks-like-directive' );
 	} );
 
 	it( 'warns of nothing in ordinary text', () => {
-		expect( section( panelFor( batchHolding() ), 'text' ).text() )
-			.not.toContain( 'simplebatchupload-text-looks-like-directive' );
+		expect( textWarning( panelFor( batchHolding() ) ).text() ).toBe( '' );
 	} );
 
-	it( 'is named after its title', () => {
-		expect( panelFor( batchHolding() ).find( '.ext-sbu-text textarea' ).attributes( 'aria-label' ) )
-			.toBe( 'simplebatchupload-text-title' );
+	it( 'keeps a place for the warning, mounted before there is one to give', () => {
+		// A live region added at the moment it fills is not announced.
+		expect( textWarning( panelFor( batchHolding() ) ).exists() ).toBe( true );
+	} );
+
+	it( 'is labelled with its title', () => {
+		const wrapper = panelFor( batchHolding() );
+		const id = wrapper.find( '.ext-sbu-text textarea' ).attributes( 'id' );
+
+		expect( wrapper.find( `label[for="${ id }"]` ).text() ).toBe( 'simplebatchupload-text-title' );
 	} );
 } );
 
