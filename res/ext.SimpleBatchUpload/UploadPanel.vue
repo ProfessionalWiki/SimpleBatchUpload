@@ -13,21 +13,28 @@
 				{{ textTitle }}
 			</template>
 
-			<cdx-text-area
-				v-model="description"
-				:rows="4"
-				:aria-label="textTitle"
-				:disabled="locked"
-				@blur="liftDirective"
-			></cdx-text-area>
-			<cdx-message
-				v-if="batch.textLooksLikeDirective"
-				class="ext-sbu-text__warning"
-				type="warning"
-				:inline="true"
-			>
-				{{ $i18n( 'simplebatchupload-text-looks-like-directive' ).text() }}
-			</cdx-message>
+			<cdx-field :disabled="locked" :hide-label="true">
+				<cdx-text-area
+					v-model="description"
+					:rows="4"
+					@blur="liftDirective"
+				></cdx-text-area>
+				<template #label>
+					{{ textTitle }}
+				</template>
+			</cdx-field>
+			<!-- Always mounted, because a region added at the moment it fills
+			is not announced. -->
+			<div role="status">
+				<cdx-message
+					v-if="batch.textLooksLikeDirective"
+					class="ext-sbu-text__warning"
+					type="warning"
+					:inline="true"
+				>
+					{{ $i18n( 'simplebatchupload-text-looks-like-directive' ).text() }}
+				</cdx-message>
+			</div>
 		</cdx-accordion>
 
 		<cdx-accordion
