@@ -14,9 +14,14 @@
 			</template>
 
 			<cdx-field :disabled="locked" :hide-label="true">
+				<!-- Read-only as well as disabled, because WikiEditor's buttons
+				and insert dialogs check for readonly and would otherwise still
+				write to the field on screen, though not to the batch. -->
 				<cdx-text-area
+					ref="textField"
 					v-model="description"
 					:rows="4"
+					:readonly="locked"
 				></cdx-text-area>
 				<template #label>
 					{{ textTitle }}
@@ -343,6 +348,7 @@ module.exports = exports = defineComponent( {
 		const findInput = ref( null );
 
 		function upload() {
+			takeFieldText();
 			props.batch.start();
 
 			if ( !props.batch.state.renamePatternInvalid ) {
@@ -352,6 +358,20 @@ module.exports = exports = defineComponent( {
 			renameOpen.value = true;
 			settleFind();
 			nextTick( () => findInput.value.focus() );
+		}
+
+		// Upload sends what the field shows. Not every writer says so with an
+		// input event: WikiEditor's inserts set the value directly for 100 lines
+		// or more in Chrome and Safari, or when the field cannot take focus, and
+		// Upload redraws the field from the batch, which would undo them.
+		const textField = ref( null );
+
+		function takeFieldText() {
+			const shown = textField.value.$el.querySelector( 'textarea' ).value;
+
+			if ( shown !== description.value ) {
+				description.value = shown;
+			}
 		}
 
 		// One list filter, so two can never hide each other's rows: what is on
@@ -494,6 +514,7 @@ module.exports = exports = defineComponent( {
 			findError,
 			findInput,
 			upload,
+			textField,
 			matchesNothing,
 			filter,
 			toggleFilter,
@@ -624,6 +645,20 @@ module.exports = exports = defineComponent( {
 
 .ext-sbu-text__warning {
 	margin-top: @spacing-50;
+}
+
+// One frame on every skin, Codex's. WikiEditor takes the border off a textarea
+// it wraps for a frame of its own to stand in, which Citizen does not draw: the
+// field would show as blank space there, and as a frame within a frame
+// elsewhere. The colours stay Codex's, hover and focus included.
+.ext-sbu-text .cdx-text-area__textarea {
+	border-width: @border-width-base;
+	border-style: @border-style-base;
+}
+
+/* stylelint-disable-next-line selector-class-pattern -- WikiEditor's frame, not ours */
+.ext-sbu-text .wikiEditor-ui .wikiEditor-ui-view {
+	border: 0;
 }
 
 // A reading width for the fields; Codex spaces them itself.
