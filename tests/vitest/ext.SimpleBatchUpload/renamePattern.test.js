@@ -132,8 +132,8 @@ describe( 'looksLikeDirective', () => {
 		expect( looksLikeDirective( '{{Pics|+Rename = /x/-->y}}' ) ).toBe( true );
 	} );
 
-	it( 'does not mistake a working directive for a broken one', () => {
-		expect( looksLikeDirective( '{{Pics|+rename = /^IMG_/-->Trip-}}' ) ).toBe( false );
+	it( 'spots a working one too, since a directive is read only from what the wiki sent', () => {
+		expect( looksLikeDirective( '{{Pics|+rename = /^IMG_/-->Trip-}}' ) ).toBe( true );
 	} );
 
 	it( 'finds nothing in ordinary text', () => {

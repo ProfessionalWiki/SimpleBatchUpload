@@ -207,8 +207,8 @@ function createBatch( options ) {
 	}
 
 	/**
-	 * @param {string} written The wikitext every file page gets. A directive in
-	 *  it stays there, as typed, until liftDirective() reads it into the rule.
+	 * @param {string} written The wikitext every file page gets. A directive
+	 *  typed into it stays there as text: rules are set in the fields.
 	 */
 	function setDescription( written ) {
 		description.value = written;
@@ -268,17 +268,14 @@ function createBatch( options ) {
 	}
 
 	/**
-	 * Reads a +rename directive out of the text and into the rule, in place of
-	 * whatever rule there was. Never the other way: the fields are the one
-	 * place a rule lives.
-	 *
-	 * @return {boolean} Whether there was a directive to read
+	 * Reads a +rename directive out of the text the wiki sent, where a
+	 * {{#batchupload:}} parameter puts it, and into the rule.
 	 */
 	function liftDirective() {
 		const directive = findRenameDirective( description.value );
 
 		if ( !directive ) {
-			return false;
+			return;
 		}
 
 		description.value = directive.text;
@@ -287,8 +284,6 @@ function createBatch( options ) {
 		rule.regex = true;
 		rule.flags = directive.flags;
 		retarget();
-
-		return true;
 	}
 
 	/**
@@ -636,10 +631,6 @@ function createBatch( options ) {
 	 * sent, it takes the pause back.
 	 */
 	function start() {
-		// A directive typed into the text and not yet read would otherwise be
-		// published on every file page and rename nothing.
-		liftDirective();
-
 		// A rule that is not one renames nothing, and every file would go up
 		// under its own name: not what anyone who typed a rule asked for.
 		if ( state.renamePatternInvalid ) {
@@ -735,7 +726,6 @@ function createBatch( options ) {
 		state: state,
 		setDescription: setDescription,
 		setRule: setRule,
-		liftDirective: liftDirective,
 		addFiles: addFiles,
 		keepFile: keepFile,
 		skipFile: skipFile,

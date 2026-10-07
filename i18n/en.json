@@ -66,7 +66,7 @@
 	"simplebatchupload-status-queued": "Waiting to upload",
 	"simplebatchupload-status-skipped": "Not uploaded",
 	"simplebatchupload-status-uploading": "Uploading",
-	"simplebatchupload-text-looks-like-directive": "This looks like a +rename instruction, but it is not one, so it would appear on every file page as written. Use Rename files below instead.",
+	"simplebatchupload-text-directive-not-read": "This looks like a +rename instruction, but it will not rename anything, and would be added to every file page as written. Use Rename files below instead.",
 	"simplebatchupload-text-title": "Text for each file page",
 	"simplebatchupload-warning-duplicate": "Duplicate of {{PLURAL:$2|the existing file|the existing files}} $1.",
 	"simplebatchupload-warning-exists": "Overwrote the existing file $1.",

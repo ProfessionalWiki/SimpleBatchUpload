@@ -166,7 +166,7 @@
 				"simplebatchupload-status-queued",
 				"simplebatchupload-status-skipped",
 				"simplebatchupload-status-uploading",
-				"simplebatchupload-text-looks-like-directive",
+				"simplebatchupload-text-directive-not-read",
 				"simplebatchupload-text-title",
 				"simplebatchupload-warning-duplicate",
 				"simplebatchupload-warning-exists",

@@ -2,7 +2,7 @@
 
 /**
  * Renaming the files of a batch: the rule the Rename files fields hold, and the
- * "+rename" directive older pages put in the description instead, e.g.
+ * "+rename" directive a {{#batchupload:}} parameter puts in the description, e.g.
  *
  *   {{Template| +rename = !^IMG_(\d+)! -->Trip-$1}}
  *
@@ -37,14 +37,15 @@ function findRenameDirective( text ) {
 }
 
 /**
- * Whether the text holds something meant as a directive that is not one, and
- * so would be published on every file page as written.
+ * Whether the text holds something meant as a directive. Typed into the text,
+ * even a working one is not read, and would be published on every file page
+ * as written.
  *
  * @param {string} text
  * @return {boolean}
  */
 function looksLikeDirective( text ) {
-	return LOOKS_LIKE_DIRECTIVE.test( text ) && !findRenameDirective( text );
+	return LOOKS_LIKE_DIRECTIVE.test( text );
 }
 
 function keepName( name ) {

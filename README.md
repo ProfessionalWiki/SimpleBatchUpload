@@ -100,10 +100,10 @@ expressions** ticked, and is not stored on the file page. It takes a regular
 expression and a replacement separated by `-->`. The pattern is delimited by
 `#`, `/`, `@` or `!` — whichever does not appear in the pattern itself — and may
 be followed by any of the flags `g` (replace every match, not just the first),
-`i` (ignore case), `m`, `u` and `y`. Typed into the text for each file page
-inside a template call, it moves into the fields when the text field is left. It
-cannot be set in a parameter line on _MediaWiki:Simplebatchupload-parameters_,
-whose first field is the template name alone.
+`i` (ignore case), `m`, `u` and `y`. A `+rename` typed into **Text for each file
+page** is not read, and is published on every file page as written. It cannot
+be set in a parameter line on _MediaWiki:Simplebatchupload-parameters_, whose
+first field is the template name alone.
 
 ## Configuration
 
