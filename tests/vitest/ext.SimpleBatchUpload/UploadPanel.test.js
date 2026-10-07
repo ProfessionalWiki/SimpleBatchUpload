@@ -86,10 +86,6 @@ function batchHolding( rows, extra ) {
 		remaining: '',
 		setDescription: ( text ) => asked.push( [ 'setDescription', text ] ),
 		setRule: ( given ) => asked.push( [ 'setRule', given ] ),
-		liftDirective: () => {
-			asked.push( [ 'liftDirective' ] );
-			return false;
-		},
 		start: () => asked.push( [ 'start' ] ),
 		pause: () => asked.push( [ 'pause' ] )
 	}, extra || {} );
@@ -559,40 +555,19 @@ describe( 'the text for each file page', () => {
 		expect( batch.asked ).toEqual( [ [ 'setDescription', '{{Scan}}' ] ] );
 	} );
 
-	it( 'reads a directive typed into it into the rule once the field is left', async () => {
+	it( 'leaves the text as typed when the field is left', async () => {
 		const batch = batchHolding();
 		const wrapper = panelFor( batch );
 
 		await wrapper.find( '.ext-sbu-text textarea' ).trigger( 'blur' );
 
-		expect( batch.asked ).toEqual( [ [ 'liftDirective' ] ] );
+		expect( batch.asked ).toEqual( [] );
 	} );
 
-	it( 'opens Rename files when leaving it read a directive into the rule', async () => {
-		const batch = batchHolding();
-		batch.liftDirective = () => true;
-		const wrapper = panelFor( batch );
-
-		await wrapper.find( '.ext-sbu-text textarea' ).trigger( 'blur' );
-
-		expect( section( wrapper, 'rename' ).attributes( 'open' ) ).toBeDefined();
-	} );
-
-	it( 'leaves Rename files as the user left it when there was no directive to read', async () => {
-		const batch = batchHolding( [], { rule: { find: 'x', replace: 'y', regex: false, flags: '' } } );
-		const wrapper = panelFor( batch );
-
-		section( wrapper, 'rename' ).element.open = false;
-		await section( wrapper, 'rename' ).trigger( 'toggle' );
-		await wrapper.find( '.ext-sbu-text textarea' ).trigger( 'blur' );
-
-		expect( section( wrapper, 'rename' ).attributes( 'open' ) ).toBeUndefined();
-	} );
-
-	it( 'warns when it holds what looks like a directive but is not one', () => {
+	it( 'warns when it holds what looks like a directive, which is not read from there', () => {
 		const wrapper = panelFor( batchHolding( [], { textLooksLikeDirective: true } ) );
 
-		expect( textWarning( wrapper ).text() ).toBe( 'simplebatchupload-text-looks-like-directive' );
+		expect( textWarning( wrapper ).text() ).toBe( 'simplebatchupload-text-directive-not-read' );
 	} );
 
 	it( 'warns of nothing in ordinary text', () => {

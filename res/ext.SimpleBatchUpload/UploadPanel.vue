@@ -2,8 +2,8 @@
 	<div class="ext-sbu-shell">
 		<!-- Each section starts open when it has something in it, and says
 		nothing about itself when closed: one with content is only ever
-		closed because the user closed it. The toggle is written back, so a
-		lifted directive opens its section even after the user closed it. -->
+		closed because the user closed it. The toggle is written back, so
+		Upload can open a section the user closed to show what stops it. -->
 		<cdx-accordion
 			class="ext-sbu-section ext-sbu-text"
 			:open="textOpen || null"
@@ -17,7 +17,6 @@
 				<cdx-text-area
 					v-model="description"
 					:rows="4"
-					@blur="liftDirective"
 				></cdx-text-area>
 				<template #label>
 					{{ textTitle }}
@@ -32,7 +31,7 @@
 					type="warning"
 					:inline="true"
 				>
-					{{ $i18n( 'simplebatchupload-text-looks-like-directive' ).text() }}
+					{{ $i18n( 'simplebatchupload-text-directive-not-read' ).text() }}
 				</cdx-message>
 			</div>
 		</cdx-accordion>
@@ -312,14 +311,6 @@ module.exports = exports = defineComponent( {
 		const renameOpen = ref( hasRule.value );
 		const locked = computed( () => props.batch.state.phase !== 'idle' );
 
-		// A rule read out of the text is news, and is shown; a field left with
-		// no directive in it leaves the section as the user had it.
-		function liftDirective() {
-			if ( props.batch.liftDirective() ) {
-				renameOpen.value = true;
-			}
-		}
-
 		// An invalid pattern is said once typing pauses, or the field is left,
 		// rather than on every key: Codex announces it as an alert, and would
 		// interrupt each character of an IME composition as well.
@@ -496,7 +487,6 @@ module.exports = exports = defineComponent( {
 			textOpen,
 			renameOpen,
 			locked,
-			liftDirective,
 			composing,
 			typingFind,
 			settleFind,

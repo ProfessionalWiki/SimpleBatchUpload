@@ -258,7 +258,7 @@ describe( 'the description the files are uploaded with', () => {
 		expect( batch.uploader.calls[ 0 ].text ).toBe( '{{Photo}}' );
 	} );
 
-	it( 'keeps a directive in what it reports back until it is read into the rule', () => {
+	it( 'keeps a directive typed into it as text', () => {
 		const batch = batchAgainst();
 
 		batch.setDescription( '{{Photo| +rename = !^!-->Trip-}}' );
@@ -276,14 +276,17 @@ describe( 'the description the files are uploaded with', () => {
 		expect( batch.uploader.calls[ 0 ].text ).toBe( '{{Scan}}' );
 	} );
 
-	it( 'reads a directive still in the text into the rule before anything is sent', async () => {
+	it( 'sends a directive typed into it as text, renaming nothing', async () => {
 		const batch = batchAgainst();
 
 		batch.setDescription( '{{Photo| +rename = !^!-->Trip-}}' );
 		batch.addFiles( dropped( [ 'A.png' ] ) );
 		await uploadEverything( batch );
 
-		expect( batch.uploader.calls[ 0 ] ).toMatchObject( { filename: 'Trip-A.png', text: '{{Photo}}' } );
+		expect( batch.uploader.calls[ 0 ] ).toMatchObject( {
+			filename: 'A.png',
+			text: '{{Photo| +rename = !^!-->Trip-}}'
+		} );
 	} );
 } );
 
@@ -301,38 +304,6 @@ describe( 'the rule the files are renamed by', () => {
 
 		expect( batch.description ).toBe( '{{Photo}}' );
 		expect( batch.rule ).toMatchObject( { find: '^', replace: 'Trip-', regex: true } );
-	} );
-
-	it( 'takes a directive typed into the text in place of the rule there was', () => {
-		const batch = batchAgainst();
-
-		batch.setRule( rule( { find: 'x', replace: 'y' } ) );
-		batch.setDescription( '{{Photo| +rename = /a/i-->b}}' );
-		batch.liftDirective();
-
-		expect( batch.rule ).toMatchObject( { find: 'a', replace: 'b', regex: true, flags: 'i' } );
-		expect( batch.description ).toBe( '{{Photo}}' );
-	} );
-
-	it( 'says whether there was a directive to read', () => {
-		const batch = batchAgainst();
-
-		batch.setDescription( '{{Scan}}' );
-		const withNone = batch.liftDirective();
-		batch.setDescription( '{{Scan| +rename = /a/-->b}}' );
-		const withOne = batch.liftDirective();
-
-		expect( [ withNone, withOne ] ).toEqual( [ false, true ] );
-	} );
-
-	it( 'leaves the rule alone when the text has no directive to read', () => {
-		const batch = batchAgainst();
-
-		batch.setRule( rule( { find: 'x', replace: 'y' } ) );
-		batch.setDescription( '{{Scan}}' );
-		batch.liftDirective();
-
-		expect( batch.rule ).toMatchObject( { find: 'x', replace: 'y' } );
 	} );
 
 	it( 'renames the files that have not gone up yet, since a rename can create a clash', () => {
@@ -452,6 +423,14 @@ describe( 'the rule the files are renamed by', () => {
 		const batch = batchAgainst();
 
 		batch.setDescription( '{{Photo}}\n+rename = /^IMG_/-->Trip-' );
+
+		expect( batch.textLooksLikeDirective ).toBe( true );
+	} );
+
+	it( 'says so of a working directive typed into it too, as it is not read from there', () => {
+		const batch = batchAgainst();
+
+		batch.setDescription( '{{Photo| +rename = /a/-->b}}' );
 
 		expect( batch.textLooksLikeDirective ).toBe( true );
 	} );

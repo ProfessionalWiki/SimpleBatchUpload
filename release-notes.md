@@ -14,6 +14,8 @@
   running batch can be paused and carried on
 * Added a Rename files section, with Find and Replace with fields and an option for regular expressions;
   each file shows its new name before it is uploaded. A `+rename` parameter fills the fields in
+* A `+rename` typed into the text for each file page is no longer read: the field warns that it would be
+  published as written, and points to Rename files
 * Added a button to take a file out of the batch before it is uploaded, and to add it back
 * Added a button to try a failed file again
 * Removed the vendored jQuery File Upload widget and the extension's own use of jQuery
