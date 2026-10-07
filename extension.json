@@ -91,6 +91,7 @@
 				"renamePattern.js",
 				"thumbnail.js",
 				"thumbnailer.js",
+				"toolbar.js",
 				"uploadQueue.js",
 				"uploadRequest.js",
 				"uploadResult.js",

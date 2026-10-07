@@ -496,6 +496,16 @@ describe( 'what the dock asks the batch to do', () => {
 		expect( batch.asked ).toEqual( [ [ 'start' ] ] );
 	} );
 
+	it( 'uploads the text the field shows, even when it was changed without an input event', async () => {
+		const batch = batchHolding( [ {} ] );
+		const wrapper = panelFor( batch );
+
+		wrapper.find( '.ext-sbu-text textarea' ).element.value = '{{Scan}}';
+		await wrapper.find( '.ext-sbu-dock__action' ).trigger( 'click' );
+
+		expect( batch.asked ).toEqual( [ [ 'setDescription', '{{Scan}}' ], [ 'start' ] ] );
+	} );
+
 	it( 'pauses a batch that is running', async () => {
 		const batch = batchHolding( [ { status: 'uploading' } ] );
 		batch.state.phase = 'uploading';
@@ -834,16 +844,24 @@ describe( 'once Upload is pressed', () => {
 		const wrapper = panelFor( batch );
 
 		expect( wrapper.find( '.ext-sbu-text textarea' ).attributes( 'disabled' ) ).toBeDefined();
+		expect( wrapper.find( '.ext-sbu-text textarea' ).attributes( 'readonly' ) ).toBeDefined();
 		expect( wrapper.findAll( '.ext-sbu-rename input' ).every(
 			( input ) => input.attributes( 'disabled' ) !== undefined
 		) ).toBe( true );
 	} );
 
+	it( 'leaves the text writable while the batch waits for Upload', () => {
+		expect( panelFor( batchHolding() ).find( '.ext-sbu-text textarea' ).attributes( 'readonly' ) )
+			.toBeUndefined();
+	} );
+
 	it( 'keeps them locked while a pause takes hold', () => {
 		const batch = batchHolding( [ { status: 'uploading' } ] );
 		batch.state.phase = 'pausing';
+		const field = panelFor( batch ).find( '.ext-sbu-text textarea' );
 
-		expect( panelFor( batch ).find( '.ext-sbu-text textarea' ).attributes( 'disabled' ) ).toBeDefined();
+		expect( field.attributes( 'disabled' ) ).toBeDefined();
+		expect( field.attributes( 'readonly' ) ).toBeDefined();
 	} );
 
 	it( 'puts away the skip buttons, since a waiting file\'s turn can come at any moment', () => {

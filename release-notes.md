@@ -16,9 +16,11 @@
   each file shows its new name before it is uploaded. A `+rename` parameter fills the fields in
 * A `+rename` typed into the text for each file page is no longer read: the field warns that it would be
   published as written, and points to Rename files
+* Where WikiEditor is installed, the text for each file page gets its toolbar, following each user's toolbar
+  preference. A page with more than one upload area gets none, as WikiEditor cannot keep their dialogs apart
 * Added a button to take a file out of the batch before it is uploaded, and to add it back
 * Added a button to try a failed file again
-* Removed the vendored jQuery File Upload widget and the extension's own use of jQuery
+* Removed the vendored jQuery File Upload widget
 
 Pages using `{{#batchupload:}}` should be purged after upgrading, or `$wgCacheEpoch` bumped. The markup
 the parser function emits has changed, and a page served from the parser cache keeps the old markup for
