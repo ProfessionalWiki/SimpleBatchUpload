@@ -13,18 +13,6 @@ parameters:
 			path: src/ParameterProvider.php
 
 		-
-			message: '#^Method MediaWiki\\Extension\\SimpleBatchUpload\\ParameterProvider\:\:populateParametersFromDefaults\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/ParameterProvider.php
-
-		-
-			message: '#^Method MediaWiki\\Extension\\SimpleBatchUpload\\ParameterProvider\:\:populateParametersFromKey\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: src/ParameterProvider.php
-
-		-
 			message: '#^Method MediaWiki\\Extension\\SimpleBatchUpload\\ParameterProvider\:\:setParameters\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1

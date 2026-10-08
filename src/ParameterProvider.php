@@ -69,8 +69,9 @@ class ParameterProvider {
 		}
 	}
 
-	private function populateParametersFromKey() {
-		$paramMsg = Message::newFromKey( 'simplebatchupload-parameters' );
+	private function populateParametersFromKey(): bool {
+		// The wiki's configuration, not interface text, so not in the reader's language.
+		$paramMsg = Message::newFromKey( 'simplebatchupload-parameters' )->inContentLanguage();
 
 		if ( $paramMsg->exists() ) {
 
@@ -86,8 +87,14 @@ class ParameterProvider {
 		return false;
 	}
 
-	private function populateParametersFromDefaults() {
-		$this->setParameters( $this->templateName, '', Message::newFromKey( 'simplebatchupload-comment' )->text(), Message::newFromKey( 'batchupload' )->text() );
+	private function populateParametersFromDefaults(): void {
+		// The summary is saved with the upload; the page title is interface text.
+		$this->setParameters(
+			$this->templateName,
+			'',
+			Message::newFromKey( 'simplebatchupload-comment' )->inContentLanguage()->text(),
+			Message::newFromKey( 'batchupload' )->text()
+		);
 	}
 
 	/**
