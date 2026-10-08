@@ -97,6 +97,9 @@ function mountPanel( element, panels ) {
 	batches.push( batch );
 	Vue.createMwApp( UploadPanel, {
 		batch: batch,
+		// Special:BatchUpload is there to upload. A {{#batchupload:}} sits among
+		// a page's own content, sometimes dozens of them to a page.
+		startsCompact: mw.config.get( 'wgCanonicalSpecialPageName' ) !== 'BatchUpload',
 		onEditDetailsOnce: ( textarea ) => offerToolbar( textarea, panels )
 	} ).mount( element );
 }

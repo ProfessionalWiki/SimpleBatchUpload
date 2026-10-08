@@ -20,6 +20,8 @@
   as written, and points to Rename files
 * Where WikiEditor is installed, the file page text gets its toolbar, following each user's toolbar
   preference. A page with more than one upload area gets none, as WikiEditor cannot keep their dialogs apart
+* An upload area added with `{{#batchupload:}}` starts small and opens out once files are added to it, so a
+  page holding many stays short. On `Special:BatchUpload` it is full size from the start
 * Added a button to take a file out of the batch before it is uploaded, and to add it back
 * Added a button to try a failed file again
 * Fixed the default upload summary being in a user's interface language rather than the wiki's content

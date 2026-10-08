@@ -1,9 +1,7 @@
 <template>
 	<div class="ext-sbu-shell">
-		<!-- The form is hidden rather than removed: Upload and the edit-details
-		event need its textarea while it is put away, and WikiEditor's toolbar
-		survives it. -->
 		<div
+			v-if="!compact"
 			class="ext-sbu-details"
 			role="group"
 			:aria-label="detailsTitle"
@@ -63,14 +61,9 @@
 				</cdx-message>
 			</div>
 
-			<!-- The count where a screen reader hears it, whether the form is
-			open or not: a live region in the put-away form would be silent.
-			Always mounted, and holding the one sentence, since a region is
-			read whole on every change. -->
-			<div class="ext-sbu-visually-hidden ext-sbu-details__count-status" role="status">
-				{{ countLabel }}
-			</div>
-
+			<!-- Hidden rather than removed: Upload and the edit-details event
+			need its textarea while it is put away, and WikiEditor's toolbar
+			survives it. -->
 			<div v-show="editing" class="ext-sbu-details__form">
 				<cdx-field class="ext-sbu-text" :disabled="locked">
 					<!-- Read-only as well as disabled, because WikiEditor's buttons
@@ -155,9 +148,19 @@
 			</div>
 		</div>
 
+		<!-- The count where a screen reader hears it, whether the form is open
+		or not: a live region in the put-away form would be silent. Outside the
+		details, which a compact panel leaves out until the first files arrive,
+		and those are what it counts. Always mounted, and holding the one
+		sentence, since a region is read whole on every change. -->
+		<div class="ext-sbu-visually-hidden ext-sbu-rename-status" role="status">
+			{{ countLabel }}
+		</div>
+
 		<div
 			class="ext-sbu-panel"
 			:class="{
+				'ext-sbu-panel--compact': compact,
 				'ext-sbu-panel--empty': empty,
 				'ext-sbu-panel--dragging': dragging,
 				'ext-sbu-panel--running': locked
@@ -199,19 +202,28 @@
 					class="ext-sbu-add__all"
 					weight="quiet"
 					@click="openPicker">
-					<cdx-icon :icon="icons.cdxIconUpload"></cdx-icon>
+					<cdx-icon v-if="!compact" :icon="icons.cdxIconUpload"></cdx-icon>
 					<span class="ext-sbu-add__words">
 						<span class="ext-sbu-item__title">{{ addTitle }}</span>
-						<span class="ext-sbu-add__hint">{{ addHint }}</span>
+						<span v-if="!compact" class="ext-sbu-add__hint">{{ addHint }}</span>
 						<span v-if="capacityLabel" class="ext-sbu-add__hint">{{ capacityLabel }}</span>
 					</span>
 					<!-- Not a button: the container around it already is
 					one, and a button inside a button is neither valid nor
 					reachable. Codex has a modifier for exactly this, and it
-					keeps the word that says the container can be clicked. -->
+					keeps the word that says the container can be clicked.
+
+					Compact, it is the icon alone, and not primary: a page may
+					hold dozens. The word stays in the container's name. -->
 					<span
-						class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--weight-primary cdx-button--action-progressive ext-sbu-add__select"
-					>{{ selectLabel }}</span>
+						class="cdx-button cdx-button--fake-button cdx-button--fake-button--enabled cdx-button--action-progressive ext-sbu-add__select"
+						:class="compact ?
+							'cdx-button--icon-only cdx-button--weight-normal' :
+							'cdx-button--weight-primary'"
+					>
+						<cdx-icon v-if="compact" :icon="icons.cdxIconUpload"></cdx-icon>
+						<span :class="{ 'ext-sbu-visually-hidden': compact }">{{ selectLabel }}</span>
+					</span>
 				</cdx-button>
 			</div>
 
@@ -328,7 +340,8 @@ module.exports = exports = defineComponent( {
 	},
 
 	props: {
-		batch: { type: Object, required: true }
+		batch: { type: Object, required: true },
+		startsCompact: { type: Boolean }
 	},
 
 	// Each time the form opens, with its textarea, so the page can add
@@ -480,6 +493,13 @@ module.exports = exports = defineComponent( {
 		const droppedTooMany = ref( false );
 		const dragging = computed( () => dragDepth.value > 0 );
 		const empty = computed( () => !props.batch.rows.length );
+		// Not at all when the details start with something to warn of, so
+		// whoever wrote the page sees it without adding a file. Decided once:
+		// putting the warning right in the open form must not close it. And for
+		// good once files have arrived, since rows are never taken out.
+		const startsCompact = props.startsCompact &&
+			!props.batch.textLooksLikeDirective && !props.batch.state.renamePatternInvalid;
+		const compact = computed( () => startsCompact && empty.value );
 
 		// The first files replace the button that opened the picker with the
 		// add line's, and a focused element that goes leaves focus on the page
@@ -622,6 +642,7 @@ module.exports = exports = defineComponent( {
 			toggleFilter,
 			dragging,
 			empty,
+			compact,
 			addAll,
 			addSelect,
 			sections,
@@ -1061,7 +1082,8 @@ module.exports = exports = defineComponent( {
 }
 
 // One class deeper than Codex's .cdx-button .cdx-icon, which sets the colour too.
-.ext-sbu-add--empty .ext-sbu-add__all .cdx-icon {
+// The lead icon only, not one in the button inside.
+.ext-sbu-add--empty .ext-sbu-add__all > .cdx-icon {
 	min-width: @size-250;
 	min-height: @size-250;
 	width: @size-250;
@@ -1072,6 +1094,36 @@ module.exports = exports = defineComponent( {
 
 .ext-sbu-add--empty .ext-sbu-add__select {
 	margin-top: @spacing-75;
+}
+
+// Compact, the same button is a slim line: the words, and at their end the icon
+// that stands for Select files. Spaced alike on either side, since the panel
+// takes the direction of the page's content and CSSJanus flips by the
+// interface's.
+.ext-sbu-panel--compact .ext-sbu-add--empty {
+	min-height: 0;
+}
+
+.ext-sbu-panel--compact .ext-sbu-add--empty .ext-sbu-add__all {
+	flex-direction: row;
+	align-items: center;
+	padding: @spacing-50;
+	text-align: start;
+}
+
+.ext-sbu-panel--compact .ext-sbu-add--empty .ext-sbu-add__words {
+	flex-grow: 1;
+	margin: 0 @spacing-50;
+}
+
+// A line among the page's text, so at its size.
+.ext-sbu-panel--compact .ext-sbu-add--empty .ext-sbu-item__title {
+	font-size: inherit;
+}
+
+.ext-sbu-panel--compact .ext-sbu-add--empty .ext-sbu-add__select {
+	flex-shrink: 0;
+	margin-top: 0;
 }
 
 .ext-sbu-group {

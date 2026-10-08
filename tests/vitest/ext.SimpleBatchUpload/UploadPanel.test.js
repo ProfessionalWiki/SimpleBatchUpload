@@ -321,6 +321,91 @@ describe( 'focus as the first files arrive', () => {
 	} );
 } );
 
+describe( 'a panel that starts compact', () => {
+	function compactPanelFor( batch ) {
+		return panelFor( batch, { startsCompact: true } );
+	}
+
+	it( 'draws nothing but the way to add files while it has none', () => {
+		const wrapper = compactPanelFor( batchHolding() );
+
+		expect( wrapper.find( '.ext-sbu-details' ).exists() ).toBe( false );
+		expect( wrapper.find( '.ext-sbu-add__all' ).exists() ).toBe( true );
+	} );
+
+	it( 'says how many files it takes, leaving the folder hint to the full drop zone', () => {
+		const words = compactPanelFor( batchHolding( [], { room: 5 } ) ).find( '.ext-sbu-add__all' ).text();
+
+		expect( words ).toContain( 'simplebatchupload-add-capacity(5)' );
+		expect( words ).not.toContain( 'simplebatchupload-add-hint' );
+	} );
+
+	it( 'stands for Select files with the upload icon, keeping the words for screen readers', () => {
+		const select = compactPanelFor( batchHolding() ).find( '.ext-sbu-add__select' );
+
+		expect( select.find( '.cdx-icon' ).exists() ).toBe( true );
+		expect( select.find( '.ext-sbu-visually-hidden' ).text() ).toBe( 'simplebatchupload-buttonlabel' );
+	} );
+
+	it( 'draws the upload icon once, as that button', () => {
+		expect( compactPanelFor( batchHolding() ).findAll( '.ext-sbu-add__all .cdx-icon' ) ).toHaveLength( 1 );
+	} );
+
+	it( 'keeps a place for the rename count before files arrive, so the count is announced', () => {
+		// A {{#batchupload:}} can bring a rule, which counts as the first files
+		// arrive; a live region added at the moment it fills is not announced.
+		expect( countRegion( compactPanelFor( batchHolding() ) ).exists() ).toBe( true );
+	} );
+
+	it( 'starts whole when its page text holds a warning, so whoever wrote the page sees it', () => {
+		const wrapper = compactPanelFor( batchHolding( [], { textLooksLikeDirective: true } ) );
+
+		expect( textWarning( wrapper ).text() ).toContain( 'simplebatchupload-text-directive-not-read' );
+	} );
+
+	it( 'stays whole as the warning that kept it so is put right, so the form is not taken away mid-edit', async () => {
+		const batch = reactive( batchHolding( [], { textLooksLikeDirective: true } ) );
+		const wrapper = compactPanelFor( batch );
+
+		batch.textLooksLikeDirective = false;
+		await wrapper.vm.$nextTick();
+
+		expect( wrapper.find( '.ext-sbu-details' ).exists() ).toBe( true );
+	} );
+
+	it( 'starts whole when its rename pattern is not one, so whoever wrote the page sees it', () => {
+		const { rule, state } = invalid();
+		const wrapper = compactPanelFor( batchHolding( [], { rule: rule, state: state } ) );
+
+		expect( wrapper.find( '.ext-sbu-details__error' ).exists() ).toBe( true );
+	} );
+
+	it( 'draws no primary button, since a page may hold dozens of these', () => {
+		const select = compactPanelFor( batchHolding() ).find( '.ext-sbu-add__select' );
+
+		expect( select.classes() ).not.toContain( 'cdx-button--weight-primary' );
+	} );
+
+	it( 'becomes the whole panel once files arrive', async () => {
+		const batch = batchHolding();
+		const wrapper = compactPanelFor( batch );
+
+		await filesArrive( batch, wrapper );
+
+		expect( wrapper.find( '.ext-sbu-details' ).exists() ).toBe( true );
+	} );
+
+	it( 'is marked compact for the stylesheet only while it is', async () => {
+		const batch = batchHolding();
+		const wrapper = compactPanelFor( batch );
+		const atRest = target( wrapper ).classes( 'ext-sbu-panel--compact' );
+
+		await filesArrive( batch, wrapper );
+
+		expect( [ atRest, target( wrapper ).classes( 'ext-sbu-panel--compact' ) ] ).toEqual( [ true, false ] );
+	} );
+} );
+
 describe( 'putting the list in order', () => {
 	it( 'leads with the files sharing a name, which nothing but this page can see', () => {
 		const wrapper = panelFor( batchHolding( [
@@ -590,7 +675,7 @@ function shownValue( wrapper, title ) {
 }
 
 function countRegion( wrapper ) {
-	return wrapper.find( '.ext-sbu-details__count-status' );
+	return wrapper.find( '.ext-sbu-rename-status' );
 }
 
 function countSaid( wrapper ) {
