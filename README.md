@@ -97,12 +97,12 @@ is pressed.
 
 ### A rule from the page
 
-A `rename` parameter fills in the fields when the page opens, with **Use regular
-expressions** ticked. The uploader can still change them. Here `Pics` is the
-template the file pages get:
+A `+rename` parameter fills in the fields when the page opens, with **Use regular
+expressions** ticked. The uploader can still change them. Here `Pics` names the
+template every uploaded file's page contains:
 
 ```
-{{#batchupload:Pics|rename = /^IMG_(\d+)/-->Trip-$1}}
+{{#batchupload:Pics|+rename = /^IMG_(\d+)/-->Trip-$1}}
 ```
 
 | Part | In the example | Written as |
@@ -113,10 +113,9 @@ template the file pages get:
 | Replacement | `Trip-$1` | Everything after `-->`, spaces included |
 
 * A rule containing `|` goes inside `<nowiki>` whole:
-  `rename = <nowiki>/IMG_|DSC_/-->Trip-</nowiki>`.
+  `+rename = <nowiki>/IMG_|DSC_/-->Trip-</nowiki>`.
 * A rule not written this way renames nothing, and the upload area says so.
-* The parameter is not passed to the template, so a template used here cannot
-  be given a parameter named `rename`.
+* The parameter is not passed to the template.
 * A parameter line on _MediaWiki:Simplebatchupload-parameters_ cannot set a
   rule, and a `+rename` typed into **File page text** is published as written.
 

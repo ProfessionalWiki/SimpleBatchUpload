@@ -57,30 +57,30 @@ class UploadButtonRendererTest extends MediaWikiIntegrationTestCase {
 	}
 
 	public function testSendsTheRenameRuleOnItsOwnRatherThanToTheTemplate(): void {
-		$wikitext = '{{#batchupload:Pics|by=Ann|rename = /^IMG_/-->Trip-}}';
+		$wikitext = '{{#batchupload:Pics|by=Ann|+rename = /^IMG_/-->Trip-}}';
 
 		$this->assertSame( '/^IMG_/-->Trip-', $this->attributeFrom( $wikitext, 'data-mw-sbu-rename' ) );
 		$this->assertSame( '{{Pics|by=Ann}}', $this->descriptionFrom( $wikitext ) );
 	}
 
-	public function testTakesTheRenameRuleWrittenTheOlderWay(): void {
-		$wikitext = '{{#batchupload:Pics|+rename = /^IMG_/-->Trip-}}';
+	public function testPassesAPlainRenameParameterToTheTemplate(): void {
+		$wikitext = '{{#batchupload:Pics|rename=yes}}';
 
-		$this->assertSame( '/^IMG_/-->Trip-', $this->attributeFrom( $wikitext, 'data-mw-sbu-rename' ) );
-		$this->assertSame( '{{Pics}}', $this->descriptionFrom( $wikitext ) );
+		$this->assertNull( $this->attributeFrom( $wikitext, 'data-mw-sbu-rename' ) );
+		$this->assertSame( '{{Pics|rename=yes}}', $this->descriptionFrom( $wikitext ) );
 	}
 
 	public function testLeavesARenameParameterOfANestedTemplateToThatTemplate(): void {
-		$wikitext = '{{#batchupload:Pics|note=<nowiki>{{Note|rename=yes}}</nowiki>}}';
+		$wikitext = '{{#batchupload:Pics|note=<nowiki>{{Note|+rename=yes}}</nowiki>}}';
 
 		$this->assertNull( $this->attributeFrom( $wikitext, 'data-mw-sbu-rename' ) );
-		$this->assertSame( '{{Pics|note={{Note|rename=yes}}}}', $this->descriptionFrom( $wikitext ) );
+		$this->assertSame( '{{Pics|note={{Note|+rename=yes}}}}', $this->descriptionFrom( $wikitext ) );
 	}
 
 	public function testPutsBackWhatANowikiInTheRenameRuleHeld(): void {
 		$this->assertSame(
 			'/IMG_|DSC_/-->Trip-',
-			$this->attributeFrom( '{{#batchupload:Pics|rename=<nowiki>/IMG_|DSC_/-->Trip-</nowiki>}}', 'data-mw-sbu-rename' )
+			$this->attributeFrom( '{{#batchupload:Pics|+rename=<nowiki>/IMG_|DSC_/-->Trip-</nowiki>}}', 'data-mw-sbu-rename' )
 		);
 	}
 
