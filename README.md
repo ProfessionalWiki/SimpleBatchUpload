@@ -43,6 +43,9 @@ See the [SimpleBatchUpload usage documentation](https://professional.wiki/en/ext
 
 ## Customization
 
+Text on _MediaWiki:Batchupload-summary_ is shown at the top of
+_Special:BatchUpload_ and its subpages.
+
 It is possible to specify dedicated parameter sets for the upload of specific
 file types by editing the _MediaWiki:Simplebatchupload-parameters_ page. Each
 line of that page is considered as one set of parameters.

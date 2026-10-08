@@ -43,6 +43,8 @@ Changes:
   rule wrapped in `<nowiki>` can contain `|`
 * Added a prompt before a file is uploaded over one the wiki already holds, instead of overwriting it
 * Added a prompt when files in one batch would be uploaded under the same name, instead of letting the last one win
+* Added `MediaWiki:Batchupload-summary`, shown at the top of `Special:BatchUpload`, as
+  `MediaWiki:Upload-summary` is on `Special:Upload`
 * Fixed the default upload summary being in a user's interface language rather than the wiki's content language,
   which usually also ignored a summary customised in `MediaWiki:Simplebatchupload-comment`
 

@@ -59,6 +59,7 @@ class SpecialBatchUpload extends SpecialPage {
 	public function execute( $subpage ) {
 		$this->setHeaders();
 		$this->checkPermissions();
+		$this->outputHeader();
 
 		$this->addPageContentToOutput( $subpage );
 	}
