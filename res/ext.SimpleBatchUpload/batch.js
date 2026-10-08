@@ -119,7 +119,7 @@ function regroupClashes( undecided ) {
  * @param {Function} options.getToken Called with true to force a fresh one
  * @param {string} [options.description] The file page text
  * @param {string} [options.comment] The summary every upload gets
- * @param {string} [options.rename] The rule a {{#batchupload:}} rename
+ * @param {string} [options.rename] The rule a {{#batchupload:}} +rename
  *  parameter gave, read into the rule at once
  * @param {number} [options.maxFiles] How many unfinished files the wiki lets
  *  this user hold at once
@@ -131,7 +131,7 @@ function createBatch( options ) {
 	const rows = reactive( [] );
 	// What the Rename files fields hold. The flags are a regular expression's:
 	// one typed into the form replaces every match, like plain text, and one
-	// a rename parameter gave keeps its own.
+	// a +rename parameter gave keeps its own.
 	const rule = reactive( { find: '', replace: '', regex: false, flags: '' } );
 	const renamer = computed( () => createRenamer( rule ) );
 	const state = reactive( {
@@ -288,7 +288,7 @@ function createBatch( options ) {
 	}
 
 	/**
-	 * @param {string} value What a {{#batchupload:}} rename parameter gave
+	 * @param {string} value What a {{#batchupload:}} +rename parameter gave
 	 */
 	function readRenameRule( value ) {
 		const given = parseRenameRule( value );

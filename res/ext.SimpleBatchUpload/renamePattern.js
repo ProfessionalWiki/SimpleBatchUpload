@@ -2,9 +2,9 @@
 
 /**
  * Renaming the files of a batch: the rule the Rename files fields hold, and the
- * rule a {{#batchupload:}} rename parameter gives, e.g.
+ * rule a {{#batchupload:}} +rename parameter gives, e.g.
  *
- *   {{#batchupload:Template|rename = !^IMG_(\d+)! -->Trip-$1}}
+ *   {{#batchupload:Template|+rename = !^IMG_(\d+)! -->Trip-$1}}
  *
  * The parameter's rule is read into the fields, never written back, so the
  * fields are the one place a rule lives.
@@ -16,7 +16,7 @@ const RENAME_RULE = /^([#/@!])(.+)\1([gimuy]{0,5})\s*-->(.*)$/;
 const LOOKS_LIKE_DIRECTIVE = /\+\s*rename\s*=/i;
 
 /**
- * @param {string} value What the rename parameter was given
+ * @param {string} value What the +rename parameter was given
  * @return {?{find: string, flags: string, replace: string}} Null if it is not
  *  written as a rule
  */
@@ -67,7 +67,7 @@ function plainRenamer( find, replace ) {
 
 /**
  * @param {{find: string, replace: string, regex: boolean, flags: string}} rule
- *  The flags are a regular expression's; a rename parameter brings its own
+ *  The flags are a regular expression's; a +rename parameter brings its own
  * @return {{renameFile: Function, invalid: boolean}} An unusable pattern is
  *  reported rather than thrown, and renames nothing
  */

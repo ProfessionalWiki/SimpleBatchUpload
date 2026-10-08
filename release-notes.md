@@ -13,15 +13,13 @@
 * Files no longer upload as soon as they are added: they wait in the list until Upload is pressed, and a
   running batch can be paused and carried on
 * Added a Rename files section, with Find and Replace with fields and an option for regular expressions;
-  each file shows its new name before it is uploaded. A `rename` parameter on `{{#batchupload:}}` fills the
-  fields in; `+rename` still works, but is deprecated
+  each file shows its new name before it is uploaded. A `+rename` parameter fills the fields in
 * Added a block above the file list that shows the file page text, the upload summary and the rename rule,
   one line each, with Edit details to change them. The summary can now be changed before uploading
 * A `+rename` typed into the file page text is no longer read: the field warns that it would be published
   as written, and points to Rename files
-* The rename parameter is no longer passed to the template, so a template used with `{{#batchupload:}}` can no
-  longer be given a parameter named `rename` through it. A rule that is not written correctly is warned about
-  rather than published on every file page, and a rule wrapped in `<nowiki>` can contain `|`
+* A `+rename` rule that is not written correctly is warned about rather than published on every file page,
+  and a rule wrapped in `<nowiki>` can contain `|`
 * Where WikiEditor is installed, the file page text gets its toolbar, following each user's toolbar
   preference. A page with more than one upload area gets none, as WikiEditor cannot keep their dialogs apart
 * An upload area added with `{{#batchupload:}}` starts small and opens out once files are added to it, so a

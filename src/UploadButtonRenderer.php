@@ -78,11 +78,11 @@ class UploadButtonRenderer {
 	}
 
 	/**
-	 * The value of a rename rule, which the panel reads rather than the template
-	 * being given it. Found among the arguments the parser has already told
-	 * apart, so a parameter of that name in a template nested in another
-	 * argument stays that template's. It was written "+rename" before it was
-	 * read here.
+	 * The value of a +rename rule, which the panel reads rather than the
+	 * template being given it. Found among the arguments the parser has already
+	 * told apart, so a parameter of that name in a template nested in another
+	 * argument stays that template's. The + marks it as the upload area's: every
+	 * other argument is the template's.
 	 */
 	private function renameRuleIn( PPNode $arg, PPFrame $frame ): ?PPNode {
 		$parts = $arg->splitArg();
@@ -93,7 +93,7 @@ class UploadButtonRenderer {
 			return null;
 		}
 
-		return in_array( trim( $frame->expand( $name ) ), [ 'rename', '+rename' ], true ) ? $value : null;
+		return trim( $frame->expand( $name ) ) === '+rename' ? $value : null;
 	}
 
 	/**
