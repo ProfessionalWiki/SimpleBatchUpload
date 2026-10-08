@@ -27,6 +27,7 @@ namespace MediaWiki\Extension\SimpleBatchUpload;
 use MediaWiki\Html\Html;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\PPFrame;
+use MediaWiki\Parser\PPNode;
 use MediaWiki\Parser\Sanitizer;
 
 /**
@@ -49,18 +50,50 @@ class UploadButtonRenderer {
 		// aside. So it is put back here: for a <nowiki>, the text that was
 		// written inside it, since this is wikitext for the file pages; anything
 		// else a marker stands for is HTML, and has no place there.
-		$args = array_map(
-			static fn ( $arg ) => $stripState->killMarkers( $stripState->replaceNoWikis(
-				$frame->expand( $arg ),
+		$expand = static fn ( PPNode|string $node ): string => $stripState->killMarkers(
+			$stripState->replaceNoWikis(
+				$frame->expand( $node ),
 				static fn ( string $content ) => Sanitizer::decodeCharReferences( $content )
-			) ),
-			$args
+			)
 		);
+
+		$renameRule = null;
+		$templateArgs = [];
+
+		foreach ( $args as $arg ) {
+			$rule = $arg instanceof PPNode ? $this->renameRuleIn( $arg, $frame ) : null;
+
+			if ( $rule === null ) {
+				$templateArgs[] = $expand( $arg );
+			} else {
+				$renameRule = trim( $expand( $rule ) );
+			}
+		}
+
 		$output = $parser->getOutput();
 
-		$html = $this->renderUploadButton( $args, $output );
+		$html = $this->renderUploadButton( $templateArgs, $renameRule, $output );
 
 		return [ $html, 'isHTML' => true, 'noparse' => true, 'nowiki' => false ];
+	}
+
+	/**
+	 * The value of a rename rule, which the panel reads rather than the template
+	 * being given it. Found among the arguments the parser has already told
+	 * apart, so a parameter of that name in a template nested in another
+	 * argument stays that template's. It was written "+rename" before it was
+	 * read here.
+	 */
+	private function renameRuleIn( PPNode $arg, PPFrame $frame ): ?PPNode {
+		$parts = $arg->splitArg();
+		$name = $parts['name'];
+		$value = $parts['value'];
+
+		if ( $parts['index'] !== '' || !$name instanceof PPNode || !$value instanceof PPNode ) {
+			return null;
+		}
+
+		return in_array( trim( $frame->expand( $name ) ), [ 'rename', '+rename' ], true ) ? $value : null;
 	}
 
 	/**
@@ -71,7 +104,7 @@ class UploadButtonRenderer {
 		$args = [ $templateName ];
 		$output = $specialPage->getOutput();
 
-		$html = $this->renderUploadButton( $args, $output );
+		$html = $this->renderUploadButton( $args, null, $output );
 
 		$output->addHTML( $html );
 	}
@@ -81,7 +114,7 @@ class UploadButtonRenderer {
 	 * @param \ParserOutput | \OutputPage $output
 	 * @return string
 	 */
-	protected function renderUploadButton( $args, $output ) {
+	protected function renderUploadButton( $args, ?string $renameRule, $output ) {
 		$paramProvider = $this->prepareParameterProvider( $args );
 
 		$this->addModulesToOutput( $output );
@@ -90,7 +123,7 @@ class UploadButtonRenderer {
 			$output->setPageTitle( $paramProvider->getSpecialPageTitle() );
 		}
 
-		return $this->getHtml( $paramProvider );
+		return $this->getHtml( $paramProvider, $renameRule );
 	}
 
 	/**
@@ -104,11 +137,12 @@ class UploadButtonRenderer {
 	 * @param ParameterProvider $paramProvider
 	 * @return string
 	 */
-	protected function getHtml( ParameterProvider $paramProvider ): string {
+	protected function getHtml( ParameterProvider $paramProvider, ?string $renameRule ): string {
 		return Html::element( 'div', [
 			'class' => 'ext-sbu-mount',
 			'data-mw-sbu-description' => $paramProvider->getUploadPageText(),
 			'data-mw-sbu-comment' => $paramProvider->getUploadComment(),
+			'data-mw-sbu-rename' => $renameRule,
 		] );
 	}
 

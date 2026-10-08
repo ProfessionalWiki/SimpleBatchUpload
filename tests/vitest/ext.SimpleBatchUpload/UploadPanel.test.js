@@ -67,7 +67,8 @@ function batchHolding( rows, extra ) {
 			stoppedByLimit: false,
 			admitted: 0,
 			turnedAway: 0,
-			renamePatternInvalid: false
+			renamePatternInvalid: false,
+			renameRuleUnreadable: false
 		},
 		counts: countsFor( held ),
 		addFiles: ( entries ) => asked.push( [ 'addFiles', entries ] ),
@@ -371,6 +372,14 @@ describe( 'a panel that starts compact', () => {
 		await wrapper.vm.$nextTick();
 
 		expect( wrapper.find( '.ext-sbu-details' ).exists() ).toBe( true );
+	} );
+
+	it( 'starts whole when its rename rule cannot be read, so whoever wrote the page sees it', () => {
+		const batch = batchHolding();
+
+		batch.state.renameRuleUnreadable = true;
+
+		expect( textWarning( compactPanelFor( batch ) ).text() ).toContain( 'simplebatchupload-rename-rule-unreadable' );
 	} );
 
 	it( 'starts whole when its rename pattern is not one, so whoever wrote the page sees it', () => {
@@ -914,6 +923,14 @@ describe( 'the details for every file', () => {
 
 	it( 'warns of nothing in ordinary text', () => {
 		expect( textWarning( panelFor( batchHolding() ) ).text() ).toBe( '' );
+	} );
+
+	it( 'warns when the page\'s rename rule cannot be read, as it renames nothing', () => {
+		const batch = batchHolding();
+
+		batch.state.renameRuleUnreadable = true;
+
+		expect( textWarning( panelFor( batch ) ).text() ).toBe( 'simplebatchupload-rename-rule-unreadable' );
 	} );
 
 	it( 'keeps a place for the warning, mounted before there is one to give', () => {

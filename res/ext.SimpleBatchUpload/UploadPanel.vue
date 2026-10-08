@@ -59,6 +59,14 @@
 				>
 					{{ $i18n( 'simplebatchupload-text-directive-not-read' ).text() }}
 				</cdx-message>
+				<cdx-message
+					v-if="batch.state.renameRuleUnreadable"
+					class="ext-sbu-details__warning"
+					type="warning"
+					:inline="true"
+				>
+					{{ $i18n( 'simplebatchupload-rename-rule-unreadable' ).text() }}
+				</cdx-message>
 			</div>
 
 			<!-- Hidden rather than removed: Upload and the edit-details event
@@ -497,8 +505,8 @@ module.exports = exports = defineComponent( {
 		// whoever wrote the page sees it without adding a file. Decided once:
 		// putting the warning right in the open form must not close it. And for
 		// good once files have arrived, since rows are never taken out.
-		const startsCompact = props.startsCompact &&
-			!props.batch.textLooksLikeDirective && !props.batch.state.renamePatternInvalid;
+		const startsCompact = props.startsCompact && !props.batch.textLooksLikeDirective &&
+			!props.batch.state.renamePatternInvalid && !props.batch.state.renameRuleUnreadable;
 		const compact = computed( () => startsCompact && empty.value );
 
 		// The first files replace the button that opened the picker with the

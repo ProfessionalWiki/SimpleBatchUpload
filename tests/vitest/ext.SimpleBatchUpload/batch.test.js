@@ -339,11 +339,20 @@ describe( 'the rule the files are renamed by', () => {
 		return batch.rows.map( ( row ) => row.targetName );
 	}
 
-	it( 'starts with the one a directive in the wiki\'s description brought', () => {
-		const batch = batchAgainst( {}, { description: '{{Photo| +rename = !^!-->Trip-}}' } );
+	it( 'starts with the one the wiki sent', () => {
+		const batch = batchAgainst( {}, { rename: '!^!-->Trip-' } );
 
-		expect( batch.description ).toBe( '{{Photo}}' );
 		expect( batch.rule ).toMatchObject( { find: '^', replace: 'Trip-', regex: true } );
+	} );
+
+	it( 'says when the rule the wiki sent cannot be read', () => {
+		const batch = batchAgainst( {}, { rename: 'IMG_-->Trip-' } );
+
+		expect( batch.state.renameRuleUnreadable ).toBe( true );
+	} );
+
+	it( 'says nothing is wrong when the wiki sent no rule', () => {
+		expect( batchAgainst().state.renameRuleUnreadable ).toBe( false );
 	} );
 
 	it( 'renames the files that have not gone up yet, since a rename can create a clash', () => {
@@ -375,10 +384,10 @@ describe( 'the rule the files are renamed by', () => {
 		expect( targets( batch ) ).toEqual( [ 'bonono.png' ] );
 	} );
 
-	it( 'keeps the flags a directive brought while its rule is edited', () => {
-		// Without the g flag a directive replaces the first match only, and an
-		// edit to the fields should not quietly change that.
-		const batch = batchAgainst( {}, { description: '{{Photo| +rename = /a/-->o}}' } );
+	it( 'keeps the flags the wiki\'s rule brought while the rule is edited', () => {
+		// Without the g flag the wiki's rule replaces the first match only, and
+		// an edit to the fields should not quietly change that.
+		const batch = batchAgainst( {}, { rename: '/a/-->o' } );
 
 		batch.addFiles( dropped( [ 'banana.png' ] ) );
 		batch.setRule( rule( { find: 'a', replace: 'u', regex: true } ) );

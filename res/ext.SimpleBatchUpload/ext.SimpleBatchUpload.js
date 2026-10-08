@@ -88,6 +88,7 @@ function mountPanel( element, panels ) {
 		getToken: getToken,
 		description: element.dataset.mwSbuDescription || '',
 		comment: element.dataset.mwSbuComment || '',
+		rename: element.dataset.mwSbuRename || '',
 		maxFiles: resolveUserLimit(
 			mw.config.get( 'simpleBatchUploadMaxFilesPerBatch' ),
 			mw.config.get( 'wgUserGroups' )

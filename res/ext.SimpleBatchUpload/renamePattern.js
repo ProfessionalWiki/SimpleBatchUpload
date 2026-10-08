@@ -2,38 +2,32 @@
 
 /**
  * Renaming the files of a batch: the rule the Rename files fields hold, and the
- * "+rename" directive a {{#batchupload:}} parameter puts in the description, e.g.
+ * rule a {{#batchupload:}} rename parameter gives, e.g.
  *
- *   {{Template| +rename = !^IMG_(\d+)! -->Trip-$1}}
+ *   {{#batchupload:Template|rename = !^IMG_(\d+)! -->Trip-$1}}
  *
- * A directive is read into the fields and taken out of the text, never written
- * back, so the fields are the one place a rule lives.
+ * The parameter's rule is read into the fields, never written back, so the
+ * fields are the one place a rule lives.
  */
 
-const RENAME_DIRECTIVE =
-	/\|\s*\+rename\s*=\s*([#/@!])(.+)\1([gimuy]{0,5})\s*-->(.*?)(?=\||}}\s*$)/;
+const RENAME_RULE = /^([#/@!])(.+)\1([gimuy]{0,5})\s*-->(.*)$/;
 
 // Anything a person might have meant as a directive, correct or not.
 const LOOKS_LIKE_DIRECTIVE = /\+\s*rename\s*=/i;
 
 /**
- * @param {string} text
- * @return {?{text: string, find: string, flags: string, replace: string}} The
- *  directive's parts, with the text it leaves behind; null if there is none
+ * @param {string} value What the rename parameter was given
+ * @return {?{find: string, flags: string, replace: string}} Null if it is not
+ *  written as a rule
  */
-function findRenameDirective( text ) {
-	const match = RENAME_DIRECTIVE.exec( text );
+function parseRenameRule( value ) {
+	const match = RENAME_RULE.exec( value );
 
 	if ( !match ) {
 		return null;
 	}
 
-	return {
-		text: text.replace( RENAME_DIRECTIVE, '' ),
-		find: match[ 2 ],
-		flags: match[ 3 ],
-		replace: match[ 4 ]
-	};
+	return { find: match[ 2 ], flags: match[ 3 ], replace: match[ 4 ] };
 }
 
 /**
@@ -73,7 +67,7 @@ function plainRenamer( find, replace ) {
 
 /**
  * @param {{find: string, replace: string, regex: boolean, flags: string}} rule
- *  The flags are a regular expression's; a directive brings its own
+ *  The flags are a regular expression's; a rename parameter brings its own
  * @return {{renameFile: Function, invalid: boolean}} An unusable pattern is
  *  reported rather than thrown, and renames nothing
  */
@@ -108,7 +102,7 @@ function createRenamer( rule ) {
 }
 
 module.exports = {
-	findRenameDirective: findRenameDirective,
+	parseRenameRule: parseRenameRule,
 	looksLikeDirective: looksLikeDirective,
 	createRenamer: createRenamer
 };
