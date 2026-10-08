@@ -161,6 +161,17 @@ async function afterReading( wrapper ) {
 	await wrapper.vm.$nextTick();
 }
 
+/**
+ * The batch's first files, arriving as a selection or a drop would add them.
+ *
+ * @param {Object} batch From batchHolding()
+ * @param {Object} wrapper
+ */
+async function filesArrive( batch, wrapper ) {
+	batch.rows.push( batchHolding( [ {} ] ).rows[ 0 ] );
+	await wrapper.vm.$nextTick();
+}
+
 describe( 'the way to add files', () => {
 	it( 'is one generous target rather than a box beside a list', () => {
 		const wrapper = panelFor( batchHolding() );
@@ -272,6 +283,41 @@ describe( 'the way to add files', () => {
 
 	it( 'says nothing of a limit where there is none', () => {
 		expect( panelFor( batchHolding( [], { room: Infinity } ) ).text() ).not.toContain( 'add-capacity' );
+	} );
+} );
+
+describe( 'focus as the first files arrive', () => {
+	afterEach( () => {
+		document.body.innerHTML = '';
+	} );
+
+	function panelOnPage( batch ) {
+		const wrapper = panelFor( batch );
+
+		document.body.appendChild( wrapper.element );
+		return wrapper;
+	}
+
+	it( 'passes from the button that opened the picker to the one that takes its place', async () => {
+		const batch = batchHolding();
+		const wrapper = panelOnPage( batch );
+
+		wrapper.find( '.ext-sbu-add__all' ).element.focus();
+		await filesArrive( batch, wrapper );
+
+		expect( document.activeElement ).toBe( wrapper.find( '.ext-sbu-add__select' ).element );
+	} );
+
+	it( 'stays where it was when it was not on that button', async () => {
+		const batch = batchHolding();
+		const wrapper = panelOnPage( batch );
+		const elsewhere = document.createElement( 'input' );
+
+		document.body.appendChild( elsewhere );
+		elsewhere.focus();
+		await filesArrive( batch, wrapper );
+
+		expect( document.activeElement ).toBe( elsewhere );
 	} );
 } );
 
