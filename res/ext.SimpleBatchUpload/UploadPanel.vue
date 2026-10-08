@@ -181,6 +181,7 @@
 				</template>
 				<template #end>
 					<cdx-button
+						ref="addSelect"
 						class="ext-sbu-add__select"
 						action="progressive"
 						@click="openPicker">
@@ -194,6 +195,7 @@
 				picker, so it is one button rather than a panel with a
 				button in it. Filled, that room belongs to the files. -->
 				<cdx-button
+					ref="addAll"
 					class="ext-sbu-add__all"
 					weight="quiet"
 					@click="openPicker">
@@ -290,7 +292,7 @@
 </template>
 
 <script>
-const { defineComponent, computed, nextTick, ref } = require( 'vue' );
+const { defineComponent, computed, nextTick, ref, watch } = require( 'vue' );
 const {
 	CdxButton, CdxCheckbox, CdxField, CdxIcon, CdxMessage, CdxTextArea, CdxTextInput
 } = require( './codex.js' );
@@ -479,6 +481,20 @@ module.exports = exports = defineComponent( {
 		const dragging = computed( () => dragDepth.value > 0 );
 		const empty = computed( () => !props.batch.rows.length );
 
+		// The first files replace the button that opened the picker with the
+		// add line's, and a focused element that goes leaves focus on the page
+		// itself. Run before that happens, while the old button still holds it.
+		const addAll = ref( null );
+		const addSelect = ref( null );
+
+		watch( empty, ( isEmpty ) => {
+			if ( isEmpty || addAll.value.$el !== document.activeElement ) {
+				return;
+			}
+
+			nextTick( () => addSelect.value.$el.focus() );
+		} );
+
 		/**
 		 * What is waiting on an answer first, and files sharing a name next to
 		 * each other, so the choice between them can be made by looking.
@@ -606,6 +622,8 @@ module.exports = exports = defineComponent( {
 			toggleFilter,
 			dragging,
 			empty,
+			addAll,
+			addSelect,
 			sections,
 			openPicker,
 			onPicked,
