@@ -1,6 +1,8 @@
 ## Release Notes
 
-### Unreleased
+### SimpleBatchUpload 4.0.0
+
+Released on October 8, 2026.
 
 When upgrading:
 
