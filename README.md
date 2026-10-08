@@ -73,44 +73,52 @@ Pics | These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}Simpl
 
 ## Renaming files on upload
 
-Files are renamed under **Rename files**, in the form **Edit details** opens
-above the file list: **Find** is looked for in each file name and replaced with
-**Replace with**. Each row shows the name its file will be uploaded under before
-**Upload** is pressed, and renaming is applied before the batch checks whether
-two files would be uploaded under one name.
+Select **Edit details** above the file list; **Rename files** is in the form it
+opens. Each row shows the name its file will be uploaded under before **Upload**
+is pressed.
 
-* As plain text, every occurrence is replaced, matching case, and the file
-  extension is left alone. An empty **Find** puts **Replace with** in front:
-  `Trip-` uploads `IMG_0001.jpg` as `Trip-IMG_0001.jpg`.
-* With **Use regular expressions** ticked, **Find** is a JavaScript regular
-  expression matched against the whole name, extension included, and every match
-  is replaced. In **Replace with**, `$1` stands for the text matched by the first
-  `(...)` group, along with the rest of
+| To | Find | Replace with | Use regular expressions | `IMG_0001.jpeg` uploads as |
+|---|---|---|---|---|
+| Add a prefix | | `Trip-` | no | `Trip-IMG_0001.jpeg` |
+| Replace text | `IMG_` | `Trip-` | no | `Trip-0001.jpeg` |
+| Change the extension | `\.jpeg$` | `.jpg` | yes | `IMG_0001.jpg` |
+| Keep part of the name | `^IMG_(\d+)` | `Trip-$1` | yes | `Trip-0001.jpeg` |
+
+* An empty **Find** puts **Replace with** in front of the name.
+* Plain text replaces every occurrence, matching case, and never changes the
+  file extension.
+* A regular expression searches the whole name, extension included, and
+  replaces every match. In **Replace with**, `$1` stands for the first `(...)`
+  group, along with the rest of
   [JavaScript's replacement syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#specifying_a_string_as_the_replacement).
+* Files that end up sharing a name wait on their rows for a choice.
+* A name left without an extension is marked on its row. The file is still
+  sent, and the wiki adds an extension from what the file turns out to be.
 
-A name left without a file extension is marked on its row. The file is still
-sent, and the wiki adds an extension from what the file turns out to be.
+### A rule from the page
 
-A page can bring a rule with it, as a `rename` parameter in the parser function:
+A `rename` parameter fills in the fields when the page opens, with **Use regular
+expressions** ticked. The uploader can still change them. Here `Pics` is the
+template the file pages get:
 
 ```
-{{#batchupload:Pics|rename = /^IMG_/-->Holiday-}}
+{{#batchupload:Pics|rename = /^IMG_(\d+)/-->Trip-$1}}
 ```
 
-The parameter fills in the fields when the page opens, with **Use regular
-expressions** ticked. It is not passed to the template, so a template used here
-cannot be given a parameter named `rename`. It takes a regular expression and a
-replacement separated by `-->`. The pattern is delimited by `#`, `/`, `@` or `!`
-— whichever does not appear in the pattern itself — and may be followed by any
-of the flags `g` (replace every match, not just the first), `i` (ignore case),
-`m`, `u` and `y`. A rule containing `|` goes inside `<nowiki>`. A rule not
-written this way renames nothing, and the upload area says so. `+rename` is
-read the same way as `rename`.
+| Part | In the example | Written as |
+|---|---|---|
+| Delimiters | `/` | `#`, `/`, `@` or `!`; use one that is not in the pattern |
+| Pattern | `^IMG_(\d+)` | A regular expression |
+| Flags | none | Any of `g`, `i`, `m`, `u` and `y`, right after the closing delimiter. Without `g` only the first match is replaced, even after **Find** or **Replace with** is edited |
+| Replacement | `Trip-$1` | Everything after `-->`, spaces included |
 
-A `+rename` typed into **File page text** is not read, and is published on every
-file page as written. A rule cannot be set in a parameter line on
-_MediaWiki:Simplebatchupload-parameters_, whose first field is the template
-name alone.
+* A rule containing `|` goes inside `<nowiki>` whole:
+  `rename = <nowiki>/IMG_|DSC_/-->Trip-</nowiki>`.
+* A rule not written this way renames nothing, and the upload area says so.
+* The parameter is not passed to the template, so a template used here cannot
+  be given a parameter named `rename`.
+* A parameter line on _MediaWiki:Simplebatchupload-parameters_ cannot set a
+  rule, and a `+rename` typed into **File page text** is published as written.
 
 ## Configuration
 
