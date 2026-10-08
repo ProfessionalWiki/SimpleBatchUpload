@@ -21,7 +21,7 @@
 
 const { reactive, computed, ref } = require( 'vue' );
 const { groupNameClashes, pageName } = require( './nameClash.js' );
-const { findRenameDirective, looksLikeDirective, createRenamer } = require( './renamePattern.js' );
+const { parseRenameRule, looksLikeDirective, createRenamer } = require( './renamePattern.js' );
 const { estimateRemainingMs, describeRemaining } = require( './remainingTime.js' );
 const { createUploadRunner } = require( './uploadRunner.js' );
 const { describeWarnings, filePageUrl } = require( './uploadResult.js' );
@@ -117,9 +117,10 @@ function regroupClashes( undecided ) {
  * @param {Object} options.uploader From createUploader()
  * @param {Object} options.gate From createRateLimitGate(), likewise shared
  * @param {Function} options.getToken Called with true to force a fresh one
- * @param {string} [options.description] The file page text, which may
- *  carry a +rename directive; it is read into the rule at once
+ * @param {string} [options.description] The file page text
  * @param {string} [options.comment] The summary every upload gets
+ * @param {string} [options.rename] The rule a {{#batchupload:}} rename
+ *  parameter gave, read into the rule at once
  * @param {number} [options.maxFiles] How many unfinished files the wiki lets
  *  this user hold at once
  * @param {?Object} [options.thumbnailer] From createThumbnailer(), or absent
@@ -130,7 +131,7 @@ function createBatch( options ) {
 	const rows = reactive( [] );
 	// What the Rename files fields hold. The flags are a regular expression's:
 	// one typed into the form replaces every match, like plain text, and one
-	// read from a directive keeps the directive's own.
+	// a rename parameter gave keeps its own.
 	const rule = reactive( { find: '', replace: '', regex: false, flags: '' } );
 	const renamer = computed( () => createRenamer( rule ) );
 	const state = reactive( {
@@ -140,7 +141,8 @@ function createBatch( options ) {
 		// told is how much of what they chose got in.
 		admitted: 0,
 		turnedAway: 0,
-		renamePatternInvalid: computed( () => renamer.value.invalid )
+		renamePatternInvalid: computed( () => renamer.value.invalid ),
+		renameRuleUnreadable: false
 	} );
 	// Absent means no limit; zero means no room. resolveUserLimit() answers zero
 	// for a user in no configured group, and `|| Infinity` would turn exactly
@@ -212,7 +214,7 @@ function createBatch( options ) {
 	 * Ignored while files are going up, so each one in the batch gets the
 	 * same.
 	 *
-	 * @param {string} written The wikitext every file page gets. A directive
+	 * @param {string} written The wikitext every file page gets. A +rename
 	 *  typed into it stays there as text: rules are set in the fields.
 	 */
 	function setDescription( written ) {
@@ -286,21 +288,20 @@ function createBatch( options ) {
 	}
 
 	/**
-	 * Reads a +rename directive out of the text the wiki sent, where a
-	 * {{#batchupload:}} parameter puts it, and into the rule.
+	 * @param {string} value What a {{#batchupload:}} rename parameter gave
 	 */
-	function liftDirective() {
-		const directive = findRenameDirective( description.value );
+	function readRenameRule( value ) {
+		const given = parseRenameRule( value );
 
-		if ( !directive ) {
+		if ( !given ) {
+			state.renameRuleUnreadable = true;
 			return;
 		}
 
-		description.value = directive.text;
-		rule.find = directive.find;
-		rule.replace = directive.replace;
+		rule.find = given.find;
+		rule.replace = given.replace;
 		rule.regex = true;
-		rule.flags = directive.flags;
+		rule.flags = given.flags;
 		retarget();
 	}
 
@@ -737,7 +738,9 @@ function createBatch( options ) {
 		of: waitingRows.value.length
 	} ) );
 
-	liftDirective();
+	if ( options.rename ) {
+		readRenameRule( options.rename );
+	}
 
 	return {
 		rows: rows,

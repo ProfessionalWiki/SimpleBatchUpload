@@ -63,6 +63,7 @@
 	"simplebatchupload-rename-matches-nothing": "Find matches no file name.",
 	"simplebatchupload-rename-regex": "Use regular expressions",
 	"simplebatchupload-rename-replace": "Replace with",
+	"simplebatchupload-rename-rule-unreadable": "This page's rename rule is not written correctly, so it renames nothing. Use Rename files instead.",
 	"simplebatchupload-rename-show-only": "Show only these {{formatnum:$1}}",
 	"simplebatchupload-rename-title": "Rename files",
 	"simplebatchupload-result-network-error": "Server communication failed.",

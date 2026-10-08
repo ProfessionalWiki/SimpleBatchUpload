@@ -1,5 +1,5 @@
 const {
-	findRenameDirective,
+	parseRenameRule,
 	createRenamer,
 	looksLikeDirective
 } = require( '../../../res/ext.SimpleBatchUpload/renamePattern.js' );
@@ -8,23 +8,26 @@ function rule( parts ) {
 	return Object.assign( { find: '', replace: '', regex: false, flags: '' }, parts );
 }
 
-describe( 'findRenameDirective', () => {
-	it( 'finds nothing in a description without one', () => {
-		expect( findRenameDirective( '{{Photo|author=Ada}}' ) ).toBeNull();
-	} );
-
-	it( 'takes the pattern, its flags and the replacement out of the text', () => {
-		expect( findRenameDirective( '{{Photo| +rename = !^IMG_!g -->Holiday-|author=Ada}}' ) )
-			.toMatchObject( { text: '{{Photo|author=Ada}}', find: '^IMG_', flags: 'g', replace: 'Holiday-' } );
+describe( 'parseRenameRule', () => {
+	it( 'takes the pattern, its flags and the replacement', () => {
+		expect( parseRenameRule( '!^IMG_!g -->Holiday-' ) )
+			.toEqual( { find: '^IMG_', flags: 'g', replace: 'Holiday-' } );
 	} );
 
 	it( 'treats a space after the arrow as part of the replacement', () => {
-		expect( findRenameDirective( '{{Photo| +rename = !^IMG_! --> Holiday-}}' ).replace )
-			.toBe( ' Holiday-' );
+		expect( parseRenameRule( '!^IMG_! --> Holiday-' ).replace ).toBe( ' Holiday-' );
 	} );
 
-	it( 'leaves alone a directive missing the pipe before it', () => {
-		expect( findRenameDirective( '{{Photo +rename = /^IMG_/-->Trip-}}' ) ).toBeNull();
+	it( 'takes a pipe in the pattern, which a nowiki lets the parser function pass on', () => {
+		expect( parseRenameRule( '/IMG_|DSC_/-->Trip-' ).find ).toBe( 'IMG_|DSC_' );
+	} );
+
+	it( 'reads nothing from a rule without delimiters around its pattern', () => {
+		expect( parseRenameRule( 'IMG_-->Trip-' ) ).toBeNull();
+	} );
+
+	it( 'reads nothing from a rule without an arrow before its replacement', () => {
+		expect( parseRenameRule( '/IMG_/Trip-' ) ).toBeNull();
 	} );
 } );
 

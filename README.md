@@ -91,21 +91,26 @@ two files would be uploaded under one name.
 A name left without a file extension is marked on its row. The file is still
 sent, and the wiki adds an extension from what the file turns out to be.
 
-A page can bring a rule with it, as a `+rename` parameter in the parser function:
+A page can bring a rule with it, as a `rename` parameter in the parser function:
 
 ```
-{{#batchupload:Pics|+rename = /^IMG_/-->Holiday-}}
+{{#batchupload:Pics|rename = /^IMG_/-->Holiday-}}
 ```
 
 The parameter fills in the fields when the page opens, with **Use regular
-expressions** ticked, and is not stored on the file page. It takes a regular
-expression and a replacement separated by `-->`. The pattern is delimited by
-`#`, `/`, `@` or `!` — whichever does not appear in the pattern itself — and may
-be followed by any of the flags `g` (replace every match, not just the first),
-`i` (ignore case), `m`, `u` and `y`. A `+rename` typed into **File page text**
-is not read, and is published on every file page as written. It cannot be set
-in a parameter line on _MediaWiki:Simplebatchupload-parameters_, whose first
-field is the template name alone.
+expressions** ticked. It is not passed to the template, so a template used here
+cannot be given a parameter named `rename`. It takes a regular expression and a
+replacement separated by `-->`. The pattern is delimited by `#`, `/`, `@` or `!`
+— whichever does not appear in the pattern itself — and may be followed by any
+of the flags `g` (replace every match, not just the first), `i` (ignore case),
+`m`, `u` and `y`. A rule containing `|` goes inside `<nowiki>`. A rule not
+written this way renames nothing, and the upload area says so. `+rename` is
+read the same way as `rename`.
+
+A `+rename` typed into **File page text** is not read, and is published on every
+file page as written. A rule cannot be set in a parameter line on
+_MediaWiki:Simplebatchupload-parameters_, whose first field is the template
+name alone.
 
 ## Configuration
 

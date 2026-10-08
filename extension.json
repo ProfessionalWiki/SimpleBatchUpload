@@ -163,6 +163,7 @@
 				"simplebatchupload-rename-matches-nothing",
 				"simplebatchupload-rename-regex",
 				"simplebatchupload-rename-replace",
+				"simplebatchupload-rename-rule-unreadable",
 				"simplebatchupload-rename-show-only",
 				"simplebatchupload-rename-title",
 				"simplebatchupload-result-network-error",
