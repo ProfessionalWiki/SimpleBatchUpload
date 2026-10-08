@@ -101,6 +101,7 @@ function mountPanel( element, panels ) {
 		// Special:BatchUpload is there to upload. A {{#batchupload:}} sits among
 		// a page's own content, sometimes dozens of them to a page.
 		startsCompact: mw.config.get( 'wgCanonicalSpecialPageName' ) !== 'BatchUpload',
+		autoUpload: 'mwSbuAutoupload' in element.dataset,
 		onEditDetailsOnce: ( textarea ) => offerToolbar( textarea, panels )
 	} ).mount( element );
 }

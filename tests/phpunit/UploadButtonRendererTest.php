@@ -77,6 +77,24 @@ class UploadButtonRendererTest extends MediaWikiIntegrationTestCase {
 		$this->assertSame( '{{Pics|note={{Note|+rename=yes}}}}', $this->descriptionFrom( $wikitext ) );
 	}
 
+	public function testMarksAnUploadAreaThatUploadsFilesAsTheyAreAdded(): void {
+		$wikitext = '{{#batchupload:Pics|by=Ann|+autoupload}}';
+
+		$this->assertNotNull( $this->attributeFrom( $wikitext, 'data-mw-sbu-autoupload' ) );
+		$this->assertSame( '{{Pics|by=Ann}}', $this->descriptionFrom( $wikitext ) );
+	}
+
+	public function testLeavesAnUploadAreaWithoutItToWaitForUpload(): void {
+		$this->assertNull( $this->attributeFrom( '{{#batchupload:Pics|by=Ann}}', 'data-mw-sbu-autoupload' ) );
+	}
+
+	public function testPassesAPlainAutouploadToTheTemplate(): void {
+		$wikitext = '{{#batchupload:Pics|autoupload}}';
+
+		$this->assertNull( $this->attributeFrom( $wikitext, 'data-mw-sbu-autoupload' ) );
+		$this->assertSame( '{{Pics|autoupload}}', $this->descriptionFrom( $wikitext ) );
+	}
+
 	public function testPutsBackWhatANowikiInTheRenameRuleHeld(): void {
 		$this->assertSame(
 			'/IMG_|DSC_/-->Trip-',

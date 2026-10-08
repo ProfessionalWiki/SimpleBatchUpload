@@ -415,6 +415,114 @@ describe( 'a panel that starts compact', () => {
 	} );
 } );
 
+describe( 'an upload area that uploads files as they are added', () => {
+	afterEach( () => {
+		vi.useRealTimers();
+	} );
+
+	function autoPanelFor( batch ) {
+		return panelFor( batch, { autoUpload: true } );
+	}
+
+	async function pick( wrapper ) {
+		Object.defineProperty( wrapper.find( 'input[type="file"]' ).element, 'files', {
+			value: [ new File( [ 'x' ], 'A.png' ) ],
+			writable: true
+		} );
+		await wrapper.find( 'input[type="file"]' ).trigger( 'change' );
+		await wrapper.vm.$nextTick();
+	}
+
+	function asked( batch ) {
+		return batch.asked.map( ( request ) => request[ 0 ] );
+	}
+
+	function running( rows ) {
+		const batch = batchHolding( rows );
+
+		batch.state = reactive( Object.assign( batch.state, { phase: 'uploading' } ) );
+		return batch;
+	}
+
+	it( 'uploads files as they are picked, without Upload being pressed', async () => {
+		const batch = batchHolding();
+
+		await pick( autoPanelFor( batch ) );
+
+		expect( asked( batch ) ).toEqual( [ 'addFiles', 'start' ] );
+	} );
+
+	it( 'uploads files as they are dropped', async () => {
+		const batch = batchHolding();
+		const wrapper = autoPanelFor( batch );
+
+		await target( wrapper ).trigger( 'drop', entriesDropped( [ 'A.png' ] ) );
+		await afterReading( wrapper );
+
+		expect( asked( batch ) ).toEqual( [ 'addFiles', 'start' ] );
+	} );
+
+	it( 'uploads files picked on a compact panel, once it has opened', async () => {
+		const batch = batchHolding();
+
+		batch.addFiles = ( entries ) => {
+			batch.asked.push( [ 'addFiles', entries ] );
+			batch.rows.push( batchHolding( [ {} ] ).rows[ 0 ] );
+		};
+		await pick( panelFor( batch, { autoUpload: true, startsCompact: true } ) );
+
+		expect( asked( batch ) ).toEqual( [ 'addFiles', 'start' ] );
+	} );
+
+	it( 'leaves files to Upload where the page does not ask for this', async () => {
+		const batch = batchHolding();
+
+		await pick( panelFor( batch ) );
+
+		expect( asked( batch ) ).toEqual( [ 'addFiles' ] );
+	} );
+
+	it( 'leaves files added after Pause to Upload', async () => {
+		const batch = running( [ { status: 'uploading' } ] );
+		const wrapper = autoPanelFor( batch );
+
+		await wrapper.find( '.ext-sbu-dock__action' ).trigger( 'click' );
+		await pick( wrapper );
+
+		expect( asked( batch ) ).toEqual( [ 'pause', 'addFiles' ] );
+	} );
+
+	it( 'uploads files as they are added again once Upload is pressed after a pause', async () => {
+		vi.useFakeTimers();
+		const batch = running( [ { status: 'uploading' }, {} ] );
+		const wrapper = autoPanelFor( batch );
+
+		await wrapper.find( '.ext-sbu-dock__action' ).trigger( 'click' );
+		batch.state.phase = 'idle';
+		await wrapper.vm.$nextTick();
+		// Past the dock's guard against a double press.
+		vi.advanceTimersByTime( 1000 );
+		await wrapper.find( '.ext-sbu-dock__action' ).trigger( 'click' );
+		await pick( wrapper );
+
+		expect( asked( batch ) ).toEqual( [ 'pause', 'start', 'addFiles', 'start' ] );
+	} );
+
+	it( 'leaves files added after the wiki\'s rate limit stopped the batch to Upload', async () => {
+		const batch = batchHolding( [ {} ] );
+
+		batch.state.stoppedByLimit = true;
+		await pick( autoPanelFor( batch ) );
+
+		expect( asked( batch ) ).toEqual( [ 'addFiles' ] );
+	} );
+
+	it( 'says before anything is added that files upload as soon as they are', () => {
+		expect( autoPanelFor( batchHolding() ).find( '.ext-sbu-add__all' ).text() )
+			.toContain( 'simplebatchupload-add-autoupload' );
+	} );
+} );
+
 describe( 'putting the list in order', () => {
 	it( 'leads with the files sharing a name, which nothing but this page can see', () => {
 		const wrapper = panelFor( batchHolding( [

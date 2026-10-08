@@ -58,21 +58,24 @@ class UploadButtonRenderer {
 		);
 
 		$renameRule = null;
+		$autoUpload = false;
 		$templateArgs = [];
 
 		foreach ( $args as $arg ) {
 			$rule = $arg instanceof PPNode ? $this->renameRuleIn( $arg, $frame ) : null;
 
-			if ( $rule === null ) {
-				$templateArgs[] = $expand( $arg );
-			} else {
+			if ( $rule !== null ) {
 				$renameRule = trim( $expand( $rule ) );
+			} elseif ( $arg instanceof PPNode && $this->isAutoUpload( $arg, $frame ) ) {
+				$autoUpload = true;
+			} else {
+				$templateArgs[] = $expand( $arg );
 			}
 		}
 
 		$output = $parser->getOutput();
 
-		$html = $this->renderUploadButton( $templateArgs, $renameRule, $output );
+		$html = $this->renderUploadButton( $templateArgs, $renameRule, $autoUpload, $output );
 
 		return [ $html, 'isHTML' => true, 'noparse' => true, 'nowiki' => false ];
 	}
@@ -97,6 +100,18 @@ class UploadButtonRenderer {
 	}
 
 	/**
+	 * Whether the argument is the bare +autoupload flag, which the panel reads
+	 * rather than the template being given it.
+	 */
+	private function isAutoUpload( PPNode $arg, PPFrame $frame ): bool {
+		$parts = $arg->splitArg();
+		$value = $parts['value'];
+
+		return $parts['index'] !== '' && $value instanceof PPNode &&
+			trim( $frame->expand( $value ) ) === '+autoupload';
+	}
+
+	/**
 	 * @param SpecialBatchUpload $specialPage
 	 * @param string $templateName
 	 */
@@ -104,7 +119,7 @@ class UploadButtonRenderer {
 		$args = [ $templateName ];
 		$output = $specialPage->getOutput();
 
-		$html = $this->renderUploadButton( $args, null, $output );
+		$html = $this->renderUploadButton( $args, null, false, $output );
 
 		$output->addHTML( $html );
 	}
@@ -114,7 +129,7 @@ class UploadButtonRenderer {
 	 * @param \ParserOutput | \OutputPage $output
 	 * @return string
 	 */
-	protected function renderUploadButton( $args, ?string $renameRule, $output ) {
+	protected function renderUploadButton( $args, ?string $renameRule, bool $autoUpload, $output ) {
 		$paramProvider = $this->prepareParameterProvider( $args );
 
 		$this->addModulesToOutput( $output );
@@ -123,7 +138,7 @@ class UploadButtonRenderer {
 			$output->setPageTitle( $paramProvider->getSpecialPageTitle() );
 		}
 
-		return $this->getHtml( $paramProvider, $renameRule );
+		return $this->getHtml( $paramProvider, $renameRule, $autoUpload );
 	}
 
 	/**
@@ -137,12 +152,13 @@ class UploadButtonRenderer {
 	 * @param ParameterProvider $paramProvider
 	 * @return string
 	 */
-	protected function getHtml( ParameterProvider $paramProvider, ?string $renameRule ): string {
+	protected function getHtml( ParameterProvider $paramProvider, ?string $renameRule, bool $autoUpload ): string {
 		return Html::element( 'div', [
 			'class' => 'ext-sbu-mount',
 			'data-mw-sbu-description' => $paramProvider->getUploadPageText(),
 			'data-mw-sbu-comment' => $paramProvider->getUploadComment(),
 			'data-mw-sbu-rename' => $renameRule,
+			'data-mw-sbu-autoupload' => $autoUpload ? '' : null,
 		] );
 	}
 
