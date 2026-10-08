@@ -5,7 +5,7 @@
 		]
 	},
 	"batchupload": "تحميل ملفات متعددة",
-	"simplebatchupload-buttonlabel": "حدد الملفات (أو أسقطها هنا) ...",
+	"simplebatchupload-buttonlabel": "حدد الملفات",
 	"simplebatchupload-comment": "تم التحميل باستخدام [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-desc": "يسمح بتحميل دفعة بسيطة من الملفات"
 }
