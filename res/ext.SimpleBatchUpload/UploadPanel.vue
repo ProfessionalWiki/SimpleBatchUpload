@@ -213,6 +213,7 @@
 					<cdx-icon v-if="!compact" :icon="icons.cdxIconUpload"></cdx-icon>
 					<span class="ext-sbu-add__words">
 						<span class="ext-sbu-item__title">{{ addTitle }}</span>
+						<span v-if="autoUpload" class="ext-sbu-add__hint">{{ autoUploadHint }}</span>
 						<span v-if="!compact" class="ext-sbu-add__hint">{{ addHint }}</span>
 						<span v-if="capacityLabel" class="ext-sbu-add__hint">{{ capacityLabel }}</span>
 					</span>
@@ -243,7 +244,7 @@
 				:filtered="filter === 'on-hold'"
 				:remaining="batch.remaining"
 				@start="upload"
-				@pause="batch.pause"
+				@pause="pause"
 				@toggle-filter="toggleFilter( 'on-hold' )"
 			></status-dock>
 
@@ -349,7 +350,8 @@ module.exports = exports = defineComponent( {
 
 	props: {
 		batch: { type: Object, required: true },
-		startsCompact: { type: Boolean }
+		startsCompact: { type: Boolean },
+		autoUpload: { type: Boolean }
 	},
 
 	// Each time the form opens, with its textarea, so the page can add
@@ -428,7 +430,12 @@ module.exports = exports = defineComponent( {
 		// to the field that says why instead.
 		const findInput = ref( null );
 
+		// Pressing Upload after Pause is what lets files added later go up on
+		// their own again.
+		const paused = ref( false );
+
 		function upload() {
+			paused.value = false;
 			takeFieldText();
 			props.batch.start();
 
@@ -577,13 +584,34 @@ module.exports = exports = defineComponent( {
 			return listed;
 		} );
 
+		function pause() {
+			paused.value = true;
+			props.batch.pause();
+		}
+
+		/**
+		 * Uploading files as they are added is pressing Upload for the user, so
+		 * it leaves them waiting once the user has paused, or the wiki has
+		 * stopped the batch, rather than taking that back. After the next
+		 * render, which gives a compact panel its details.
+		 *
+		 * @param {{file: File, path: string}[]} entries
+		 */
+		function addFiles( entries ) {
+			props.batch.addFiles( entries );
+
+			if ( props.autoUpload && !paused.value && !props.batch.state.stoppedByLimit ) {
+				nextTick( upload );
+			}
+		}
+
 		function openPicker() {
 			picker.value.click();
 		}
 
 		function onPicked( event ) {
 			droppedTooMany.value = false;
-			props.batch.addFiles( fromFileList( event.target.files ) );
+			addFiles( fromFileList( event.target.files ) );
 			// So selecting the same file again after removing it still fires a
 			// change event.
 			event.target.value = '';
@@ -611,7 +639,7 @@ module.exports = exports = defineComponent( {
 
 			if ( !entries.length ) {
 				droppedTooMany.value = false;
-				props.batch.addFiles( fromFileList( event.dataTransfer.files ) );
+				addFiles( fromFileList( event.dataTransfer.files ) );
 				return;
 			}
 
@@ -622,7 +650,7 @@ module.exports = exports = defineComponent( {
 			const found = await readEntryTree( entries, { limit: room + 1 } );
 
 			droppedTooMany.value = found.length > room;
-			props.batch.addFiles( found );
+			addFiles( found );
 		}
 
 		return {
@@ -644,6 +672,7 @@ module.exports = exports = defineComponent( {
 			findError,
 			findInput,
 			upload,
+			pause,
 			textField,
 			matchesNothing,
 			filter,
@@ -767,6 +796,7 @@ module.exports = exports = defineComponent( {
 			} ),
 
 			selectLabel: mw.msg( 'simplebatchupload-buttonlabel' ),
+			autoUploadHint: mw.msg( 'simplebatchupload-add-autoupload' ),
 
 			// A selection can be counted, so it says how much of it got in. A
 			// dropped tree cannot, so it says what the batch holds instead.

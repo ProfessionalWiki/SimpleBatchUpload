@@ -119,6 +119,15 @@ template every uploaded file's page contains:
 * A parameter line on _MediaWiki:Simplebatchupload-parameters_ cannot set a
   rule, and a `+rename` typed into **File page text** is published as written.
 
+## Uploading files as they are added
+
+```
+{{#batchupload:Pics|+autoupload}}
+```
+
+Files added to this upload area start uploading straight away, without
+**Upload** being pressed.
+
 ## Configuration
 
 Available configuration options:

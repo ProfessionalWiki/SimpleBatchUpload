@@ -116,6 +116,7 @@
 				"simplebatchupload-action-retry",
 				"simplebatchupload-action-skip",
 				"simplebatchupload-action-skip-file",
+				"simplebatchupload-add-autoupload",
 				"simplebatchupload-add-capacity",
 				"simplebatchupload-add-first",
 				"simplebatchupload-add-hint",

@@ -22,6 +22,8 @@
   and a rule wrapped in `<nowiki>` can contain `|`
 * Where WikiEditor is installed, the file page text gets its toolbar, following each user's toolbar
   preference. A page with more than one upload area gets none, as WikiEditor cannot keep their dialogs apart
+* Added a `+autoupload` parameter to `{{#batchupload:}}`: files added to that upload area start uploading
+  straight away, without Upload being pressed
 * An upload area added with `{{#batchupload:}}` starts small and opens out once files are added to it, so a
   page holding many stays short. On `Special:BatchUpload` it is full size from the start
 * Added a button to take a file out of the batch before it is uploaded, and to add it back

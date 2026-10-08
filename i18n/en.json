@@ -13,6 +13,7 @@
 	"simplebatchupload-action-retry": "Try $1 again",
 	"simplebatchupload-action-skip": "Skip",
 	"simplebatchupload-action-skip-file": "Skip $1",
+	"simplebatchupload-add-autoupload": "Files upload as soon as they are added.",
 	"simplebatchupload-add-capacity": "Up to {{PLURAL:$1|$1 file|{{formatnum:$1}} files}} per batch.",
 	"simplebatchupload-add-first": "Drop files or folders here",
 	"simplebatchupload-add-hint": "Folders are searched for files, including subfolders.",
