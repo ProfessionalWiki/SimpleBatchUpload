@@ -1,110 +1,159 @@
 <template>
 	<div class="ext-sbu-shell">
-		<!-- Each section starts open when it has something in it, and says
-		nothing about itself when closed: one with content is only ever
-		closed because the user closed it. The toggle is written back, so
-		Upload can open a section the user closed to show what stops it. -->
-		<cdx-accordion
-			class="ext-sbu-section ext-sbu-text"
-			:open="textOpen || null"
-			@toggle="textOpen = $event.target.open"
+		<!-- The form is hidden rather than removed: Upload and the edit-details
+		event need its textarea while it is put away, and WikiEditor's toolbar
+		survives it. -->
+		<div
+			class="ext-sbu-details"
+			role="group"
+			:aria-label="detailsTitle"
 		>
-			<template #title>
-				{{ textTitle }}
-			</template>
+			<div class="ext-sbu-details__bar">
+				<dl v-show="!editing" class="ext-sbu-details__values">
+					<dt>{{ textTitle }}</dt>
+					<dd>
+						<template v-if="textPreview">
+							<span class="ext-sbu-details__text">{{ textPreview }}</span>
+							<span v-if="textLinesLabel" class="ext-sbu-details__lines">{{ textLinesLabel }}</span>
+						</template>
+						<span v-else class="ext-sbu-details__none">{{ noTextLabel }}</span>
+					</dd>
+					<dt>{{ commentTitle }}</dt>
+					<dd>
+						<span v-if="comment.trim()" class="ext-sbu-details__text">{{ comment }}</span>
+						<span v-else class="ext-sbu-details__none">{{ noCommentLabel }}</span>
+					</dd>
+					<dt>{{ renameTitle }}</dt>
+					<dd>
+						<template v-if="hasRule">
+							<span class="ext-sbu-details__text">{{ ruleLabel }}</span>
+							<span
+								v-if="batch.state.renamePatternInvalid"
+								class="ext-sbu-details__error"
+							>{{ findErrorLabel }}</span>
+							<span
+								v-else-if="countLabel"
+								class="ext-sbu-details__count"
+							>{{ countLabel }}</span>
+						</template>
+						<span v-else class="ext-sbu-details__none">{{ noRuleLabel }}</span>
+					</dd>
+				</dl>
+				<span v-show="editing" class="ext-sbu-details__title">{{ detailsTitle }}</span>
+				<cdx-button
+					class="ext-sbu-details__toggle"
+					:aria-expanded="editing"
+					@click="toggleEditing"
+				>
+					{{ editing ? doneLabel : editLabel }}
+				</cdx-button>
+			</div>
 
-			<cdx-field :disabled="locked" :hide-label="true">
-				<!-- Read-only as well as disabled, because WikiEditor's buttons
-				and insert dialogs check for readonly and would otherwise still
-				write to the field on screen, though not to the batch. -->
-				<cdx-text-area
-					ref="textField"
-					v-model="description"
-					:rows="4"
-					:readonly="locked"
-				></cdx-text-area>
-				<template #label>
-					{{ textTitle }}
-				</template>
-			</cdx-field>
-			<!-- Always mounted, because a region added at the moment it fills
-			is not announced. -->
-			<div role="status">
+			<!-- Always mounted, because a region added at the moment it fills is
+			not announced. Above the form rather than in it, so the warning shows
+			either way, next to the text it is about. -->
+			<div class="ext-sbu-details__status" role="status">
 				<cdx-message
 					v-if="batch.textLooksLikeDirective"
-					class="ext-sbu-text__warning"
+					class="ext-sbu-details__warning"
 					type="warning"
 					:inline="true"
 				>
 					{{ $i18n( 'simplebatchupload-text-directive-not-read' ).text() }}
 				</cdx-message>
 			</div>
-		</cdx-accordion>
 
-		<cdx-accordion
-			class="ext-sbu-section ext-sbu-rename"
-			:open="renameOpen || null"
-			@toggle="renameOpen = $event.target.open"
-		>
-			<template #title>
-				{{ $i18n( 'simplebatchupload-rename-title' ).text() }}
-			</template>
-
-			<div class="ext-sbu-rename__fields">
-				<cdx-field
-					:status="findError ? 'error' : 'default'"
-					:messages="findError ? { error: findErrorLabel } : {}"
-					:disabled="locked"
-				>
-					<cdx-text-input
-						ref="findInput"
-						v-model="find"
-						:placeholder="$i18n( 'simplebatchupload-rename-find-placeholder' ).text()"
-						@input="typingFind"
-						@blur="settleFind"
-						@compositionstart="composing = true"
-						@compositionend="composingEnded"
-					></cdx-text-input>
-					<template #label>
-						{{ $i18n( 'simplebatchupload-rename-find' ).text() }}
-					</template>
-				</cdx-field>
-
-				<cdx-field :disabled="locked">
-					<cdx-text-input v-model="replace"></cdx-text-input>
-					<template #label>
-						{{ $i18n( 'simplebatchupload-rename-replace' ).text() }}
-					</template>
-				</cdx-field>
-
-				<cdx-checkbox v-model="regex" :disabled="locked">
-					{{ $i18n( 'simplebatchupload-rename-regex' ).text() }}
-				</cdx-checkbox>
-
-				<div
-					class="ext-sbu-rename__count"
-					:class="{ 'ext-sbu-rename__count--empty': !countLabel && !offersRenamedFilter }"
-				>
-					<!-- Always mounted, and holding the one sentence: a region is
-					read whole on every change. The button is outside it, so
-					it is not read along with the count. -->
-					<span
-						class="ext-sbu-rename__count-text"
-						:class="{ 'ext-sbu-rename__count-text--none': matchesNothing }"
-						role="status"
-					>{{ countLabel }}</span>
-					<cdx-button
-						v-if="offersRenamedFilter"
-						class="ext-sbu-rename__filter"
-						weight="quiet"
-						action="progressive"
-						@click="toggleFilter( 'renamed' )"
-					>
-						{{ renamedFilterLabel }}
-					</cdx-button>
-				</div>
+			<!-- The count where a screen reader hears it, whether the form is
+			open or not: a live region in the put-away form would be silent.
+			Always mounted, and holding the one sentence, since a region is
+			read whole on every change. -->
+			<div class="ext-sbu-visually-hidden ext-sbu-details__count-status" role="status">
+				{{ countLabel }}
 			</div>
-		</cdx-accordion>
+
+			<div v-show="editing" class="ext-sbu-details__form">
+				<cdx-field class="ext-sbu-text" :disabled="locked">
+					<!-- Read-only as well as disabled, because WikiEditor's buttons
+					and insert dialogs check for readonly and would otherwise still
+					write to the field on screen, though not to the batch. -->
+					<cdx-text-area
+						ref="textField"
+						v-model="description"
+						:rows="4"
+						:readonly="locked"
+					></cdx-text-area>
+					<template #label>
+						{{ textTitle }}
+					</template>
+				</cdx-field>
+
+				<!-- MediaWiki keeps 500 characters of a summary and drops the rest
+				without saying so. -->
+				<cdx-field class="ext-sbu-comment" :disabled="locked">
+					<cdx-text-input v-model="comment" maxlength="500"></cdx-text-input>
+					<template #label>
+						{{ commentTitle }}
+					</template>
+				</cdx-field>
+
+				<cdx-field class="ext-sbu-rename" :is-fieldset="true">
+					<template #label>
+						{{ renameTitle }}
+					</template>
+
+					<div class="ext-sbu-rename__pair">
+						<cdx-field
+							:status="findError ? 'error' : 'default'"
+							:messages="findError ? { error: findErrorLabel } : {}"
+							:disabled="locked"
+						>
+							<cdx-text-input
+								ref="findInput"
+								v-model="find"
+								:placeholder="$i18n( 'simplebatchupload-rename-find-placeholder' ).text()"
+								@input="typingFind"
+								@blur="settleFind"
+								@compositionstart="composing = true"
+								@compositionend="composingEnded"
+							></cdx-text-input>
+							<template #label>
+								{{ $i18n( 'simplebatchupload-rename-find' ).text() }}
+							</template>
+						</cdx-field>
+
+						<cdx-field :disabled="locked">
+							<cdx-text-input v-model="replace"></cdx-text-input>
+							<template #label>
+								{{ $i18n( 'simplebatchupload-rename-replace' ).text() }}
+							</template>
+						</cdx-field>
+					</div>
+
+					<cdx-checkbox v-model="regex" :disabled="locked">
+						{{ $i18n( 'simplebatchupload-rename-regex' ).text() }}
+					</cdx-checkbox>
+
+					<div
+						class="ext-sbu-rename__count"
+						:class="{ 'ext-sbu-rename__count--empty': !countLabel && !offersRenamedFilter }"
+					>
+						<span
+							class="ext-sbu-rename__count-text"
+							:class="{ 'ext-sbu-rename__count-text--none': matchesNothing }"
+						>{{ countLabel }}</span>
+						<cdx-button
+							v-if="offersRenamedFilter"
+							class="ext-sbu-rename__filter"
+							weight="quiet"
+							action="progressive"
+							@click="toggleFilter( 'renamed' )"
+						>
+							{{ renamedFilterLabel }}
+						</cdx-button>
+					</div>
+				</cdx-field>
+			</div>
+		</div>
 
 		<div
 			class="ext-sbu-panel"
@@ -243,7 +292,7 @@
 <script>
 const { defineComponent, computed, nextTick, ref } = require( 'vue' );
 const {
-	CdxAccordion, CdxButton, CdxCheckbox, CdxField, CdxIcon, CdxMessage, CdxTextArea, CdxTextInput
+	CdxButton, CdxCheckbox, CdxField, CdxIcon, CdxMessage, CdxTextArea, CdxTextInput
 } = require( './codex.js' );
 const icons = require( './icons.json' );
 const FileRow = require( './FileRow.vue' );
@@ -264,7 +313,6 @@ module.exports = exports = defineComponent( {
 	name: 'UploadPanel',
 
 	components: {
-		CdxAccordion,
 		CdxButton,
 		CdxCheckbox,
 		CdxField,
@@ -281,13 +329,24 @@ module.exports = exports = defineComponent( {
 		batch: { type: Object, required: true }
 	},
 
-	setup( props ) {
+	// Each time the form opens, with its textarea, so the page can add
+	// WikiEditor to it.
+	emits: [ 'edit-details' ],
+
+	setup( props, { emit } ) {
 		const picker = ref( null );
 		// Read from and written straight through to the batch, which owns it.
 		const description = computed( {
 			get: () => props.batch.description,
 			set: ( written ) => props.batch.setDescription( written )
 		} );
+		const comment = computed( {
+			get: () => props.batch.comment,
+			set: ( written ) => props.batch.setComment( written )
+		} );
+		// Kept to one line by the stylesheet, line breaks and all; the count
+		// says how much more there is.
+		const textPreview = computed( () => description.value.trim() );
 
 		// Likewise the rule, one field at a time: changing it renames the files
 		// not yet sent, which can make or settle a clash between them.
@@ -312,8 +371,7 @@ module.exports = exports = defineComponent( {
 		const regex = ruleField( 'regex' );
 		const hasRule = computed( () => !!( props.batch.rule.find || props.batch.rule.replace ) );
 
-		const textOpen = ref( !!props.batch.description );
-		const renameOpen = ref( hasRule.value );
+		const editing = ref( false );
 		const locked = computed( () => props.batch.state.phase !== 'idle' );
 
 		// An invalid pattern is said once typing pauses, or the field is left,
@@ -355,19 +413,24 @@ module.exports = exports = defineComponent( {
 				return;
 			}
 
-			renameOpen.value = true;
+			editDetails();
 			settleFind();
 			nextTick( () => findInput.value.focus() );
 		}
 
-		// Upload sends what the field shows. Not every writer says so with an
-		// input event: WikiEditor's inserts set the value directly for 100 lines
-		// or more in Chrome and Safari, or when the field cannot take focus, and
-		// Upload redraws the field from the batch, which would undo them.
+		// Upload sends what the field shows, and putting the form away shows
+		// it. Not every writer says so with an input event: WikiEditor's inserts
+		// set the value directly for 100 lines or more in Chrome and Safari, or
+		// when the field cannot take focus, and the next redraw from the batch
+		// would undo them.
 		const textField = ref( null );
 
+		function textArea() {
+			return textField.value.$el.querySelector( 'textarea' );
+		}
+
 		function takeFieldText() {
-			const shown = textField.value.$el.querySelector( 'textarea' ).value;
+			const shown = textArea().value;
 
 			if ( shown !== description.value ) {
 				description.value = shown;
@@ -380,6 +443,27 @@ module.exports = exports = defineComponent( {
 
 		function toggleFilter( name ) {
 			filter.value = filter.value === name ? '' : name;
+		}
+
+		function editDetails() {
+			editing.value = true;
+			emit( 'edit-details', textArea() );
+		}
+
+		// The way back from the renamed files is in the form, so putting the
+		// form away puts the whole list back.
+		function toggleEditing() {
+			if ( !editing.value ) {
+				editDetails();
+				return;
+			}
+
+			takeFieldText();
+			editing.value = false;
+
+			if ( filter.value === 'renamed' ) {
+				filter.value = '';
+			}
 		}
 
 		const matchesNothing = computed( () => hasRule.value &&
@@ -501,11 +585,13 @@ module.exports = exports = defineComponent( {
 			icons,
 			picker,
 			description,
+			comment,
 			find,
 			replace,
 			regex,
-			textOpen,
-			renameOpen,
+			hasRule,
+			editing,
+			toggleEditing,
 			locked,
 			composing,
 			typingFind,
@@ -546,15 +632,39 @@ module.exports = exports = defineComponent( {
 			) ),
 
 			textTitle: mw.msg( 'simplebatchupload-text-title' ),
+			commentTitle: mw.msg( 'simplebatchupload-comment-title' ),
+			renameTitle: mw.msg( 'simplebatchupload-rename-title' ),
+			detailsTitle: mw.msg( 'simplebatchupload-details-title' ),
+			editLabel: mw.msg( 'simplebatchupload-details-edit' ),
+			doneLabel: mw.msg( 'simplebatchupload-details-done' ),
+			noTextLabel: mw.msg( 'simplebatchupload-details-no-text' ),
+			noCommentLabel: mw.msg( 'simplebatchupload-details-no-comment' ),
+			noRuleLabel: mw.msg( 'simplebatchupload-details-no-rule' ),
+
+			textPreview,
+
+			textLinesLabel: computed( () => {
+				const lines = textPreview.value.split( '\n' ).length;
+
+				return lines > 1 ? mw.msg( 'simplebatchupload-details-lines', lines ) : '';
+			} ),
+
+			// An empty Find adds Replace with to the start of every name.
+			ruleLabel: computed( () => ( props.batch.rule.find ?
+				mw.msg( 'simplebatchupload-details-rule', props.batch.rule.find, props.batch.rule.replace ) :
+				mw.msg( 'simplebatchupload-details-rule-start', props.batch.rule.replace )
+			) ),
 
 			findErrorLabel: mw.msg( 'simplebatchupload-error-rename-pattern' ),
 
 			// Nothing while there is no rule or no file to apply it to, and
-			// nothing while the pattern is not one: the field says so.
+			// nothing while the pattern is not one: the field says so. Nothing
+			// while uploading either: only files still waiting are counted, so a
+			// rule that renamed every file sent would seem to match nothing.
 			countLabel: computed( () => {
 				const count = props.batch.renameCount;
 
-				if ( !hasRule.value || props.batch.state.renamePatternInvalid || !count.of ) {
+				if ( !hasRule.value || props.batch.state.renamePatternInvalid || !count.of || locked.value ) {
 					return '';
 				}
 
@@ -636,15 +746,128 @@ module.exports = exports = defineComponent( {
 <style lang="less">
 @import 'mediawiki.skin.variables.less';
 
-// The panel below draws its own top border, and two hairlines of the same
-// colour with nothing between them read as one rule twice as thick. One class
-// deeper than .cdx-accordion, which sets the border itself.
-.ext-sbu-shell .ext-sbu-rename {
-	border-bottom: 0;
+.ext-sbu-details {
+	margin-bottom: @spacing-100;
+	padding: @spacing-50 @spacing-75;
+	background-color: @background-color-interactive-subtle;
+	border: @border-width-base @border-style-base @border-color-subtle;
+	border-radius: @border-radius-base;
 }
 
-.ext-sbu-text__warning {
+// A grid rather than a flex row: gap on a flex container is above the browsers
+// ResourceLoader still serves.
+.ext-sbu-details__bar {
+	display: grid;
+	grid-template-columns: minmax( 0, 1fr ) auto;
+	gap: @spacing-50 @spacing-100;
+	align-items: start;
+}
+
+.ext-sbu-details .ext-sbu-details__values {
+	display: grid;
+	grid-template-columns: max-content minmax( 0, 1fr );
+	gap: @spacing-25 @spacing-100;
+	margin: 0;
+}
+
+.ext-sbu-details .ext-sbu-details__values dt {
+	margin: 0;
+	font-family: inherit;
+	font-weight: @font-weight-bold;
+	line-height: inherit;
+}
+
+.ext-sbu-details .ext-sbu-details__values dd {
+	display: flex;
+	align-items: baseline;
+	min-width: 0;
+	margin: 0;
+}
+
+// One line, however long: the field holds the rest.
+.ext-sbu-details__text {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ext-sbu-details__lines,
+.ext-sbu-details__count,
+.ext-sbu-details__error {
+	flex-shrink: 0;
+	margin-left: @spacing-50;
+	color: @color-subtle;
+	white-space: nowrap;
+}
+
+.ext-sbu-details__error {
+	color: @color-error;
+}
+
+.ext-sbu-details__none {
+	color: @color-subtle;
+}
+
+.ext-sbu-details__title {
+	align-self: center;
+	font-weight: @font-weight-bold;
+}
+
+.ext-sbu-details__form {
+	margin-top: @spacing-75;
+}
+
+// One class deeper than .cdx-field, which spaces fields too.
+.ext-sbu-details__form .ext-sbu-comment,
+.ext-sbu-details__form .ext-sbu-rename {
+	margin-top: @spacing-150;
+}
+
+.ext-sbu-details .ext-sbu-details__warning {
 	margin-top: @spacing-50;
+}
+
+@media ( max-width: @max-width-breakpoint-mobile ) {
+	.ext-sbu-details .ext-sbu-details__values {
+		grid-template-columns: minmax( 0, 1fr );
+		row-gap: 0;
+	}
+
+	.ext-sbu-details .ext-sbu-details__values dd {
+		margin-bottom: @spacing-50;
+	}
+
+	// The button ends the box, under the values or the form alike, and spans
+	// it. Moved there by order rather than in the markup, so it still comes
+	// before what it opens when read or tabbed through. One class deeper than
+	// Codex's .cdx-button, which caps its width.
+	.ext-sbu-details {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.ext-sbu-details__bar {
+		display: contents;
+	}
+
+	.ext-sbu-details__title {
+		align-self: flex-start;
+	}
+
+	.ext-sbu-details .ext-sbu-details__toggle {
+		order: 1;
+		width: 100%;
+		max-width: none;
+	}
+
+	.ext-sbu-details__form {
+		margin-bottom: @spacing-100;
+	}
+
+	.ext-sbu-details .ext-sbu-details__warning {
+		margin-bottom: @spacing-50;
+	}
 }
 
 // One frame on every skin, Codex's. WikiEditor takes the border off a textarea
@@ -656,17 +879,48 @@ module.exports = exports = defineComponent( {
 	border-style: @border-style-base;
 }
 
-/* stylelint-disable-next-line selector-class-pattern -- WikiEditor's frame, not ours */
+/* stylelint-disable selector-class-pattern -- WikiEditor's elements, not ours */
 .ext-sbu-text .wikiEditor-ui .wikiEditor-ui-view {
 	border: 0;
 }
 
-// A reading width for the fields; Codex spaces them itself.
-.ext-sbu-rename__fields {
-	max-width: @size-3200;
+// With its frame gone, the toolbar is boxed in the field's own resting colour
+// on three sides, and the field's top edge is the one line between them. No
+// overflow: hidden for the corners, which would clip WikiEditor's menus.
+.ext-sbu-text .wikiEditor-ui .wikiEditor-ui-top {
+	border: @border-width-base @border-style-base @border-color-base;
+	border-bottom: 0;
+	border-radius: @border-radius-base @border-radius-base 0 0;
 }
 
-.ext-sbu-rename__fields .cdx-checkbox {
+.ext-sbu-text .wikiEditor-ui .cdx-text-area__textarea {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+// A group kept for tools a gadget may add, drawn as a second line against the
+// box's right edge while it has none.
+.ext-sbu-text .wikiEditor-ui-toolbar .group.empty {
+	display: none;
+}
+/* stylelint-enable selector-class-pattern */
+
+// Find and Replace with side by side where both fit at Codex's narrowest text
+// input, one above the other where they do not: wrapping by the room the form
+// has rather than by the viewport, which says nothing about the skin around it.
+.ext-sbu-rename__pair {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( @min-width-medium, 1fr ) );
+	gap: @spacing-100;
+}
+
+// The grid spaces them instead of Codex's margin between fields, which would
+// set the second one lower. One class deeper than .cdx-field:first-child.
+.ext-sbu-rename .ext-sbu-rename__pair .cdx-field {
+	margin-top: 0;
+}
+
+.ext-sbu-rename .cdx-checkbox {
 	margin-top: @spacing-100;
 }
 
@@ -740,9 +994,6 @@ module.exports = exports = defineComponent( {
 	border-bottom: @border-width-base @border-style-base @border-color-subtle;
 }
 
-// Stacked title over hint, modelled on the Accordion header directly above it
-// on the page -- with the hint a step smaller, which the Accordion itself does
-// not do: it carries one line, and this carries two.
 .ext-sbu-add__words {
 	display: flex;
 	flex-direction: column;

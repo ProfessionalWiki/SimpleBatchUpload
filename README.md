@@ -68,14 +68,16 @@ Pics | These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}Simpl
 * The title of this page will be _Upload some pics!_.
 * The comment for the upload will be _These pics were uploaded using [[mw:Extension:SimpleBatchUpload{{!}}SimpleBatchUpload]]_.
 * If a file with that name is uploaded for the first time it will have `{{Pics}}` as wikitext.
+* Both can be changed under **Edit details** before **Upload** is pressed: the
+  wikitext as **File page text**, the comment as **Summary**.
 
 ## Renaming files on upload
 
-Files are renamed under **Rename files**, above the file list: **Find** is
-looked for in each file name and replaced with **Replace with**. Each row shows
-the name its file will be uploaded under before **Upload** is pressed, and
-renaming is applied before the batch checks whether two files would be uploaded
-under one name.
+Files are renamed under **Rename files**, in the form **Edit details** opens
+above the file list: **Find** is looked for in each file name and replaced with
+**Replace with**. Each row shows the name its file will be uploaded under before
+**Upload** is pressed, and renaming is applied before the batch checks whether
+two files would be uploaded under one name.
 
 * As plain text, every occurrence is replaced, matching case, and the file
   extension is left alone. An empty **Find** puts **Replace with** in front:
@@ -100,10 +102,10 @@ expressions** ticked, and is not stored on the file page. It takes a regular
 expression and a replacement separated by `-->`. The pattern is delimited by
 `#`, `/`, `@` or `!` — whichever does not appear in the pattern itself — and may
 be followed by any of the flags `g` (replace every match, not just the first),
-`i` (ignore case), `m`, `u` and `y`. A `+rename` typed into **Text for each file
-page** is not read, and is published on every file page as written. It cannot
-be set in a parameter line on _MediaWiki:Simplebatchupload-parameters_, whose
-first field is the template name alone.
+`i` (ignore case), `m`, `u` and `y`. A `+rename` typed into **File page text**
+is not read, and is published on every file page as written. It cannot be set
+in a parameter line on _MediaWiki:Simplebatchupload-parameters_, whose first
+field is the template name alone.
 
 ## Configuration
 

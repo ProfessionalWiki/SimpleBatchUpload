@@ -79,12 +79,14 @@ function batchHolding( rows, extra ) {
 		skipFiles: ( ids ) => asked.push( [ 'skipFiles', ids ] ),
 		keepFile: ( id ) => asked.push( [ 'keepFile', id ] ),
 		description: '{{Pics}}',
+		comment: 'Uploaded with SimpleBatchUpload',
 		rule: { find: '', replace: '', regex: false, flags: '' },
 		renameCount: { changed: 0, of: held.length },
 		renamedRows: [],
 		textLooksLikeDirective: false,
 		remaining: '',
 		setDescription: ( text ) => asked.push( [ 'setDescription', text ] ),
+		setComment: ( text ) => asked.push( [ 'setComment', text ] ),
 		setRule: ( given ) => asked.push( [ 'setRule', given ] ),
 		start: () => asked.push( [ 'start' ] ),
 		pause: () => asked.push( [ 'pause' ] )
@@ -98,8 +100,8 @@ function panelFor( batch, props ) {
 }
 
 /**
- * The container that is both the list and the drop target. The description
- * folds away above it, outside the target.
+ * The container that is both the list and the drop target. The details sit
+ * above it, outside the target.
  *
  * @param {Object} wrapper
  * @return {Object}
@@ -500,7 +502,7 @@ describe( 'what the dock asks the batch to do', () => {
 		const batch = batchHolding( [ {} ] );
 		const wrapper = panelFor( batch );
 
-		wrapper.find( '.ext-sbu-text textarea' ).element.value = '{{Scan}}';
+		textField( wrapper ).element.value = '{{Scan}}';
 		await wrapper.find( '.ext-sbu-dock__action' ).trigger( 'click' );
 
 		expect( batch.asked ).toEqual( [ [ 'setDescription', '{{Scan}}' ], [ 'start' ] ] );
@@ -517,67 +519,266 @@ describe( 'what the dock asks the batch to do', () => {
 	} );
 } );
 
-function section( wrapper, name ) {
-	return wrapper.find( 'details.ext-sbu-' + name );
+function detailsToggle( wrapper ) {
+	return wrapper.find( '.ext-sbu-details__toggle' );
+}
+
+// Read from the element itself: isVisible() was seen to report the form as
+// visible after it had been hidden again.
+function formShown( wrapper ) {
+	return wrapper.find( '.ext-sbu-details__form' ).element.style.display !== 'none';
+}
+
+/**
+ * The value the put-away details show under a title, found by the title rather
+ * than by where it stands.
+ *
+ * @param {Object} wrapper
+ * @param {string} title
+ * @return {Object}
+ */
+function shownValue( wrapper, title ) {
+	const titles = wrapper.findAll( '.ext-sbu-details__values dt' ).map( ( term ) => term.text() );
+
+	return wrapper.findAll( '.ext-sbu-details__values dd' )[ titles.indexOf( title ) ];
+}
+
+function countRegion( wrapper ) {
+	return wrapper.find( '.ext-sbu-details__count-status' );
+}
+
+function countSaid( wrapper ) {
+	return countRegion( wrapper ).text();
 }
 
 function textWarning( wrapper ) {
-	return section( wrapper, 'text' ).find( '[role="status"]' );
+	return wrapper.find( '.ext-sbu-details__status' );
 }
 
 function ruleField( wrapper, index ) {
 	return wrapper.findAll( '.ext-sbu-rename input' )[ index ];
 }
 
-describe( 'the text for each file page', () => {
-	it( 'starts open when the wiki put text in it, so it is seen before Upload', () => {
-		expect( section( panelFor( batchHolding() ), 'text' ).attributes( 'open' ) ).toBeDefined();
+function textField( wrapper ) {
+	return wrapper.find( '.ext-sbu-text textarea' );
+}
+
+function commentField( wrapper ) {
+	return wrapper.find( '.ext-sbu-comment input' );
+}
+
+function labelOf( wrapper, field ) {
+	return wrapper.find( `label[for="${ field.attributes( 'id' ) }"]` ).text();
+}
+
+function withRule( rule, extra ) {
+	return batchHolding( [ {}, {}, {} ], Object.assign( {
+		rule: Object.assign( { find: '', replace: '', regex: false, flags: '' }, rule )
+	}, extra ) );
+}
+
+function invalid() {
+	return withRule( { find: '(IMG', regex: true }, {
+		state: { phase: 'idle', stoppedByLimit: false, admitted: 0,
+			turnedAway: 0, renamePatternInvalid: true }
+	} );
+}
+
+// A batch whose text can be changed under the panel, as an edit made
+// anywhere would.
+function batchWithLiveDescription( description ) {
+	const held = reactive( { description: description } );
+	const batch = batchHolding();
+
+	Object.defineProperty( batch, 'description', {
+		get: () => held.description,
+		configurable: true
 	} );
 
-	it( 'starts closed when there is none', () => {
-		const wrapper = panelFor( batchHolding( [], { description: '' } ) );
+	return { batch: batch, held: held };
+}
 
-		expect( section( wrapper, 'text' ).attributes( 'open' ) ).toBeUndefined();
+describe( 'the details for every file', () => {
+	const threeLines = '{{Information\n|description=Harbour walk\n}}';
+
+	afterEach( () => {
+		document.body.innerHTML = '';
 	} );
 
-	it( 'follows the batch, so an edit made anywhere shows in the field', async () => {
-		const held = reactive( { description: '{{Pics}}' } );
+	it( 'starts with its form put away, so the files start near the top of the page', () => {
+		expect( formShown( panelFor( batchHolding() ) ) ).toBe( false );
+	} );
+
+	it( 'opens its form in place, and puts it away again', async () => {
+		const wrapper = panelFor( batchHolding() );
+
+		await detailsToggle( wrapper ).trigger( 'click' );
+		const opened = formShown( wrapper );
+		await detailsToggle( wrapper ).trigger( 'click' );
+
+		expect( [ opened, formShown( wrapper ) ] ).toEqual( [ true, false ] );
+	} );
+
+	it( 'names its button for what a press does', async () => {
+		const wrapper = panelFor( batchHolding() );
+		const closed = detailsToggle( wrapper ).text();
+
+		await detailsToggle( wrapper ).trigger( 'click' );
+
+		expect( [ closed, detailsToggle( wrapper ).text() ] )
+			.toEqual( [ 'simplebatchupload-details-edit', 'simplebatchupload-details-done' ] );
+	} );
+
+	it( 'says whether its form is open', async () => {
+		const wrapper = panelFor( batchHolding() );
+		const closed = detailsToggle( wrapper ).attributes( 'aria-expanded' );
+
+		await detailsToggle( wrapper ).trigger( 'click' );
+
+		expect( [ closed, detailsToggle( wrapper ).attributes( 'aria-expanded' ) ] ).toEqual( [ 'false', 'true' ] );
+	} );
+
+	it( 'keeps focus on its button as the form opens', async () => {
+		const wrapper = panelFor( batchHolding() );
+		document.body.appendChild( wrapper.element );
+
+		detailsToggle( wrapper ).element.focus();
+		await detailsToggle( wrapper ).trigger( 'click' );
+
+		expect( document.activeElement ).toBe( detailsToggle( wrapper ).element );
+	} );
+
+	it( 'tells the page when its form opens, with the field WikiEditor can be added to', async () => {
+		const wrapper = panelFor( batchHolding() );
+
+		await detailsToggle( wrapper ).trigger( 'click' );
+
+		expect( wrapper.emitted( 'edit-details' ) ).toEqual( [ [ textField( wrapper ).element ] ] );
+	} );
+
+	it( 'takes the text the field shows when the form is put away', async () => {
 		const batch = batchHolding();
-
-		Object.defineProperty( batch, 'description', {
-			get: () => held.description,
-			configurable: true
-		} );
-
-		const wrapper = panelFor( batch );
-		held.description = '{{Scan}}';
-		await wrapper.vm.$nextTick();
-
-		expect( wrapper.find( '.ext-sbu-text textarea' ).element.value ).toBe( '{{Scan}}' );
-	} );
-
-	it( 'hands an edit straight to the batch, which owns it', async () => {
-		const batch = batchHolding();
 		const wrapper = panelFor( batch );
 
-		await wrapper.find( '.ext-sbu-text textarea' ).setValue( '{{Scan}}' );
+		await detailsToggle( wrapper ).trigger( 'click' );
+		textField( wrapper ).element.value = '{{Scan}}';
+		await detailsToggle( wrapper ).trigger( 'click' );
 
 		expect( batch.asked ).toEqual( [ [ 'setDescription', '{{Scan}}' ] ] );
 	} );
 
-	it( 'leaves the text as typed when the field is left', async () => {
-		const batch = batchHolding();
+	it( 'puts the whole list back when the form is put away, since the way back goes with it', async () => {
+		const batch = batchHolding( [
+			{ name: 'IMG_1.png', targetName: 'Trip-1.png' },
+			{ name: 'Plain.png', targetName: 'Plain.png' }
+		], {
+			rule: { find: 'IMG_', replace: 'Trip-', regex: false, flags: '' },
+			renameCount: { changed: 1, of: 2 }
+		} );
+		batch.renamedRows = [ batch.rows[ 0 ] ];
 		const wrapper = panelFor( batch );
 
-		await wrapper.find( '.ext-sbu-text textarea' ).trigger( 'blur' );
+		await detailsToggle( wrapper ).trigger( 'click' );
+		await wrapper.find( '.ext-sbu-rename__filter' ).trigger( 'click' );
+		await detailsToggle( wrapper ).trigger( 'click' );
 
-		expect( batch.asked ).toEqual( [] );
+		expect( rowNames( wrapper ) ).toHaveLength( 2 );
 	} );
 
-	it( 'warns when it holds what looks like a directive, which is not read from there', () => {
+	it( 'shows the page text as it is edited', async () => {
+		const { batch, held } = batchWithLiveDescription( '{{Pics}}' );
+		const wrapper = panelFor( batch );
+		held.description = '{{Scan}}';
+		await wrapper.vm.$nextTick();
+
+		expect( shownValue( wrapper, 'simplebatchupload-text-title' ).text() ).toBe( '{{Scan}}' );
+	} );
+
+	it( 'shows the page text', () => {
+		const wrapper = panelFor( batchHolding( [], { description: threeLines } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-text-title' ).text() ).toContain( '|description=Harbour walk' );
+	} );
+
+	it( 'says how many lines the page text has', () => {
+		const wrapper = panelFor( batchHolding( [], { description: threeLines } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-text-title' ).find( '.ext-sbu-details__lines' ).text() )
+			.toBe( 'simplebatchupload-details-lines(3)' );
+	} );
+
+	it( 'says nothing of lines for page text on one, a line break at its end included', () => {
+		const wrapper = panelFor( batchHolding( [], { description: '{{Pics}}\n' } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-text-title' ).find( '.ext-sbu-details__lines' ).exists() )
+			.toBe( false );
+	} );
+
+	it( 'says there is no page text rather than leaving a gap', () => {
+		const wrapper = panelFor( batchHolding( [], { description: '' } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-text-title' ).text() ).toBe( 'simplebatchupload-details-no-text' );
+	} );
+
+	it( 'shows the summary', () => {
+		const wrapper = panelFor( batchHolding( [], { comment: 'Harbour walk' } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-comment-title' ).text() ).toBe( 'Harbour walk' );
+	} );
+
+	it.each( [ '', '   ' ] )( 'says there is no summary rather than leaving a gap (%j)', ( comment ) => {
+		const wrapper = panelFor( batchHolding( [], { comment: comment } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-comment-title' ).text() ).toBe( 'simplebatchupload-details-no-comment' );
+	} );
+
+	it( 'shows the rule, and how many names it changes', () => {
+		const wrapper = panelFor( withRule( { find: 'IMG_', replace: 'Trip-' }, { renameCount: { changed: 4, of: 5 } } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-rename-title' ).text() )
+			.toContain( 'simplebatchupload-details-rule(IMG_|Trip-)' );
+		expect( shownValue( wrapper, 'simplebatchupload-rename-title' ).text() )
+			.toContain( 'simplebatchupload-rename-count(4|5)' );
+	} );
+
+	it( 'says nothing of how many names change once the batch is uploading', () => {
+		const batch = withRule( { find: 'IMG_', replace: 'Trip-' }, { renameCount: { changed: 0, of: 1 } } );
+		batch.state.phase = 'uploading';
+		const wrapper = panelFor( batch );
+
+		expect( [ shownValue( wrapper, 'simplebatchupload-rename-title' ).text(), countSaid( wrapper ) ] )
+			.toEqual( [ 'simplebatchupload-details-rule(IMG_|Trip-)', '' ] );
+	} );
+
+	it( 'shows a rule that only adds to the start of each name', () => {
+		const wrapper = panelFor( withRule( { replace: 'Trip-' } ) );
+
+		expect( shownValue( wrapper, 'simplebatchupload-rename-title' ).text() )
+			.toContain( 'simplebatchupload-details-rule-start(Trip-)' );
+	} );
+
+	it( 'says a pattern is not one, rather than showing it as a rule that works', () => {
+		const wrapper = panelFor( invalid() );
+
+		expect( shownValue( wrapper, 'simplebatchupload-rename-title' ).text() )
+			.toContain( 'simplebatchupload-error-rename-pattern' );
+	} );
+
+	it( 'says there is no rule rather than leaving a gap', () => {
+		expect( shownValue( panelFor( batchHolding() ), 'simplebatchupload-rename-title' ).text() )
+			.toBe( 'simplebatchupload-details-no-rule' );
+	} );
+
+	it( 'warns when the page text holds what looks like a directive, which is not read from there', () => {
 		const wrapper = panelFor( batchHolding( [], { textLooksLikeDirective: true } ) );
 
 		expect( textWarning( wrapper ).text() ).toBe( 'simplebatchupload-text-directive-not-read' );
+	} );
+
+	it( 'shows the warning while the form is put away too', () => {
+		const wrapper = panelFor( batchHolding( [], { textLooksLikeDirective: true } ) );
+
+		expect( textWarning( wrapper ).isVisible() ).toBe( true );
 	} );
 
 	it( 'warns of nothing in ordinary text', () => {
@@ -586,39 +787,71 @@ describe( 'the text for each file page', () => {
 
 	it( 'keeps a place for the warning, mounted before there is one to give', () => {
 		// A live region added at the moment it fills is not announced.
-		expect( textWarning( panelFor( batchHolding() ) ).exists() ).toBe( true );
+		expect( textWarning( panelFor( batchHolding() ) ).attributes( 'role' ) ).toBe( 'status' );
+	} );
+} );
+
+describe( 'the file page text', () => {
+	it( 'follows the batch, so an edit made anywhere shows in the field', async () => {
+		const { batch, held } = batchWithLiveDescription( '{{Pics}}' );
+		const wrapper = panelFor( batch );
+		held.description = '{{Scan}}';
+		await wrapper.vm.$nextTick();
+
+		expect( textField( wrapper ).element.value ).toBe( '{{Scan}}' );
+	} );
+
+	it( 'hands an edit straight to the batch, which owns it', async () => {
+		const batch = batchHolding();
+		const wrapper = panelFor( batch );
+
+		await textField( wrapper ).setValue( '{{Scan}}' );
+
+		expect( batch.asked ).toEqual( [ [ 'setDescription', '{{Scan}}' ] ] );
+	} );
+
+	it( 'leaves the text as typed when the field is left', async () => {
+		const batch = batchHolding();
+		const wrapper = panelFor( batch );
+
+		await textField( wrapper ).trigger( 'blur' );
+
+		expect( batch.asked ).toEqual( [] );
 	} );
 
 	it( 'is labelled with its title', () => {
 		const wrapper = panelFor( batchHolding() );
-		const id = wrapper.find( '.ext-sbu-text textarea' ).attributes( 'id' );
 
-		expect( wrapper.find( `label[for="${ id }"]` ).text() ).toBe( 'simplebatchupload-text-title' );
+		expect( labelOf( wrapper, textField( wrapper ) ) ).toBe( 'simplebatchupload-text-title' );
+	} );
+} );
+
+describe( 'the summary', () => {
+	it( 'shows the one the batch holds', () => {
+		expect( commentField( panelFor( batchHolding() ) ).element.value ).toBe( 'Uploaded with SimpleBatchUpload' );
+	} );
+
+	it( 'hands an edit straight to the batch, which owns it', async () => {
+		const batch = batchHolding();
+		const wrapper = panelFor( batch );
+
+		await commentField( wrapper ).setValue( 'Harbour walk' );
+
+		expect( batch.asked ).toEqual( [ [ 'setComment', 'Harbour walk' ] ] );
+	} );
+
+	it( 'is labelled as the summary', () => {
+		const wrapper = panelFor( batchHolding() );
+
+		expect( labelOf( wrapper, commentField( wrapper ) ) ).toBe( 'simplebatchupload-comment-title' );
+	} );
+
+	it( 'takes no more than the 500 characters MediaWiki keeps of a summary', () => {
+		expect( commentField( panelFor( batchHolding() ) ).attributes( 'maxlength' ) ).toBe( '500' );
 	} );
 } );
 
 describe( 'the rule the files are renamed by', () => {
-	function withRule( rule, extra ) {
-		return batchHolding( [ {}, {}, {} ], Object.assign( {
-			rule: Object.assign( { find: '', replace: '', regex: false, flags: '' }, rule )
-		}, extra ) );
-	}
-
-	it( 'starts closed when there is no rule', () => {
-		expect( section( panelFor( withRule( {} ) ), 'rename' ).attributes( 'open' ) ).toBeUndefined();
-	} );
-
-	it( 'starts open when the page brought a rule that only adds to the start', () => {
-		expect( section( panelFor( withRule( { replace: 'Trip-' } ) ), 'rename' ).attributes( 'open' ) )
-			.toBeDefined();
-	} );
-
-	it( 'starts open when the page brought one', () => {
-		const wrapper = panelFor( withRule( { find: '^IMG_', replace: 'Trip-', regex: true } ) );
-
-		expect( section( wrapper, 'rename' ).attributes( 'open' ) ).toBeDefined();
-	} );
-
 	it( 'shows the rule it holds', () => {
 		const wrapper = panelFor( withRule( { find: '^IMG_', replace: 'Trip-', regex: true } ) );
 
@@ -648,19 +881,23 @@ describe( 'the rule the files are renamed by', () => {
 	it( 'counts the names it changes among the files waiting', () => {
 		const wrapper = panelFor( withRule( { find: 'IMG_' }, { renameCount: { changed: 9, of: 11 } } ) );
 
-		expect( wrapper.find( '.ext-sbu-rename [role="status"]' ).text() )
+		expect( countSaid( wrapper ) )
 			.toBe( 'simplebatchupload-rename-count(9|11)' );
+	} );
+
+	it( 'says the count where a screen reader hears it with the form put away', () => {
+		expect( countRegion( panelFor( batchHolding() ) ).isVisible() ).toBe( true );
 	} );
 
 	it( 'says when Find matches no file name, which no syntax check would', () => {
 		const wrapper = panelFor( withRule( { find: 'XYZ' }, { renameCount: { changed: 0, of: 3 } } ) );
 
-		expect( wrapper.find( '.ext-sbu-rename [role="status"]' ).text() )
+		expect( countSaid( wrapper ) )
 			.toBe( 'simplebatchupload-rename-matches-nothing' );
 	} );
 
 	it( 'says nothing about names while there is no rule', () => {
-		expect( panelFor( withRule( {} ) ).find( '.ext-sbu-rename [role="status"]' ).text() ).toBe( '' );
+		expect( countSaid( panelFor( withRule( {} ) ) ) ).toBe( '' );
 	} );
 
 	it( 'says nothing about names while there are no files to rename', () => {
@@ -668,7 +905,7 @@ describe( 'the rule the files are renamed by', () => {
 			rule: { find: 'IMG_', replace: 'Trip-', regex: false, flags: '' }
 		} ) );
 
-		expect( wrapper.find( '.ext-sbu-rename [role="status"]' ).text() ).toBe( '' );
+		expect( countSaid( wrapper ) ).toBe( '' );
 	} );
 
 	it( 'says nothing about names while the pattern is not one, which the field says', () => {
@@ -677,7 +914,7 @@ describe( 'the rule the files are renamed by', () => {
 				renamePatternInvalid: true }
 		} ) );
 
-		expect( wrapper.find( '.ext-sbu-rename [role="status"]' ).text() ).toBe( '' );
+		expect( countSaid( wrapper ) ).toBe( '' );
 	} );
 
 	it( 'narrows the list to the files it renames, and widens it again', async () => {
@@ -761,15 +998,8 @@ describe( 'the rule the files are renamed by', () => {
 			document.body.innerHTML = '';
 		} );
 
-		function invalid() {
-			return withRule( { find: '(IMG', regex: true }, {
-				state: { phase: 'idle', stoppedByLimit: false, admitted: 0,
-					turnedAway: 0, renamePatternInvalid: true }
-			} );
-		}
-
 		function errorShown( wrapper ) {
-			return section( wrapper, 'rename' ).text().includes( 'simplebatchupload-error-rename-pattern' );
+			return wrapper.find( '.ext-sbu-rename' ).text().includes( 'simplebatchupload-error-rename-pattern' );
 		}
 
 		it( 'is said once typing has paused rather than on every key', async () => {
@@ -824,41 +1054,48 @@ describe( 'the rule the files are renamed by', () => {
 			const wrapper = panelFor( batch );
 			document.body.appendChild( wrapper.element );
 
-			section( wrapper, 'rename' ).element.open = false;
-			await section( wrapper, 'rename' ).trigger( 'toggle' );
 			await ruleField( wrapper, 0 ).trigger( 'input' );
 			await wrapper.find( '.ext-sbu-dock__action' ).trigger( 'click' );
 			await wrapper.vm.$nextTick();
 
-			expect( section( wrapper, 'rename' ).attributes( 'open' ) ).toBeDefined();
+			expect( formShown( wrapper ) ).toBe( true );
 			expect( errorShown( wrapper ) ).toBe( true );
 			expect( document.activeElement ).toBe( ruleField( wrapper, 0 ).element );
+		} );
+
+		it( 'tells the page when Upload opens the form, so WikiEditor can be added', async () => {
+			const wrapper = panelFor( invalid() );
+
+			await wrapper.find( '.ext-sbu-dock__action' ).trigger( 'click' );
+
+			expect( wrapper.emitted( 'edit-details' ) ).toHaveLength( 1 );
 		} );
 	} );
 } );
 
 describe( 'once Upload is pressed', () => {
-	it( 'locks the text and the rule, since each file takes what is there when it is sent', () => {
+	it( 'locks the text, the summary and the rule, since each file takes what is there when it is sent', () => {
 		const batch = batchHolding( [ { status: 'uploading' } ] );
 		batch.state.phase = 'uploading';
 		const wrapper = panelFor( batch );
 
-		expect( wrapper.find( '.ext-sbu-text textarea' ).attributes( 'disabled' ) ).toBeDefined();
-		expect( wrapper.find( '.ext-sbu-text textarea' ).attributes( 'readonly' ) ).toBeDefined();
+		expect( textField( wrapper ).attributes( 'disabled' ) ).toBeDefined();
+		expect( commentField( wrapper ).attributes( 'disabled' ) ).toBeDefined();
+		expect( textField( wrapper ).attributes( 'readonly' ) ).toBeDefined();
 		expect( wrapper.findAll( '.ext-sbu-rename input' ).every(
 			( input ) => input.attributes( 'disabled' ) !== undefined
 		) ).toBe( true );
 	} );
 
 	it( 'leaves the text writable while the batch waits for Upload', () => {
-		expect( panelFor( batchHolding() ).find( '.ext-sbu-text textarea' ).attributes( 'readonly' ) )
+		expect( textField( panelFor( batchHolding() ) ).attributes( 'readonly' ) )
 			.toBeUndefined();
 	} );
 
 	it( 'keeps them locked while a pause takes hold', () => {
 		const batch = batchHolding( [ { status: 'uploading' } ] );
 		batch.state.phase = 'pausing';
-		const field = panelFor( batch ).find( '.ext-sbu-text textarea' );
+		const field = textField( panelFor( batch ) );
 
 		expect( field.attributes( 'disabled' ) ).toBeDefined();
 		expect( field.attributes( 'readonly' ) ).toBeDefined();
