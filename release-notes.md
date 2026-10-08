@@ -2,52 +2,49 @@
 
 ### Unreleased
 
+When upgrading:
+
+* Purge pages using `{{#batchupload:}}`, or bump `$wgCacheEpoch`. Until then, their upload areas can stay broken for
+  up to `$wgParserCacheExpireTime`, while the parser cache serves the old markup. `Special:BatchUpload` does not need
+  purging
+* Update anything in `MediaWiki:Common.css`, `MediaWiki:Common.js` or a gadget that targets the upload interface. The
+  `fileupload-*`, `fileinput-button` and `ful-*` classes are gone; everything this extension renders now carries an
+  `ext-sbu-` prefix
+* Delete any customised `MediaWiki:Simplebatchupload-result-error`, `-result-not-uploaded`, `-result-queued`,
+  `-result-rate-limited`, `-result-rate-limit-stopped`, `-result-success` and `-result-token-error`: those messages
+  no longer exist
+* Check any customised `MediaWiki:Simplebatchupload-buttonlabel`, which now labels the file picker alone, with
+  dropping described beside it
+* Check any customised `MediaWiki:Simplebatchupload-max-files-reached` and `-error-rename-pattern`, which now say
+  something different
+
+Changes:
+
 * Added a new upload interface, built with Vue and Codex, replacing the jQuery File Upload widget
   * The whole list is the drop target, and dropping a folder adds what is inside it, subfolders included
   * Each file shows a preview, its size, and its upload progress
   * An uploaded file links to its page on the wiki
+  * A file can be taken out of the batch before it is uploaded, and added back; a failed file can be tried again
+  * A block above the file list shows the file page text, the upload summary and the rename rule, one line each,
+    with **Edit details** to change them. The summary can now be changed before uploading
+  * Where WikiEditor is installed, the file page text gets its toolbar, following each user's toolbar preference,
+    except on a page with more than one upload area
+  * An upload area added with `{{#batchupload:}}` starts small and opens out once files are added to it, so a page
+    holding many stays short. On `Special:BatchUpload` it is full size from the start
+* Files no longer upload as soon as they are added: they wait in the list until **Upload** is pressed, and a running
+  batch can be paused and carried on
+* Added a `+autoupload` parameter to `{{#batchupload:}}`: files added to that upload area start uploading straight
+  away, without **Upload** being pressed
+* Added **Rename files**, with **Find** and **Replace with** fields and an option for regular expressions. Each file
+  shows its new name before it is uploaded. A `+rename` parameter fills the fields in
+* A `+rename` typed into the file page text is no longer read: the field warns that it would be published as written,
+  and points to **Rename files**
+* A `+rename` rule that is not written correctly is warned about rather than published on every file page, and a
+  rule wrapped in `<nowiki>` can contain `|`
 * Added a prompt before a file is uploaded over one the wiki already holds, instead of overwriting it
-  * The file waits in the upload stash while it is asked about, so going ahead does not upload it again
-* Added a prompt when files in one batch would be uploaded under the same name, instead of letting the
-  last one win
-* Files no longer upload as soon as they are added: they wait in the list until Upload is pressed, and a
-  running batch can be paused and carried on
-* Added a Rename files section, with Find and Replace with fields and an option for regular expressions;
-  each file shows its new name before it is uploaded. A `+rename` parameter fills the fields in
-* Added a block above the file list that shows the file page text, the upload summary and the rename rule,
-  one line each, with Edit details to change them. The summary can now be changed before uploading
-* A `+rename` typed into the file page text is no longer read: the field warns that it would be published
-  as written, and points to Rename files
-* A `+rename` rule that is not written correctly is warned about rather than published on every file page,
-  and a rule wrapped in `<nowiki>` can contain `|`
-* Where WikiEditor is installed, the file page text gets its toolbar, following each user's toolbar
-  preference. A page with more than one upload area gets none, as WikiEditor cannot keep their dialogs apart
-* Added a `+autoupload` parameter to `{{#batchupload:}}`: files added to that upload area start uploading
-  straight away, without Upload being pressed
-* An upload area added with `{{#batchupload:}}` starts small and opens out once files are added to it, so a
-  page holding many stays short. On `Special:BatchUpload` it is full size from the start
-* Added a button to take a file out of the batch before it is uploaded, and to add it back
-* Added a button to try a failed file again
-* Fixed the default upload summary being in a user's interface language rather than the wiki's content
-  language, which usually also ignored a summary customised in `MediaWiki:Simplebatchupload-comment`
-* Removed the vendored jQuery File Upload widget
-
-Pages using `{{#batchupload:}}` should be purged after upgrading, or `$wgCacheEpoch` bumped. The markup
-the parser function emits has changed, and a page served from the parser cache keeps the old markup for
-up to `$wgParserCacheExpireTime`, during which the upload area on that page does not work.
-`Special:BatchUpload` does not need purging.
-
-Wikis that style the upload interface from `MediaWiki:Common.css`, or reach into it from
-`MediaWiki:Common.js` or a gadget, will need to update those rules. The `fileupload-*`,
-`fileinput-button` and `ful-*` classes are all gone; everything this extension renders now carries an
-`ext-sbu-` prefix.
-
-Wikis that customised any of `MediaWiki:Simplebatchupload-result-error`, `-result-not-uploaded`,
-`-result-queued`, `-result-rate-limited`, `-result-rate-limit-stopped`, `-result-success` or
-`-result-token-error` should delete those pages: the messages no longer exist.
-`MediaWiki:Simplebatchupload-buttonlabel` should be checked instead of deleted — it now labels the file
-picker alone, with dropping described beside it — and so should `-max-files-reached` and
-`-error-rename-pattern`, which now say something different.
+* Added a prompt when files in one batch would be uploaded under the same name, instead of letting the last one win
+* Fixed the default upload summary being in a user's interface language rather than the wiki's content language,
+  which usually also ignored a summary customised in `MediaWiki:Simplebatchupload-comment`
 
 ### SimpleBatchUpload 3.1.0
 
