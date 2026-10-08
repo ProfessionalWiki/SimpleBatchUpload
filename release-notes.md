@@ -22,6 +22,8 @@
   preference. A page with more than one upload area gets none, as WikiEditor cannot keep their dialogs apart
 * Added a button to take a file out of the batch before it is uploaded, and to add it back
 * Added a button to try a failed file again
+* Fixed the default upload summary being in a user's interface language rather than the wiki's content
+  language, which usually also ignored a summary customised in `MediaWiki:Simplebatchupload-comment`
 * Removed the vendored jQuery File Upload widget
 
 Pages using `{{#batchupload:}}` should be purged after upgrading, or `$wgCacheEpoch` bumped. The markup
