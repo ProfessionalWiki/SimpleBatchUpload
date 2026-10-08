@@ -288,6 +288,46 @@ describe( 'the description the files are uploaded with', () => {
 			text: '{{Photo| +rename = !^!-->Trip-}}'
 		} );
 	} );
+
+	it( 'gives every file in a running batch the same one', async () => {
+		const batch = batchAgainst();
+
+		batch.addFiles( dropped( [ 'A.png', 'B.png', 'C.png' ] ) );
+		batch.start();
+		batch.setDescription( '{{Scan}}' );
+		await settled( batch );
+
+		expect( batch.uploader.calls.map( ( call ) => call.text ) )
+			.toEqual( [ '{{Photo}}', '{{Photo}}', '{{Photo}}' ] );
+	} );
+} );
+
+describe( 'the summary the files are uploaded with', () => {
+	it( 'starts as the one the wiki was configured with', () => {
+		expect( batchAgainst().comment ).toBe( 'Uploaded in a batch' );
+	} );
+
+	it( 'takes an edit to it after files were selected', async () => {
+		const batch = batchAgainst();
+
+		batch.addFiles( dropped( [ 'A.png' ] ) );
+		batch.setComment( 'Harbour walk' );
+		await uploadEverything( batch );
+
+		expect( batch.uploader.calls[ 0 ].comment ).toBe( 'Harbour walk' );
+	} );
+
+	it( 'gives every file in a running batch the same one', async () => {
+		const batch = batchAgainst();
+
+		batch.addFiles( dropped( [ 'A.png', 'B.png', 'C.png' ] ) );
+		batch.start();
+		batch.setComment( 'Harbour walk' );
+		await settled( batch );
+
+		expect( batch.uploader.calls.map( ( call ) => call.comment ) )
+			.toEqual( [ 'Uploaded in a batch', 'Uploaded in a batch', 'Uploaded in a batch' ] );
+	} );
 } );
 
 describe( 'the rule the files are renamed by', () => {
@@ -1725,16 +1765,18 @@ describe( 'what the batch says about itself', () => {
 		const seen = [];
 
 		watch( () => batch.description, () => seen.push( 'description' ) );
+		watch( () => batch.comment, () => seen.push( 'comment' ) );
 		watch( () => batch.counts.total, () => seen.push( 'counts' ) );
 		watch( () => batch.room, () => seen.push( 'room' ) );
 		watch( () => batch.state.phase, () => seen.push( 'phase' ) );
 
 		batch.setDescription( '{{Scan}}' );
+		batch.setComment( 'Harbour walk' );
 		batch.addFiles( dropped( [ 'A.png' ] ) );
 		batch.start();
 		await nextTick();
 
-		expect( seen.sort() ).toEqual( [ 'counts', 'description', 'phase', 'room' ] );
+		expect( seen.sort() ).toEqual( [ 'comment', 'counts', 'description', 'phase', 'room' ] );
 	} );
 
 	it( 'counts what is done, what is waiting and what wants an answer', async () => {

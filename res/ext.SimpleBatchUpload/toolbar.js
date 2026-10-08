@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Whether the text for each file page gets WikiEditor's toolbar, as the edit
+ * Whether the file page text gets WikiEditor's toolbar, as the edit
  * page would give it: only where WikiEditor is installed, and only to a user
  * who has not turned the toolbar off. Only to a user who can upload, too, as
  * no one else creates the pages the text is for.

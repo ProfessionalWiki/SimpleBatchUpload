@@ -117,9 +117,9 @@ function regroupClashes( undecided ) {
  * @param {Object} options.uploader From createUploader()
  * @param {Object} options.gate From createRateLimitGate(), likewise shared
  * @param {Function} options.getToken Called with true to force a fresh one
- * @param {string} [options.description] Wikitext for each file page, which may
+ * @param {string} [options.description] The file page text, which may
  *  carry a +rename directive; it is read into the rule at once
- * @param {string} [options.comment] Upload summary
+ * @param {string} [options.comment] The summary every upload gets
  * @param {number} [options.maxFiles] How many unfinished files the wiki lets
  *  this user hold at once
  * @param {?Object} [options.thumbnailer] From createThumbnailer(), or absent
@@ -178,6 +178,8 @@ function createBatch( options ) {
 	// because the field renders it: read through a bare getter, Vue has
 	// nothing to track and an edit would never reach the page.
 	const description = ref( options.description || '' );
+	// Likewise the upload summary.
+	const comment = ref( options.comment || '' );
 
 	// Work in hand rather than files ever added: a limit of a thousand with 999
 	// still running leaves room for one, and for a thousand once they land.
@@ -207,11 +209,27 @@ function createBatch( options ) {
 	}
 
 	/**
+	 * Ignored while files are going up, so each one in the batch gets the
+	 * same.
+	 *
 	 * @param {string} written The wikitext every file page gets. A directive
 	 *  typed into it stays there as text: rules are set in the fields.
 	 */
 	function setDescription( written ) {
-		description.value = written;
+		if ( state.phase === 'idle' ) {
+			description.value = written;
+		}
+	}
+
+	/**
+	 * Ignored while files are going up, like the text.
+	 *
+	 * @param {string} written The summary every upload gets
+	 */
+	function setComment( written ) {
+		if ( state.phase === 'idle' ) {
+			comment.value = written;
+		}
 	}
 
 	/**
@@ -497,7 +515,7 @@ function createBatch( options ) {
 			filename: row.targetName,
 			token: csrfToken,
 			text: description.value,
-			comment: options.comment,
+			comment: comment.value,
 			ignoreWarnings: row.ignoreWarnings
 		}, ( fraction ) => {
 			row.progress = fraction;
@@ -725,6 +743,7 @@ function createBatch( options ) {
 		rows: rows,
 		state: state,
 		setDescription: setDescription,
+		setComment: setComment,
 		setRule: setRule,
 		addFiles: addFiles,
 		keepFile: keepFile,
@@ -751,6 +770,10 @@ function createBatch( options ) {
 
 		get description() {
 			return description.value;
+		},
+
+		get comment() {
+			return comment.value;
 		},
 
 		get rule() {

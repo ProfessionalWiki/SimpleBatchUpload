@@ -77,8 +77,9 @@ function getToken( refresh ) {
 
 /**
  * @param {HTMLElement} element The mount point the extension rendered
+ * @param {number} panels How many panels the page has
  */
-function mountPanel( element ) {
+function mountPanel( element, panels ) {
 	const batch = createBatch( {
 		gate: gate,
 		queue: queue,
@@ -94,28 +95,27 @@ function mountPanel( element ) {
 	} );
 
 	batches.push( batch );
-	Vue.createMwApp( UploadPanel, { batch: batch } ).mount( element );
+	Vue.createMwApp( UploadPanel, {
+		batch: batch,
+		onEditDetailsOnce: ( textarea ) => offerToolbar( textarea, panels )
+	} ).mount( element );
 }
 
 function mountAll() {
 	const mounts = document.querySelectorAll( '.ext-sbu-mount' );
 
-	Array.prototype.forEach.call( mounts, ( element ) => {
-		mountPanel( element );
-		offerToolbar( element.querySelector( '.ext-sbu-text' ), mounts.length );
-	} );
+	Array.prototype.forEach.call( mounts, ( element ) => mountPanel( element, mounts.length ) );
 }
 
 /**
  * WikiEditor brings jQuery UI and OOUI with it, so the toolbar waits until the
- * text section is opened: at once where the wiki put text in it, otherwise
- * perhaps never.
+ * details form is first opened, which may be never.
  *
- * @param {HTMLDetailsElement} section The text for each file page
+ * @param {HTMLTextAreaElement} textarea The file page text
  * @param {number} panels How many panels the page has
  */
-function offerToolbar( section, panels ) {
-	whenOpened( section, () => userInfo.then( ( response ) => {
+function offerToolbar( textarea, panels ) {
+	userInfo.then( ( response ) => {
 		const page = {
 			moduleState: mw.loader.getState( 'ext.wikiEditor' ),
 			preference: mw.user.options.get( 'usebetatoolbar' ),
@@ -124,31 +124,13 @@ function offerToolbar( section, panels ) {
 		};
 
 		if ( wantsToolbar( page ) ) {
-			addToolbar( section.querySelector( 'textarea' ) );
-		}
-	} ) );
-}
-
-/**
- * @param {HTMLDetailsElement} section
- * @param {Function} callback Called once, the first time the section is open
- */
-function whenOpened( section, callback ) {
-	if ( section.open ) {
-		callback();
-		return;
-	}
-
-	section.addEventListener( 'toggle', function opened() {
-		if ( section.open ) {
-			section.removeEventListener( 'toggle', opened );
-			callback();
+			addToolbar( textarea );
 		}
 	} );
 }
 
 /**
- * @param {HTMLTextAreaElement} textarea The text for each file page
+ * @param {HTMLTextAreaElement} textarea The file page text
  */
 function addToolbar( textarea ) {
 	mw.loader.using( 'ext.wikiEditor' ).then(

@@ -14,9 +14,11 @@
   running batch can be paused and carried on
 * Added a Rename files section, with Find and Replace with fields and an option for regular expressions;
   each file shows its new name before it is uploaded. A `+rename` parameter fills the fields in
-* A `+rename` typed into the text for each file page is no longer read: the field warns that it would be
-  published as written, and points to Rename files
-* Where WikiEditor is installed, the text for each file page gets its toolbar, following each user's toolbar
+* Added a block above the file list that shows the file page text, the upload summary and the rename rule,
+  one line each, with Edit details to change them. The summary can now be changed before uploading
+* A `+rename` typed into the file page text is no longer read: the field warns that it would be published
+  as written, and points to Rename files
+* Where WikiEditor is installed, the file page text gets its toolbar, following each user's toolbar
   preference. A page with more than one upload area gets none, as WikiEditor cannot keep their dialogs apart
 * Added a button to take a file out of the batch before it is uploaded, and to add it back
 * Added a button to try a failed file again
