@@ -10,5 +10,7 @@
 	"batchupload": "העלאת קבצים מרובים",
 	"simplebatchupload-buttonlabel": "בחירת קבצים",
 	"simplebatchupload-comment": "הועלה עם [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-desc": "אפשרות העלאה פשוטה של קבצים באצווה"
+	"simplebatchupload-desc": "אפשרות העלאה פשוטה של קבצים באצווה",
+	"simplebatchupload-details-edit": "עריכת פרטים",
+	"simplebatchupload-details-rule": "$1 ← $2"
 }

@@ -8,8 +8,11 @@
 	"batchupload": "Méi Fichieren eroplueden",
 	"simplebatchupload-action-keep": "Halen",
 	"simplebatchupload-action-replace": "Ersetzen",
+	"simplebatchupload-action-skip": "Iwwersprangen",
 	"simplebatchupload-comment": "Eropgeluede mam [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-details-edit": "Detailer Änneren",
 	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-rename-regex": "Regulär Ausdréck benotzen",
 	"simplebatchupload-rename-replace": "Ersetzen duerch",
 	"simplebatchupload-warning-other": "{{PLURAL:$2|Serverwarnung|Serverwarnungen}}: $1."
 }
