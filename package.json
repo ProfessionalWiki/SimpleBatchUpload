@@ -20,7 +20,7 @@
 		"preflight": "npm -s run lint && npm -s run test:unit"
 	},
 	"devDependencies": {
-		"@vitejs/plugin-vue": "^6.0.8",
+		"@vitejs/plugin-vue": "^6.0.10",
 		"@vue/test-utils": "^2.4.11",
 		"@wikimedia/codex": "1.14.0",
 		"eslint": "8.57.1",
