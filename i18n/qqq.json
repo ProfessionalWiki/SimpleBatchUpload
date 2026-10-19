@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Amire80",
 			"F.trott",
 			"Kghbln"
 		]
@@ -29,7 +30,7 @@
 	"simplebatchupload-details-no-comment": "Shown in place of {{msg-mw|simplebatchupload-comment-title}} while the details form is put away, when it is empty. A separate message for each field, so it can agree with the field's name in languages that need it.\n{{Identical|None}}",
 	"simplebatchupload-details-no-rule": "Shown in place of {{msg-mw|simplebatchupload-rename-title}} while the details form is put away, when it is empty. A separate message for each field, so it can agree with the field's name in languages that need it.\n{{Identical|None}}",
 	"simplebatchupload-details-no-text": "Shown in place of {{msg-mw|simplebatchupload-text-title}} while the details form is put away, when it is empty. A separate message for each field, so it can agree with the field's name in languages that need it.\n{{Identical|None}}",
-	"simplebatchupload-details-rule": "The rename rule, shown on one line while the details form is put away. Parameters:\n* $1 - what is looked for in each file name ({{msg-mw|simplebatchupload-rename-find}})\n* $2 - what it is replaced with ({{msg-mw|simplebatchupload-rename-replace}})",
+	"simplebatchupload-details-rule": "The rename rule, shown on one line while the details form is put away. Parameters:\n* $1 - what is looked for in each file name ({{msg-mw|simplebatchupload-rename-find}})\n* $2 - what it is replaced with ({{msg-mw|simplebatchupload-rename-replace}})\n\nIn RTL languages, use ←.",
 	"simplebatchupload-details-rule-start": "The rename rule, shown on one line while the details form is put away, when {{msg-mw|simplebatchupload-rename-find}} is empty and the replacement is put in front of every file name. Parameters:\n* $1 - what is put in front ({{msg-mw|simplebatchupload-rename-replace}})",
 	"simplebatchupload-details-title": "Accessible name of the block holding the details every file in the batch is uploaded with, and its title while the form is open.",
 	"simplebatchupload-dock-attention": "Accessible name of the icon on the bar above the file list, marking that files are waiting for the user to decide about them. The icon has no visible text; this is read aloud by screen readers instead.",

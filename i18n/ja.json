@@ -2,11 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Ant176",
+			"Kokage si",
 			"Omotecho"
 		]
 	},
 	"batchupload": "複数のファイルをアップロード",
-	"simplebatchupload-buttonlabel": "ファイルを選択(またはここにドロップ)...",
+	"simplebatchupload-buttonlabel": "ファイルを選択",
 	"simplebatchupload-comment": "投稿には[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]を利用",
 	"simplebatchupload-desc": "ファイルの容易な一括アップロードを可能にします"
 }

@@ -80,6 +80,8 @@
 	"simplebatchupload-status-queued": "In de wacht voor uploaden",
 	"simplebatchupload-status-skipped": "Niet geüpload",
 	"simplebatchupload-status-uploading": "Aan het uploaden",
+	"simplebatchupload-text-directive-not-read": "Dit lijkt op een +rename-instructie, maar het hernoemt niets en zou, zoals nu geschreven, aan elke bestandspagina worden toegevoegd. Gebruik in plaats hiervan ‘Bestanden hernoemen’.",
+	"simplebatchupload-text-title": "Tekst van de bestandspagina",
 	"simplebatchupload-warning-duplicate": "Duplicaat van {{PLURAL:$2|het bestaande bestand|de bestaande bestanden}} $1.",
 	"simplebatchupload-warning-exists": "Het bestaande bestand $1 is overschreven.",
 	"simplebatchupload-warning-no-change": "Staat al op de wiki met identieke inhoud.",
