@@ -2,11 +2,14 @@
 	"@metadata": {
 		"authors": [
 			"Gomoko",
+			"SleaY",
 			"Wladek92"
 		]
 	},
 	"batchupload": "Téléverser plusieurs fichiers",
 	"simplebatchupload-buttonlabel": "Sélectionner les fichiers (ou les faire glisser ici)…",
 	"simplebatchupload-comment": "Téléversé avec [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
-	"simplebatchupload-desc": "Permet un téléchargement simple en tâche de fond de fichiers"
+	"simplebatchupload-desc": "Permet un téléchargement simple en tâche de fond de fichiers",
+	"simplebatchupload-rename-label": "$1 ▸ $2",
+	"simplebatchupload-warning-no-change": "Déjà présent sur le wiki avec un contenu identique."
 }

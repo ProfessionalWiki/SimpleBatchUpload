@@ -17,7 +17,10 @@
 	"simplebatchupload-add-more": "Перетащите сюда другие файлы или папки",
 	"simplebatchupload-buttonlabel": "Выбрать файлы",
 	"simplebatchupload-comment": "Загружено через [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
+	"simplebatchupload-comment-title": "Описание",
 	"simplebatchupload-desc": "Реализует простую пакетную загрузку файлов.",
+	"simplebatchupload-details-done": "Готово",
+	"simplebatchupload-details-rule": "$1 → $2",
 	"simplebatchupload-dock-pause": "Пауза",
 	"simplebatchupload-dock-pausing": "Приостановка: {{formatnum:$1}} {{PLURAL:$1|файл|файла|файлов}} ещё загружаются",
 	"simplebatchupload-dock-ready": "{{formatnum:$1}} {{PLURAL:$1|файл готов|файла готово|файлов готово}}",
@@ -25,5 +28,16 @@
 	"simplebatchupload-dock-upload": "Загрузить",
 	"simplebatchupload-group-replace-all": "Заменить все {{formatnum:$1}}",
 	"simplebatchupload-rename-find": "Найти",
-	"simplebatchupload-rename-label": "$1 → $2"
+	"simplebatchupload-rename-label": "$1 → $2",
+	"simplebatchupload-rename-regex": "Использовать регулярные выражения",
+	"simplebatchupload-rename-replace": "Заменить на",
+	"simplebatchupload-result-network-error": "Не удалось связаться с сервером.",
+	"simplebatchupload-result-unknown-error": "Сервер вернул неожиданный ответ.",
+	"simplebatchupload-row-no-extension": "У этого имени нет расширения файла",
+	"simplebatchupload-status-done": "Загружено",
+	"simplebatchupload-status-failed": "Загрузка не удалась",
+	"simplebatchupload-status-held": "Уже есть на вики",
+	"simplebatchupload-status-queued": "Ожидание загрузки",
+	"simplebatchupload-status-skipped": "Не загружено",
+	"simplebatchupload-status-uploading": "Загружается"
 }
