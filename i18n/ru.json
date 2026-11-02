@@ -20,6 +20,9 @@
 	"simplebatchupload-comment-title": "Описание",
 	"simplebatchupload-desc": "Реализует простую пакетную загрузку файлов.",
 	"simplebatchupload-details-done": "Готово",
+	"simplebatchupload-details-no-comment": "Нет",
+	"simplebatchupload-details-no-rule": "Нет",
+	"simplebatchupload-details-no-text": "Нет",
 	"simplebatchupload-details-rule": "$1 → $2",
 	"simplebatchupload-dock-pause": "Пауза",
 	"simplebatchupload-dock-pausing": "Приостановка: {{formatnum:$1}} {{PLURAL:$1|файл|файла|файлов}} ещё загружаются",
@@ -34,10 +37,16 @@
 	"simplebatchupload-result-network-error": "Не удалось связаться с сервером.",
 	"simplebatchupload-result-unknown-error": "Сервер вернул неожиданный ответ.",
 	"simplebatchupload-row-no-extension": "У этого имени нет расширения файла",
+	"simplebatchupload-row-nth-of": "{{formatnum:$1}} из {{formatnum:$2}}",
+	"simplebatchupload-status-clash": "Это имя используется более одного раза",
 	"simplebatchupload-status-done": "Загружено",
 	"simplebatchupload-status-failed": "Загрузка не удалась",
 	"simplebatchupload-status-held": "Уже есть на вики",
 	"simplebatchupload-status-queued": "Ожидание загрузки",
 	"simplebatchupload-status-skipped": "Не загружено",
-	"simplebatchupload-status-uploading": "Загружается"
+	"simplebatchupload-status-uploading": "Загружается",
+	"simplebatchupload-warning-duplicate": "Дубликат {{PLURAL:$2|существующего файла|существующих файлов}} $1.",
+	"simplebatchupload-warning-exists": "Перезаписан существующий файл $1.",
+	"simplebatchupload-warning-no-change": "Уже есть на вики с идентичным содержимым.",
+	"simplebatchupload-warning-other": "{{PLURAL:$2|Предупреждение|Предупреждения}} сервера: $1."
 }

@@ -7,9 +7,20 @@
 		]
 	},
 	"batchupload": "Téléverser plusieurs fichiers",
+	"simplebatchupload-action-for-file": "$1",
+	"simplebatchupload-action-keep": "Garder",
 	"simplebatchupload-buttonlabel": "Sélectionner les fichiers (ou les faire glisser ici)…",
 	"simplebatchupload-comment": "Téléversé avec [[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]]",
 	"simplebatchupload-desc": "Permet un téléchargement simple en tâche de fond de fichiers",
+	"simplebatchupload-details-done": "Terminé",
+	"simplebatchupload-details-edit": "Modifier les détails",
+	"simplebatchupload-details-no-comment": "Aucun",
+	"simplebatchupload-details-no-rule": "Aucun",
+	"simplebatchupload-details-no-text": "Aucun",
+	"simplebatchupload-details-rule": "$1 ▸ $2",
+	"simplebatchupload-details-rule-start": "$1 ajouté au début",
+	"simplebatchupload-details-title": "Détails pour chaque fichier",
+	"simplebatchupload-dock-pause": "Pause",
 	"simplebatchupload-rename-label": "$1 ▸ $2",
 	"simplebatchupload-warning-no-change": "Déjà présent sur le wiki avec un contenu identique."
 }

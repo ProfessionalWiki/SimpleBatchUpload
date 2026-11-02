@@ -2,11 +2,19 @@
 	"@metadata": {
 		"authors": [
 			"BaRaN6161 TURK",
-			"HakanIST"
+			"HakanIST",
+			"Rumixist"
 		]
 	},
 	"batchupload": "Birden fazla dosya yükle",
+	"simplebatchupload-action-keep": "Tut",
+	"simplebatchupload-action-skip": "Atla",
 	"simplebatchupload-buttonlabel": "Dosyaları seçin (veya buraya bırakın)...",
 	"simplebatchupload-comment": "[[mw:Special:MyLanguage/Extension:SimpleBatchUpload|SimpleBatchUpload]] ile yüklendi",
-	"simplebatchupload-desc": "Dosyaların toplu olarak basitçe yüklenmesine izin verir"
+	"simplebatchupload-comment-title": "Özet",
+	"simplebatchupload-desc": "Dosyaların toplu olarak basitçe yüklenmesine izin verir",
+	"simplebatchupload-details-edit": "Ayrıntıları Düzenle",
+	"simplebatchupload-dock-pause": "Duraklat",
+	"simplebatchupload-dock-upload": "Yükle",
+	"simplebatchupload-rename-find": "Bul"
 }
