@@ -11,3 +11,5 @@ parameters:
 		- ../../vendor
 	bootstrapFiles:
 		- ../../includes/AutoLoader.php
+	dynamicConstantNames:
+		- MW_VERSION
