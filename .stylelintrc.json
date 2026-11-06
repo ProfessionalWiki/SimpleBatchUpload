@@ -4,6 +4,7 @@
 		"stylelint-config-wikimedia/mediawiki"
 	],
 	"rules": {
-		"selector-class-pattern": "^(ext-sbu|cdx)-"
+		"selector-class-pattern": "^(ext-sbu|cdx)-",
+		"wikimedia/selector-class-prefix": null
 	}
 }

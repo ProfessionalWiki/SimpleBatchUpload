@@ -296,6 +296,12 @@ module.exports = exports = defineComponent( {
 	background-color: @background-color-error-subtle;
 }
 
+.ext-sbu-row__title {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 .ext-sbu-row .ext-sbu-row__title {
 	font-size: @font-size-small;
 }
@@ -304,12 +310,6 @@ module.exports = exports = defineComponent( {
 // title's own colour would otherwise hide.
 a.ext-sbu-row__title {
 	color: @color-progressive;
-}
-
-.ext-sbu-row__title {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
 }
 
 // Not going to the wiki, so it gives up the weight the others carry.

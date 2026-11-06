@@ -250,8 +250,14 @@ module.exports = exports = defineComponent( {
 	align-self: center;
 }
 
+// The text takes the line and the button is pushed to the end of it. Done by
+// growing the text rather than by an auto margin on the button, because the
+// button carries .cdx-button and `.cdx-button { margin: 0 }` cannot be beaten
+// on source order: another module on the page may ship Codex's stylesheet and
+// be inserted after this one.
 .ext-sbu-dock__band-text,
 .ext-sbu-dock__summary {
+	flex-grow: 1;
 	padding: @spacing-25 @spacing-75 @spacing-25 0;
 }
 
@@ -286,16 +292,6 @@ module.exports = exports = defineComponent( {
 	content: '·';
 	margin: 0 @spacing-25;
 	font-weight: normal;
-}
-
-// The text takes the line and the button is pushed to the end of it. Done by
-// growing the text rather than by an auto margin on the button, because the
-// button carries .cdx-button and `.cdx-button { margin: 0 }` cannot be beaten
-// on source order: another module on the page may ship Codex's stylesheet and
-// be inserted after this one.
-.ext-sbu-dock__band-text,
-.ext-sbu-dock__summary {
-	flex-grow: 1;
 }
 
 .ext-sbu-dock__summary-part {
