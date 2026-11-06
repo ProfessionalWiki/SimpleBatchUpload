@@ -1,6 +1,8 @@
 ## Release Notes
 
-### Unreleased
+### SimpleBatchUpload 4.0.1
+
+Released on November 6, 2026.
 
 * Fixed `Special:BatchUpload` showing the upload form to users without the `upload` right on MediaWiki 1.43 to 1.45
 
