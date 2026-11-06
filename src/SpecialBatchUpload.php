@@ -34,7 +34,12 @@ use MediaWiki\SpecialPage\SpecialPage;
 class SpecialBatchUpload extends SpecialPage {
 
 	public function __construct() {
-		parent::__construct( 'BatchUpload' );
+		if ( version_compare( MW_VERSION, '1.46', '>=' ) ) {
+			parent::__construct( 'BatchUpload' );
+		} else {
+			// Before 1.46, MediaWiki checks the restriction given here, not getRestriction()
+			parent::__construct( 'BatchUpload', 'upload' );
+		}
 	}
 
 	public function getRestriction(): string {
