@@ -9,8 +9,8 @@
  * plugin `Vue.createMwApp()` installs, which plain Vue does not have, so a
  * component template calling `$i18n( key ).text()` works in both places.
  *
- * `$` and `jQuery` are deliberately NOT stubbed: res/ext.SimpleBatchUpload/.eslintrc.json
- * leaves them undefined, so an accidental jQuery call throws a ReferenceError
+ * `$` and `jQuery` are deliberately NOT stubbed: eslint.config.js leaves them
+ * undefined in res/, so an accidental jQuery call throws a ReferenceError
  * rather than quietly hitting a shim.
  */
 
